@@ -1,0 +1,55 @@
+# Sample PostgreSQL configuration for Educational Platform
+# Copy this file to your PostgreSQL data directory and adjust as needed
+
+# Memory settings
+shared_buffers = 256MB         # Start with 1/4 of available RAM
+work_mem = 16MB                # For complex queries
+maintenance_work_mem = 64MB    # For maintenance tasks
+effective_cache_size = 768MB   # Estimate of OS cache (3/4 of available RAM)
+
+# Query optimization
+random_page_cost = 1.1         # SSDs make random access faster
+effective_io_concurrency = 200  # For SSDs
+
+# Write-ahead log (WAL)
+wal_level = replica            # For backup and replication
+max_wal_senders = 3            # For replication
+wal_keep_segments = 32         # WAL files to keep for replication
+
+# Background writer
+bgwriter_delay = 200ms
+bgwriter_lru_maxpages = 100
+bgwriter_lru_multiplier = 2.0
+
+# Checkpoints
+checkpoint_completion_target = 0.9
+checkpoint_timeout = 5min
+
+# Statistics
+track_activities = on
+track_counts = on
+track_io_timing = on
+track_functions = all
+stats_temp_directory = 'pg_stat_tmp'
+
+# Autovacuum
+autovacuum = on
+autovacuum_max_workers = 3
+autovacuum_naptime = 1min
+autovacuum_vacuum_scale_factor = 0.2
+autovacuum_analyze_scale_factor = 0.1
+
+# Logging
+log_destination = 'stderr'
+logging_collector = on
+log_directory = 'pg_log'
+log_filename = 'postgresql-%Y-%m-%d_%H%M%S.log'
+log_rotation_age = 1d
+log_rotation_size = 10MB
+log_min_duration_statement = 1000  # Log queries that take more than 1s
+log_checkpoints = on
+log_connections = on
+log_disconnections = on
+log_line_prefix = '%m [%p] %q%u@%d '
+log_lock_waits = on
+log_temp_files = 0

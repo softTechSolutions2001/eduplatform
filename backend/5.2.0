@@ -1,0 +1,12 @@
+psql -h localhost -p 5432 -U eduplatform_user -d eduplatform
+Vajjiram@79
+
+cd backend && venv\scripts\activate && python manage.py runserver
+
+
+
+cd frontend && npm run dev
+
+python manage.py runserver 
+
+99067790447-go0pcefo3nt1b9d0udei65u0or6nb0a0.apps.googleusercontent.com

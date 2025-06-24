@@ -1,0 +1,28 @@
+{
+    "courses": [
+        {
+            "id": 1,
+            "title": "Introduction to Python",
+            "slug": "introduction-to-python",
+            "description": "Learn the basics of Python programming language",
+            "difficulty_level": "beginner",
+            "category_id": 1,
+            "category_name": "Programming",
+            "is_published": true,
+            "created_at": "2025-05-05T12:00:00Z",
+            "updated_at": "2025-05-05T12:00:00Z"
+        },
+        {
+            "id": 2,
+            "title": "Advanced JavaScript",
+            "slug": "advanced-javascript",
+            "description": "Deep dive into advanced JavaScript concepts",
+            "difficulty_level": "advanced",
+            "category_id": 1,
+            "category_name": "Programming",
+            "is_published": false,
+            "created_at": "2025-05-06T12:00:00Z",
+            "updated_at": "2025-05-06T12:00:00Z"
+        }
+    ]
+}

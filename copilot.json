@@ -1,0 +1,51 @@
+{
+  "context": {
+    "alwaysInclude": [
+      "README.md",
+      "frontend/package.json",
+      "frontend/src/components/common/**/*",
+      "frontend/src/hooks/**/*",
+      "frontend/src/utils/**/*",
+      "frontend/src/contexts/AuthContext.jsx",
+      "frontend/src/courseBuilder/store/**/*",
+      "frontend/src/aiCourseBuilder/config/**/*",
+      "backend/manage.py",
+      "backend/educore/settings.py",
+      "backend/courses/models.py",
+      "backend/users/models.py",
+      "backend/content/models.py",
+      "backend/instructor_portal/models.py"
+    ],
+    "excludePatterns": [
+      "node_modules/**",
+      "dist/**",
+      "frontend/node_modules/**",
+      "frontend/dist/**",
+      "backend/venv/**",
+      "backend/staticfiles/**",
+      "backend/media/**",
+      "backend/logs/**",
+      "**/__pycache__/**",
+      "**/*.pyc",
+      "cypress/**",
+      ".git/**",
+      "*.log"
+    ],
+    "maxTokens": 8000,
+    "prioritizeRecent": true
+  },
+  "codeStyle": {
+    "formatTool": "prettier",
+    "lintTool": "eslint",
+    "typeChecker": "typescript",
+    "testFramework": "vitest",
+    "enforceConventions": true
+  },
+  "generation": {
+    "includeTypes": true,
+    "includeTests": true,
+    "includeDocumentation": true,
+    "followPatterns": true,
+    "optimizeImports": true
+  }
+}

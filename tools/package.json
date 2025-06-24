@@ -1,0 +1,44 @@
+{
+  "name": "universal-frontend-audit",
+  "version": "1.0.0",
+  "description": "A comprehensive static and runtime analysis tool for frontend codebases",
+  "main": "universal-frontend-audit.js",
+  "bin": {
+    "frontend-audit": "universal-frontend-audit.js"
+  },
+  "scripts": {
+    "start": "node universal-frontend-audit.js",
+    "audit": "node universal-frontend-audit.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "frontend",
+    "audit",
+    "static-analysis",
+    "performance",
+    "accessibility",
+    "security"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "minimist": "^1.2.8"
+  },
+  "optionalDependencies": {
+    "@babel/parser": "^7.22.5",
+    "@typescript/parser": "^5.1.3",
+    "css-tree": "^2.3.1",
+    "node-html-parser": "^6.1.5",
+    "vue-template-compiler": "^2.7.14",
+    "svelte": "^4.0.5"
+  },
+  "peerDependencies": {
+    "eslint": "^8.42.0",
+    "puppeteer": "^20.7.3",
+    "lighthouse": "^10.2.0",
+    "@axe-core/puppeteer": "^4.7.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

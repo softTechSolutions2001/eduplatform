@@ -1,0 +1,5 @@
+# PostgreSQL adapter for Python
+psycopg2-binary==2.9.10
+
+# Connection pooling (optional but recommended for production)
+django-db-connection-pool==1.2.5

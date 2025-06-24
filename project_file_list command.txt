@@ -1,0 +1,95 @@
+﻿# Fixed PowerShell command to get clean project file list
+Get-ChildItem -Recurse -File -Force | Where-Object {
+    # Exclude dependency/build directories
+    $_.FullName -notmatch '\\node_modules\\' -and
+    $_.FullName -notmatch '\\venv\\' -and
+    $_.FullName -notmatch '\\env\\' -and
+    $_.FullName -notmatch '\\\.venv\\' -and
+    $_.FullName -notmatch '\\__pycache__\\' -and
+    $_.FullName -notmatch '\\\.pytest_cache\\' -and
+    $_.FullName -notmatch '\\static\\' -and
+    $_.FullName -notmatch '\\staticfiles\\' -and
+    $_.FullName -notmatch '\\media\\' -and
+    $_.FullName -notmatch '\\uploads\\' -and
+    $_.FullName -notmatch '\\dist\\' -and
+    $_.FullName -notmatch '\\build\\' -and
+    $_.FullName -notmatch '\\coverage\\' -and
+    $_.FullName -notmatch '\\\.nyc_output\\' -and
+
+    # Exclude project-specific directories
+    $_.FullName -notmatch '\\backend_analyzer\\' -and
+    $_.FullName -notmatch '\\tools\\' -and
+    $_.FullName -notmatch '\\backend_docs_extractor\\' -and
+    $_.FullName -notmatch '\\frontend\\cypress\\' -and
+    $_.FullName -notmatch '\\frontend\\docs\\' -and
+
+    # Exclude IDE/Editor directories
+    $_.FullName -notmatch '\\\.vscode\\' -and
+    $_.FullName -notmatch '\\\.idea\\' -and
+    $_.FullName -notmatch '\\\.cursor\\' -and
+    $_.FullName -notmatch '\\\.vs\\' -and
+
+    # Exclude version control and CI
+    $_.FullName -notmatch '\\\.git\\' -and
+    $_.FullName -notmatch '\\\.github\\workflows\\' -and
+    $_.FullName -notmatch '\\\.husky\\' -and
+
+    # Exclude temporary/cache files
+    $_.FullName -notmatch '\\logs\\' -and
+    $_.FullName -notmatch '\\tmp\\' -and
+    $_.FullName -notmatch '\\temp\\' -and
+    $_.FullName -notmatch '\\screenshots\\' -and
+    $_.FullName -notmatch '\\cypress\\screenshots\\' -and
+    $_.FullName -notmatch '\\cypress\\videos\\' -and
+
+    # Exclude specific file patterns
+    $_.Name -notmatch '\.pyc$' -and
+    $_.Name -notmatch '\.pyo$' -and
+    $_.Name -notmatch '\.pyd$' -and
+    $_.Name -notmatch '\.log$' -and
+    $_.Name -notmatch '\.tmp$' -and
+    $_.Name -notmatch '\.cache$' -and
+    $_.Name -notmatch '\.sqlite3$' -and
+    $_.Name -notmatch 'db\.sqlite3$' -and
+    $_.Name -notmatch '\.db$' -and
+    $_.Name -notmatch '.*debug.*\.log$' -and
+    $_.Name -notmatch '.*error.*\.log$' -and
+    $_.Name -notmatch '\.coverage$' -and
+    $_.Name -notmatch '\.lcov$' -and
+    $_.Name -notmatch '\.DS_Store$' -and
+    $_.Name -notmatch 'Thumbs\.db$' -and
+    $_.Name -notmatch '\.env\.local$' -and
+    $_.Name -notmatch '\.env\..*\.local$' -and
+
+    # Exclude lock files (optional - uncomment if you don't want them)
+    # $_.Name -notmatch 'package-lock\.json$' -and
+    # $_.Name -notmatch 'yarn\.lock$' -and
+    # $_.Name -notmatch 'pnpm-lock\.yaml$' -and
+
+    # Exclude backup and temporary files
+    $_.Name -notmatch '\.bak$' -and
+    $_.Name -notmatch '\.backup$' -and
+    $_.Name -notmatch '\.swp$' -and
+    $_.Name -notmatch '\.swo$' -and
+    $_.Name -notmatch '~$' -and
+
+    # Exclude specific project files that might be too verbose
+    $_.Name -ne 'project_file_list.txt' -and
+    $_.Name -notmatch '.*\.cpython-.*\.pyc$'
+} | Select-Object -ExpandProperty FullName | ForEach-Object {
+    # Remove the full path up to the project root, keeping relative paths
+    $rel = ($_ -replace '.*(?:backend|frontend)[\\\/]', '')
+
+    # Determine if it's backend or frontend and prefix accordingly
+    if ($_ -match '\\backend\\') {
+        "backend/$rel"
+    } elseif ($_ -match '\\frontend\\') {
+        "frontend/$rel"
+    } else {
+        # For files in the root or other directories
+        $rel = ($_ -replace '.*(?:eduplatform)[\\\/]', '')
+        "$rel"
+    }
+} | Where-Object { $_ -ne '' } | Sort-Object -Unique | Out-File project_file_list.txt -Encoding UTF8
+
+Write-Host "Project file list generated successfully in project_file_list.txt"

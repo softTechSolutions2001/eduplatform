@@ -1,0 +1,114 @@
+# Django Super-Scaffolder Configuration
+# This file controls the behavior of the scaffolding process
+
+# API configuration
+api_base: "api/v1"
+
+# Backup settings
+max_backup_age_days: 30
+auto_clean_backups: true
+
+# Model filtering
+model_exclude_patterns:
+  - "^django\\."
+  - "^auth\\."
+  - "^admin\\."
+  - "^sessions\\."
+  - "^contenttypes\\."
+
+# Field classification 
+field_types:
+  # Fields that should be searchable
+  search:
+    - "CharField"
+    - "TextField"
+    - "EmailField"
+    - "SlugField"
+    - "UUIDField"
+  
+  # Fields that should be filterable
+  filter:
+    - "BooleanField"
+    - "CharField"
+    - "IntegerField"
+    - "DateField"
+    - "DateTimeField"
+    - "DecimalField"
+    - "ForeignKey"
+  
+  # Fields to include in admin list_display and string representation
+  display:
+    - "name"
+    - "title"
+    - "slug"
+    - "code"
+    - "email"
+    - "username"
+    - "first_name"
+    - "last_name"
+  
+  # Fields that indicate ownership of an object
+  owner:
+    - "owner"
+    - "user"
+    - "created_by"
+    - "author"
+    - "creator"
+    - "owner_id"
+    - "user_id"
+
+# Code formatting configuration
+formatters:
+  black:
+    enabled: true
+    command: ["black", "-q", "{file}"]
+    file_patterns: ["\\.py$"]
+  
+  isort:
+    enabled: true
+    command: ["isort", "-q", "{file}"]
+    file_patterns: ["\\.py$"]
+
+# Validation settings
+validation:
+  run_django_check: true
+  run_migration_check: true
+  run_pylint: false
+
+# Feature flags
+features:
+  swagger: true
+  graph: true
+  parallel: true
+
+# Custom serializer settings
+serializers:
+  # Controls depth of relationship nesting
+  max_depth: 3
+  
+  # Fields to exclude from serializers by default
+  exclude_fields:
+    - "password"
+    - "secret"
+  
+  # Additional serializer field mappings
+  field_mappings:
+    DateTimeField: "serializers.DateTimeField(format='%Y-%m-%d %H:%M:%S')"
+    DateField: "serializers.DateField(format='%Y-%m-%d')"
+
+# Custom view settings
+views:
+  # Default pagination settings
+  pagination:
+    page_size: 50
+    max_page_size: 1000
+  
+  # Default permission classes
+  permission_classes:
+    - "IsAuthenticatedOrReadOnly"
+  
+  # Default filter backends
+  filter_backends:
+    - "django_filters.rest_framework.DjangoFilterBackend"
+    - "rest_framework.filters.SearchFilter"
+    - "rest_framework.filters.OrderingFilter" 

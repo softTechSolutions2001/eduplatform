@@ -1,0 +1,25 @@
+{
+    "modules": [
+        {
+            "id": 1,
+            "title": "Getting Started with Python",
+            "description": "Introduction to Python environment and basic syntax",
+            "order": 1,
+            "lessons": []
+        },
+        {
+            "id": 2,
+            "title": "Python Data Types",
+            "description": "Understanding core Python data types",
+            "order": 2,
+            "lessons": []
+        },
+        {
+            "id": 3,
+            "title": "Control Flow",
+            "description": "Conditional statements and loops in Python",
+            "order": 3,
+            "lessons": []
+        }
+    ]
+}

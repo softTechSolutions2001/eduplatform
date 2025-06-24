@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Simple Courses Debug List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .course {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .course-title {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .published {
+            color: green;
+        }
+
+        .draft {
+            color: orange;
+        }
+
+        .detail {
+            margin: 5px 0;
+        }
+
+        .summary {
+            background-color: #f5f5f5;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Courses Debug View</h1>
+
+    <div class="summary">
+        <p>Total Courses: {{ total_count }}</p>
+        <p>Published Courses: {{ published_count }}</p>
+        <p>Draft Courses: {{ draft_count }}</p>
+    </div>
+
+    <h2>Course List</h2>
+
+    {% for course in courses %}
+    <div class="course">
+        <div class="course-title">
+            {{ course.title }}
+            {% if course.published %}
+            <span class="published">[Published]</span>
+            {% else %}
+            <span class="draft">[Draft]</span>
+            {% endif %}
+        </div>
+
+        <div class="detail"><strong>ID:</strong> {{ course.id }}</div>
+        <div class="detail"><strong>Slug:</strong> {{ course.slug }}</div>
+        <div class="detail"><strong>Level:</strong> {{ course.level }}</div>
+        <div class="detail"><strong>Creation Method:</strong> {{ course.creation_method }}</div>
+        <div class="detail"><strong>Completion:</strong> {{ course.completion_status }} ({{ course.completion_percentage
+            }}%)</div>
+        <div class="detail"><strong>Modules:</strong> {{ course.modules_count }}</div>
+        <div class="detail"><strong>Lessons:</strong> {{ course.lessons_count }}</div>
+    </div>
+    {% empty %}
+    <p>No courses found.</p>
+    {% endfor %}
+
+    <hr>
+    <p><small>Generated at: {{ now }}</small></p>
+</body>
+
+</html>

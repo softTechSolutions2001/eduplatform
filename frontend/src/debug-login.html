@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Debug Login Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 10px 15px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    #result {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      background-color: #f9f9f9;
+      min-height: 100px;
+    }
+    .error {
+      color: red;
+    }
+    .success {
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <h1>Debug Login Page</h1>
+  <p>This is a direct login test without React or other frameworks</p>
+  
+  <form id="loginForm">
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+    </div>
+    
+    <button type="submit">Login</button>
+  </form>
+  
+  <div id="result">
+    <p>Results will appear here...</p>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const loginForm = document.getElementById('loginForm');
+      const resultDiv = document.getElementById('result');
+      
+      // API endpoints
+      const API_BASE = '/api';
+      const API_ENDPOINTS = {
+        LOGIN: `${API_BASE}/token/`,
+        USER: `${API_BASE}/user/me/`
+      };
+      
+      loginForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        
+        resultDiv.innerHTML = '<p>Attempting login...</p>';
+        
+        try {
+          // Log request details
+          console.log('Making login request with:', { email });
+          
+          // Build full URL with current origin
+          const loginUrl = window.location.origin + API_ENDPOINTS.LOGIN;
+          console.log('Login URL:', loginUrl);
+          
+          // Make direct fetch request to login API
+          const response = await fetch(loginUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password }),
+            credentials: 'include', // Important for cookies
+          });
+          
+          // Log response status
+          console.log('Response status:', response.status);
+          
+          // Get response body
+          const data = await response.json();
+          console.log('Response data:', data);
+          
+          if (response.ok) {
+            // Success - show token
+            resultDiv.innerHTML = `
+              <p class="success">Login successful!</p>
+              <p>Access Token: ${data.access.substring(0, 20)}...</p>
+              <p>Refresh Token: ${data.refresh.substring(0, 20)}...</p>
+            `;
+            
+            // Store tokens in localStorage
+            localStorage.setItem('accessToken', data.access);
+            localStorage.setItem('refreshToken', data.refresh);
+            
+            // Now try to get user data
+            setTimeout(async () => {
+              try {
+                const userUrl = window.location.origin + API_ENDPOINTS.USER;
+                console.log('User API URL:', userUrl);
+                
+                const userResponse = await fetch(userUrl, {
+                  headers: {
+                    'Authorization': `Bearer ${data.access}`,
+                    'Content-Type': 'application/json'
+                  },
+                  credentials: 'include', // Include cookies
+                });
+                
+                console.log('User API response status:', userResponse.status);
+                
+                if (userResponse.ok) {
+                  const userData = await userResponse.json();
+                  console.log('User data:', userData);
+                  resultDiv.innerHTML += `
+                    <p class="success">User data retrieved successfully!</p>
+                    <p>Email: ${userData.email}</p>
+                    <p>Role: ${userData.role || 'Not specified'}</p>
+                  `;
+                } else {
+                  const errorData = await userResponse.json();
+                  resultDiv.innerHTML += `
+                    <p class="error">Failed to get user data: ${userResponse.status}</p>
+                    <pre>${JSON.stringify(errorData, null, 2)}</pre>
+                  `;
+                }
+              } catch (userError) {
+                console.error('Error fetching user data:', userError);
+                resultDiv.innerHTML += `
+                  <p class="error">Error fetching user data: ${userError.message}</p>
+                `;
+              }
+            }, 500);
+            
+          } else {
+            // Error - show error message
+            resultDiv.innerHTML = `
+              <p class="error">Login failed: ${response.status}</p>
+              <pre>${JSON.stringify(data, null, 2)}</pre>
+            `;
+          }
+          
+        } catch (error) {
+          console.error('Login error:', error);
+          resultDiv.innerHTML = `
+            <p class="error">Error: ${error.message}</p>
+          `;
+        }
+      });
+    });
+  </script>
+</body>
+</html> 

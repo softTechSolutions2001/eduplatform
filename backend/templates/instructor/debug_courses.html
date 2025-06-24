@@ -1,0 +1,238 @@
+{% extends "base.html" %}
+
+{% block title %}Course Debug Information{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-6">Course Debug Information</h1>
+
+    <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-6" role="alert">
+        <p class="font-bold">Debug Mode</p>
+        <p>Displaying detailed information about {{ total_count }} courses.</p>
+    </div>
+
+    <div class="mb-6">
+        <h2 class="text-xl font-semibold mb-2">Summary</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-white p-4 rounded shadow">
+                <p class="font-bold">Total Courses</p>
+                <p class="text-2xl">{{ total_count }}</p>
+            </div>
+            <div class="bg-white p-4 rounded shadow">
+                <p class="font-bold">Published Courses</p>
+                <p class="text-2xl" id="published-count">{{ published_count }}</p>
+            </div>
+            <div class="bg-white p-4 rounded shadow">
+                <p class="font-bold">Draft Courses</p>
+                <p class="text-2xl" id="draft-count">{{ draft_count }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-6">
+        <h2 class="text-xl font-semibold mb-4">Course Details</h2>
+
+        {% for course in courses %}
+        <div class="bg-white shadow rounded-lg mb-6 overflow-hidden">
+            <div class="bg-gray-100 p-4 border-b">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-lg font-bold">
+                        {{ course.title }}
+                        <span class="text-sm text-gray-500 font-normal">(ID: {{ course.id }})</span>
+                    </h3>
+                    <div>
+                        {% if course.published %}
+                        <span
+                            class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold">Published</span>
+                        {% else %}
+                        <span
+                            class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-semibold">Draft</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-4">
+                <!-- Basic Information -->
+                <div class="mb-4">
+                    <h4 class="font-semibold mb-2">Basic Information</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div>
+                            <p class="text-sm text-gray-600">Slug</p>
+                            <p>{{ course.slug }}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Level</p>
+                            <p>{{ course.level }}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Category</p>
+                            <p>{{ course.category }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content Metrics -->
+                <div class="mb-4">
+                    <h4 class="font-semibold mb-2">Content Metrics</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div>
+                            <p class="text-sm text-gray-600">Modules</p>
+                            <p class="font-semibold">{{ course.modules_count }}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Lessons</p>
+                            <p class="font-semibold">{{ course.lessons_count }}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Resources</p>
+                            <p class="font-semibold">{{ course.resources_count }}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Assessments</p>
+                            <p class="font-semibold">{{ course.assessments_count }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Creation & Status Information -->
+                <div class="mb-4">
+                    <h4 class="font-semibold mb-2">Creation & Status</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <p class="text-sm text-gray-600">Creation Method</p>
+                            <p>
+                                {% if course.creation_method == 'builder' %}
+                                <span class="px-2 py-1 bg-indigo-100 text-indigo-800 rounded text-xs font-semibold">Drag
+                                    & Drop Builder</span>
+                                {% elif course.creation_method == 'wizard' %}
+                                <span
+                                    class="px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs font-semibold">Step-by-Step
+                                    Wizard</span>
+                                {% elif course.creation_method == 'ai' %}
+                                <span
+                                    class="px-2 py-1 bg-purple-100 text-purple-800 rounded text-xs font-semibold">AI-Powered
+                                    Builder</span>
+                                {% else %}
+                                <span
+                                    class="px-2 py-1 bg-gray-100 text-gray-800 rounded text-xs font-semibold">Unknown</span>
+                                {% endif %}
+                            </p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Completion Status</p>
+                            <p>
+                                {% if course.completion_status == 'complete' %}
+                                <span
+                                    class="px-2 py-1 bg-green-100 text-green-800 rounded text-xs font-semibold">Complete</span>
+                                {% elif course.completion_status == 'in_progress' %}
+                                <span class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded text-xs font-semibold">In
+                                    Progress</span>
+                                {% elif course.completion_status == 'draft' %}
+                                <span
+                                    class="px-2 py-1 bg-gray-100 text-gray-800 rounded text-xs font-semibold">Draft</span>
+                                {% else %}
+                                <span
+                                    class="px-2 py-1 bg-red-100 text-red-800 rounded text-xs font-semibold">Unknown</span>
+                                {% endif %}
+                            </p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Completion Percentage</p>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-blue-600 h-2.5 rounded-full"
+                                    style="width: {{ course.completion_percentage }}%"></div>
+                            </div>
+                            <p class="text-xs text-right mt-1">{{ course.completion_percentage }}%</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Instructors -->
+                <div class="mb-4">
+                    <h4 class="font-semibold mb-2">Instructors ({{ course.instructors|length }})</h4>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Name</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Email</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Role</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                {% for instructor in course.instructors %}
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        {{ instructor.name }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        {{ instructor.email }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        {{ instructor.role }}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Technical Details -->
+                <div>
+                    <h4 class="font-semibold mb-2">Technical Details</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <p class="text-sm text-gray-600">Created At</p>
+                            <p>{{ course.created_at|date:"Y-m-d H:i:s" }}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Updated At</p>
+                            <p>{{ course.updated_at|date:"Y-m-d H:i:s" }}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Description</p>
+                            <p class="text-sm text-gray-600 max-h-20 overflow-auto">
+                                {{ course.description|truncatechars:200 }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                        fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                            d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <div class="ml-3">
+                    <p class="text-sm text-yellow-700">
+                        No courses found. You may not have any courses assigned to you.
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Technical Notes -->
+    <div class="bg-gray-50 p-4 rounded mt-8 text-sm text-gray-600">
+        <h3 class="font-bold mb-2">Technical Notes</h3>
+        <p>This debug view displays all courses accessible to the current user based on their permissions.</p>
+        <p>Time of generation: {{ now|date:"Y-m-d H:i:s" }}</p>
+    </div>
+</div>
+{% endblock %}

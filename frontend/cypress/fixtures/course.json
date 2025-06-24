@@ -1,0 +1,64 @@
+{
+    "course": {
+        "id": 1,
+        "title": "Introduction to Python",
+        "slug": "introduction-to-python",
+        "description": "Learn the basics of Python programming language",
+        "difficulty_level": "beginner",
+        "category_id": 1,
+        "category_name": "Programming",
+        "is_published": false,
+        "created_at": "2025-05-05T12:00:00Z",
+        "updated_at": "2025-05-05T12:00:00Z",
+        "modules": [
+            {
+                "id": 1,
+                "title": "Getting Started with Python",
+                "description": "Introduction to Python environment and basic syntax",
+                "order": 1,
+                "lessons": [
+                    {
+                        "id": 1,
+                        "title": "Installing Python",
+                        "content": "Step by step guide to install Python",
+                        "order": 1,
+                        "access_level": "guest",
+                        "resources": []
+                    },
+                    {
+                        "id": 2,
+                        "title": "Python IDLE",
+                        "content": "Using the Python IDLE for development",
+                        "order": 2,
+                        "access_level": "registered",
+                        "resources": []
+                    }
+                ]
+            },
+            {
+                "id": 2,
+                "title": "Python Data Types",
+                "description": "Understanding core Python data types",
+                "order": 2,
+                "lessons": [
+                    {
+                        "id": 3,
+                        "title": "Numbers and Strings",
+                        "content": "Working with numerical and string data",
+                        "order": 1,
+                        "access_level": "registered",
+                        "resources": []
+                    },
+                    {
+                        "id": 4,
+                        "title": "Lists and Tuples",
+                        "content": "Collections in Python",
+                        "order": 2,
+                        "access_level": "premium",
+                        "resources": []
+                    }
+                ]
+            }
+        ]
+    }
+}

@@ -1,0 +1,35 @@
+backend:
+  ignore_apps:
+  - auth
+  - contenttypes
+  - sessions
+  - admin
+  - messages
+  serializer_suffix: Serializer
+field_mapping:
+  custom_mappings: {}
+  rules:
+  - backend: snake_case
+    enabled: true
+    frontend: camelCase
+frontend:
+  file_extensions:
+  - .js
+  - .jsx
+  - .ts
+  - .tsx
+  ignore_folders:
+  - node_modules
+  - dist
+  - build
+  - .git
+  - __tests__
+  - __mocks__
+  whitelist_fields:
+  - confirmPassword
+  - passwordConfirm
+  - rememberMe
+  - agreeToTerms
+  - isSubmitting
+  - currentPassword
+  - newPassword

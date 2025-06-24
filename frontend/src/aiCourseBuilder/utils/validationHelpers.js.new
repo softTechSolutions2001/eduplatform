@@ -1,0 +1,53 @@
+// Validation utilities for AI Course Builder
+// Re-exporting from consolidated workflowValidation.js file
+
+import {
+  validateArrayLength,
+  validateBasicInfo,
+  validateCourseBasicInfo,
+  validateCourseData,
+  validateCourseDescription,
+  validateCourseOutline,
+  validateCourseTitle,
+  validateCourseWithWorkflow,
+  validateEmail,
+  validateMaxLength,
+  validateMinLength,
+  validateRange,
+  validateRequired,
+  validateUrl,
+  VALIDATION_SCHEMAS,
+  validateData,
+  validateLearningObjectives,
+  createFieldValidator,
+  validateField,
+  validateContentQuality,
+  validateTitleUniqueness,
+  validateCompleteCourse
+} from './workflowValidation';
+
+// Export everything from workflowValidation
+export {
+  validateArrayLength,
+  validateBasicInfo,
+  validateCourseBasicInfo,
+  validateCourseData,
+  validateCourseDescription,
+  validateCourseOutline,
+  validateCourseTitle,
+  validateCourseWithWorkflow,
+  validateEmail,
+  validateMaxLength,
+  validateMinLength,
+  validateRange,
+  validateRequired,
+  validateUrl,
+  VALIDATION_SCHEMAS,
+  validateData,
+  validateLearningObjectives,
+  createFieldValidator,
+  validateField,
+  validateContentQuality,
+  validateTitleUniqueness,
+  validateCompleteCourse
+};

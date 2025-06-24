@@ -1,0 +1,31 @@
+/**
+ * Add styles for dropdown functionality in the instructor dashboard
+ */
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu {
+  transition: all 0.3s ease;
+}
+
+.dropdown:focus-within .dropdown-menu {
+  display: block;
+}
+
+/* Fade in animation for dropdown */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown-menu {
+  animation: fadeIn 0.2s ease-in-out;
+}

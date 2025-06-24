@@ -1,0 +1,28 @@
+{
+    "lessons": [
+        {
+            "id": 1,
+            "title": "Installing Python",
+            "content": "Step by step guide to install Python",
+            "order": 1,
+            "access_level": "guest",
+            "resources": []
+        },
+        {
+            "id": 2,
+            "title": "Python IDLE",
+            "content": "Using the Python IDLE for development",
+            "order": 2,
+            "access_level": "registered",
+            "resources": []
+        },
+        {
+            "id": 3,
+            "title": "Code Editors for Python",
+            "content": "Popular code editors and IDEs for Python development",
+            "order": 3,
+            "access_level": "premium",
+            "resources": []
+        }
+    ]
+}

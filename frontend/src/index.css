@@ -1,0 +1,343 @@
+/**
+ * EduPlatform Main Application Stylesheet (index.css)
+ * =================================================
+ *
+ * REVISION DETAILS:
+ * - Fixed: Added .will-change-opacity in @layer utilities to resolve Tailwind CSS compiler error
+ * - Improved: Better organization of utility classes into appropriate @layer directives
+ * - Enhanced: Improved code comments for better maintainability
+ * - Optimized: Grouped related utilities for better code organization
+ * - Added: Import for global.css with animation utilities
+ *
+ * CUSTOMIZATION VARIABLES:
+ * 1. Gradients:
+ *    - Hero gradient: Linear gradient from #3d74f4 to #2342b8
+ *    - CTA gradient: Linear gradient from #19b29a to #0b7268
+ *
+ * 2. Animations:
+ *    - Reveal transition: 700ms duration (can be modified in .reveal class)
+ *    - Card/button hover: 300ms duration (in .btn-premium and .card-premium)
+ *
+ * 3. Shadows:
+ *    - .shadow-card: Light elevation shadow (cards, panels)
+ *    - .shadow-soft: Medium elevation shadow (elevated elements)
+ *    - .shadow-testimonial: Custom testimonial component shadow
+ *
+ * 4. Responsive Breakpoints:
+ *    - Small: max-width: 640px (Mobile)
+ *    - Medium: 641px to 768px (Tablet)
+ *    - Large: Above 768px (Desktop)
+ *
+ * Last updated: 2025-05-03 15:00:57
+ * Author: nanthiniSanthanam
+ */
+
+/* Import fonts and CSS - All imports must come first */
+@import './styles/global.css';
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+@import 'react-toastify/dist/ReactToastify.css';
+
+/* Tailwind directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Stripe background and animation utilities */
+@layer utilities {
+  .bg-stripe {
+    background-image: linear-gradient(
+      45deg,
+      #ffffff1a 25%,
+      transparent 25%,
+      transparent 50%,
+      #ffffff1a 50%,
+      #ffffff1a 75%,
+      transparent 75%
+    );
+    background-size: 20px 20px;
+  }
+
+  .animate-stripe {
+    animation: stripe 1s linear infinite;
+  }
+
+  @keyframes stripe {
+    0% {
+      background-position: 0 0;
+    }
+
+    100% {
+      background-position: 40px 0;
+    }
+  }
+}
+
+/*==============================
+  BASE STYLES
+==============================*/
+
+/* Ensure proper document behavior */
+html,
+body {
+  @apply overflow-x-hidden max-w-full scroll-smooth m-0 p-0;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Better focus handling for accessibility */
+*:focus-visible {
+  @apply outline-2 outline-offset-2 outline-primary-500;
+}
+
+/*==============================
+  CUSTOM GRADIENTS
+==============================*/
+
+/* Hero gradient with pattern overlay */
+.hero-gradient {
+  @apply relative overflow-hidden w-full;
+  background: linear-gradient(135deg, #3d74f4 0%, #2342b8 100%);
+}
+
+.hero-gradient::before {
+  content: '';
+  @apply absolute w-full h-full top-0 left-0 opacity-50;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='rgba(255,255,255,0.05)' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+/* CTA gradient with pattern overlay */
+.cta-gradient {
+  @apply relative w-full;
+  background: linear-gradient(135deg, #19b29a 0%, #0b7268 100%);
+}
+
+.cta-gradient::before {
+  content: '';
+  @apply absolute w-full h-full top-0 left-0 opacity-50;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='rgba(255,255,255,0.05)' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+/*==============================
+  COMPONENT STYLES
+==============================*/
+
+@layer components {
+  /* Root element constraints */
+  #root {
+    @apply w-full max-w-full m-0 p-0 text-left overflow-x-hidden;
+  }
+
+  /* Button styles */
+  .btn-premium {
+    @apply px-4 py-2 sm:px-6 sm:py-3 font-medium rounded-xl transition-all duration-300 transform shadow-md inline-flex items-center justify-center whitespace-nowrap text-center;
+  }
+
+  .btn-premium:hover {
+    @apply transform -translate-y-0.5;
+  }
+
+  /* Card styles */
+  .card-premium {
+    @apply bg-white rounded-xl shadow-card overflow-hidden transition-all duration-300 w-full h-full flex flex-col;
+  }
+
+  .card-premium:hover {
+    @apply shadow-soft -translate-y-1;
+  }
+
+  /* Glass effect styling */
+  .glass-effect {
+    @apply bg-white/10 backdrop-blur-md border border-white/10;
+  }
+
+  /* Feature card component */
+  .feature-card {
+    @apply transition-all duration-300 transform-gpu;
+  }
+}
+
+/*==============================
+  UTILITY CLASSES
+==============================*/
+
+/* Define custom utilities */
+@layer utilities {
+  /* Animation utilities */
+  .will-change-opacity {
+    will-change: opacity;
+  }
+
+  /* Custom text utilities */
+  .text-2xl-responsive {
+    @apply text-xl md:text-2xl lg:text-3xl;
+  }
+
+  /* Layout utilities */
+  .flex-responsive {
+    @apply flex flex-col md:flex-row;
+  }
+
+  /* Line clamping utilities */
+  .line-clamp-1 {
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+  }
+
+  .line-clamp-2 {
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+
+  .line-clamp-3 {
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+  }
+}
+
+/* Animation classes */
+.reveal {
+  @apply opacity-0 translate-y-5 transition-all duration-700 ease-in-out will-change-transform will-change-opacity;
+}
+
+.reveal.active {
+  @apply opacity-100 translate-y-0;
+}
+
+/* Shadow utility classes */
+.shadow-card {
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.shadow-soft {
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.shadow-testimonial {
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  height: 100%;
+}
+
+/* Feature card hover effect */
+.feature-card:hover {
+  transform: translateY(-5px) rotateX(2deg) rotateY(-2deg);
+}
+
+/* Typography helpers */
+.line-clamp-1,
+.line-clamp-2,
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Enhanced scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded-md;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400;
+}
+
+/* Hide scrollbar utility */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/*==============================
+  RESPONSIVE ADJUSTMENTS
+==============================*/
+
+/* Typography responsive */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply break-words;
+}
+
+@media (max-width: 640px) {
+  h1 {
+    @apply text-[1.75rem] leading-tight;
+  }
+
+  h2 {
+    @apply text-2xl;
+  }
+
+  .btn-premium {
+    @apply py-2 px-4 text-sm;
+  }
+}
+
+/* Accessibility - Reduce motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    @apply transition-opacity duration-500;
+    transform: none;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-3px);
+  }
+}
+
+/* Form elements responsiveness */
+input,
+select,
+textarea {
+  @apply max-w-full w-full;
+}
+
+@media (max-width: 640px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+    /* Prevents iOS zoom on focus */
+  }
+}
+
+/* Fix 3D effects on mobile for better performance */
+@media (max-width: 768px) {
+  .feature-card:hover {
+    transform: translateY(-3px);
+  }
+
+  /* Hide glass-effect elements on mobile */
+  .glass-effect.hidden-mobile {
+    display: none;
+  }
+}
+
+/* Back to top button positioning */
+#back-to-top {
+  @apply z-50 fixed bottom-4 right-4 md:bottom-8 md:right-8;
+}
+
+/* Ensure main element is properly constrained */
+main {
+  @apply w-full max-w-[100vw] overflow-x-hidden;
+}

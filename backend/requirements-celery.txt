@@ -1,0 +1,11 @@
+# Celery Distributed Task Queue
+celery==5.3.6
+
+# Redis - Message broker and result backend
+redis==5.0.1
+
+# For Celery monitoring dashboard (optional)
+flower==2.0.1
+
+# For async progress tracking and task management
+django-celery-results==2.5.1

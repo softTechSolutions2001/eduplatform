@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}EduPlatform{% endblock %}</title>
+    <!-- Include Tailwind CSS from CDN for the debug/admin interface -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body class="bg-gray-50">
+    <header class="bg-indigo-600 text-white">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <a href="/" class="text-2xl font-bold">EduPlatform</a>
+                <nav>
+                    <ul class="flex space-x-4">
+                        <li><a href="/instructor/courses/" class="hover:underline">Courses</a></li>
+                        <li><a href="/instructor/debug/courses/" class="hover:underline">Debug</a></li>
+                        <li><a href="/admin/" class="hover:underline">Admin</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="bg-gray-100 text-gray-600">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex justify-between items-center">
+                <p>&copy; 2025 EduPlatform</p>
+                <p>Debug/Admin Interface</p>
+            </div>
+        </div>
+    </footer>
+
+    {% block scripts %}{% endblock %}
+</body>
+
+</html>
