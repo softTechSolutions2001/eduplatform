@@ -1,9 +1,9 @@
 /**
  * File: frontend/src/courseBuilder/CourseBuilder.tsx
- * Version: 3.2.0
- * Date: 2025-06-24 16:17:45 UTC
+ * Version: 3.3.0
+ * Date: 2025-06-25 04:25:11 UTC
  * Author: saiacupunctureFolllow
- * Last Modified: 2025-06-24 16:17:45 UTC
+ * Last Modified: 2025-06-25 04:25:11 UTC
  *
  * Enhanced Course Builder Root Component - Zustand Migration
  *
@@ -15,12 +15,13 @@
  * - Migrated from Redux to Zustand for state management
  * - Removed unnecessary Redux Provider and store configuration
  * - Direct Zustand store integration for better performance
- * - Session-based routing system
+ * - Session-based routing system with offline fallback
  * - Enhanced error boundaries
  * - Improved DnD provider integration
  * - Better callback handling for publish/exit flows
  * - Fixed memory leaks and improved stability
  * - Improved type safety and error handling
+ * - Enhanced session creation with offline mode support
  */
 
 import React, { useCallback, useEffect, useState } from 'react';
@@ -128,6 +129,7 @@ interface CourseBuilderState {
   retryCount: number;
   showTitleDialog: boolean;
   loadingProgress: number;
+  isOfflineMode: boolean;
 }
 
 // Props interface for the main CourseBuilder component
@@ -145,24 +147,48 @@ const CourseBuilder: React.FC<CourseBuilderProps> = ({
 }) => {
   const navigate = useNavigate();
 
+  // Enhanced state management for session creation
+  const [state, setState] = useState<CourseBuilderState>({
+    loadingState: 'idle',
+    error: null,
+    retryCount: 0,
+    showTitleDialog: false,
+    loadingProgress: 0,
+    isOfflineMode: false,
+  });
+
+  // Enhanced session creation with offline fallback
+  const createNewSession = useCallback(async () => {
+    if (!propSessionId) {
+      try {
+        setState(prev => ({ ...prev, loadingState: 'creating_session', loadingProgress: 20 }));
+        const newSessionId = await builderApiService.createSession();
+
+        // Wait a bit for the navigation to complete
+        await new Promise(resolve => setTimeout(resolve, 100));
+        setState(prev => ({ ...prev, loadingState: 'success', loadingProgress: 100 }));
+        navigate(`/course-builder/${newSessionId}`, { replace: true });
+      } catch (error) {
+        console.error('Failed to create new session:', error);
+
+        // ✅ ENHANCED: Create fallback offline session
+        const offlineSessionId = `offline_${Date.now()}`;
+        setState(prev => ({
+          ...prev,
+          loadingState: 'success',
+          loadingProgress: 100,
+          isOfflineMode: true,
+          error: 'Working in offline mode. Session created locally.'
+        }));
+        navigate(`/course-builder/${offlineSessionId}`, { replace: true });
+      }
+    }
+  }, [propSessionId, navigate]);
+
   // Create new session if none provided
   useEffect(() => {
-    const createNewSession = async () => {
-      if (!propSessionId) {
-        try {
-          const newSessionId = await builderApiService.createSession();
-          // Wait a bit for the navigation to complete
-          await new Promise(resolve => setTimeout(resolve, 100));
-          navigate(`/course-builder/${newSessionId}`, { replace: true });
-        } catch (error) {
-          console.error('Failed to create new session:', error);
-          // Don't navigate on error, let the component handle it
-        }
-      }
-    };
-
     createNewSession();
-  }, [propSessionId, navigate]);
+  }, [createNewSession]);
 
   // Handle publish callback with error handling
   const handlePublishComplete = useCallback((courseId: number) => {
@@ -194,10 +220,87 @@ const CourseBuilder: React.FC<CourseBuilderProps> = ({
     }
   }, [onExit, navigate]);
 
+  // Enhanced loading component with offline mode indication
+  const LoadingComponent = () => (
+    <div className="flex flex-col justify-center items-center h-screen bg-gray-50">
+      <div className="text-center max-w-md">
+        <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-500 border-t-transparent mx-auto mb-6"></div>
+
+        <div className="space-y-2">
+          <h3 className="text-xl font-semibold text-gray-800">
+            {state.loadingState === 'creating_session'
+              ? 'Initializing session...'
+              : 'Loading...'}
+          </h3>
+          <p className="text-gray-600">
+            {state.loadingState === 'creating_session'
+              ? 'Setting up your workspace. This may take a moment.'
+              : 'Please wait while we prepare your environment.'}
+          </p>
+        </div>
+
+        {/* Dynamic progress indicator */}
+        <div className="mt-6 w-full bg-gray-200 rounded-full h-2">
+          <div
+            className="bg-blue-500 h-2 rounded-full transition-all duration-300"
+            style={{ width: `${state.loadingProgress}%` }}
+          ></div>
+        </div>
+
+        {/* Progress percentage */}
+        <div className="mt-2 text-sm text-gray-500">
+          {state.loadingProgress}%
+        </div>
+
+        {/* Offline mode indicator during loading */}
+        {state.isOfflineMode && (
+          <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <p className="text-sm text-yellow-800">
+              🔄 Switching to offline mode...
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+
+  // Show loading while creating session
+  if (state.loadingState === 'creating_session') {
+    return <LoadingComponent />;
+  }
+
   return (
     <ErrorBoundary FallbackComponent={BuilderErrorFallback}>
       <MainLayout>
         <div className="course-builder-container" data-testid="course-builder">
+          {/* Offline mode notification */}
+          {state.isOfflineMode && state.error && (
+            <div className="fixed top-4 right-4 z-50 max-w-sm">
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 shadow-lg">
+                <div className="flex items-start">
+                  <svg
+                    className="w-5 h-5 text-yellow-400 mt-0.5 mr-2 flex-shrink-0"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  <div>
+                    <p className="text-sm text-yellow-800 font-medium">
+                      Offline Mode
+                    </p>
+                    <p className="text-xs text-yellow-700 mt-1">{state.error}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
           <Routes>
             <Route
               path=":sessionId"
@@ -256,6 +359,7 @@ const CourseEditorWrapper: React.FC = () => {
     retryCount: 0,
     showTitleDialog: false,
     loadingProgress: 60,
+    isOfflineMode: false,
   });
 
   const { saveStatus, lastSaved } = useAutoSave();
@@ -263,6 +367,9 @@ const CourseEditorWrapper: React.FC = () => {
   // Memoized search param getters with proper dependencies
   const templateId = searchParams.get('template');
   const isNewCourse = searchParams.get('new') === 'true';
+
+  // Check if we're in offline mode based on session ID
+  const isOfflineSession = sessionId?.startsWith('offline_') || sessionId?.startsWith('temp_');
 
   // Improved error handler with proper typing
   const handleError = useCallback((err: Error | unknown, context: string) => {
@@ -278,19 +385,26 @@ const CourseEditorWrapper: React.FC = () => {
     }));
   }, []);
 
-  // Enhanced session creation with better error handling
+  // Enhanced session creation with better error handling and retry logic
   const createSession = useCallback(async (): Promise<string> => {
     if (sessionId) return sessionId;
 
     try {
       setState(prev => ({ ...prev, loadingState: 'creating_session' }));
       const newSessionId = await builderApiService.createSession();
+      setState(prev => ({ ...prev, loadingState: 'success' }));
       navigate(`/course-builder/${newSessionId}`, { replace: true });
       return newSessionId;
     } catch (err) {
       console.error('Failed to create session:', err);
       // Create a temporary session ID for offline mode
       const tempSessionId = `temp_${Date.now()}`;
+      setState(prev => ({
+        ...prev,
+        loadingState: 'success',
+        isOfflineMode: true,
+        error: 'Working in offline mode. Changes may not be saved to the server.'
+      }));
       navigate(`/course-builder/${tempSessionId}`, { replace: true });
       return tempSessionId;
     }
@@ -364,6 +478,7 @@ const CourseEditorWrapper: React.FC = () => {
           setState(prev => ({
             ...prev,
             loadingState: 'success',
+            isOfflineMode: true,
             error: 'Working in offline mode. Changes may not be saved to the server.',
           }));
 
@@ -435,12 +550,12 @@ const CourseEditorWrapper: React.FC = () => {
     initializeCourse();
   }, [initializeCourse]);
 
-  // Fixed progress simulation with proper cleanup
+  // Fixed progress simulation with proper cleanup and better timing
   useEffect(() => {
     let intervalId: number | null = null;
 
-    const PROGRESS_INCREMENT = 5;
-    const PROGRESS_INTERVAL = 500;
+    const PROGRESS_INCREMENT = 8; // Slightly faster increment
+    const PROGRESS_INTERVAL = 400; // Slightly faster interval
     const MAX_PROGRESS = 90;
 
     if (
@@ -448,16 +563,25 @@ const CourseEditorWrapper: React.FC = () => {
       state.loadingState === 'creating_draft' ||
       state.loadingState === 'creating_session'
     ) {
+      // Reset progress when starting new loading operation
+      if (state.loadingProgress === 100) {
+        setState(prev => ({ ...prev, loadingProgress: 0 }));
+      }
+
       intervalId = window.setInterval(() => {
         setState(prev => ({
           ...prev,
           loadingProgress: prev.loadingProgress < MAX_PROGRESS
-            ? prev.loadingProgress + PROGRESS_INCREMENT
+            ? Math.min(prev.loadingProgress + PROGRESS_INCREMENT, MAX_PROGRESS)
             : prev.loadingProgress,
         }));
       }, PROGRESS_INTERVAL);
     } else if (state.loadingState === 'success') {
+      // Complete the progress bar immediately when successful
       setState(prev => ({ ...prev, loadingProgress: 100 }));
+    } else if (state.loadingState === 'error') {
+      // Stop progress on error
+      setState(prev => ({ ...prev, loadingProgress: 0 }));
     }
 
     return () => {
@@ -465,7 +589,7 @@ const CourseEditorWrapper: React.FC = () => {
         clearInterval(intervalId);
       }
     };
-  }, [state.loadingState]);
+  }, [state.loadingState, state.loadingProgress]);
 
   useEffect(() => {
     if (sessionId) {
@@ -624,38 +748,54 @@ const CourseEditorWrapper: React.FC = () => {
         </div>
       )}
 
-      {/* Session indicator */}
+      {/* Session indicator with offline mode detection */}
       {sessionId && (
         <div className="fixed top-4 left-4 z-50">
-          <div className="px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-            Session: {sessionId.substring(0, 8)}...
+          <div className={`px-3 py-1 rounded-full text-xs font-medium ${isOfflineSession
+            ? 'bg-yellow-100 text-yellow-800'
+            : 'bg-blue-100 text-blue-800'
+            }`}>
+            {isOfflineSession ? '🔄 Offline' : '🌐 Online'} Session: {sessionId.substring(0, 8)}...
           </div>
         </div>
       )}
 
-      {/* Offline mode warning */}
-      {state.error && course?.isTemporary && (
+      {/* Offline mode warning - Enhanced with better positioning and dismissible option */}
+      {(state.error && course?.isTemporary) || state.isOfflineMode && (
         <div className="fixed top-16 right-4 z-50 max-w-sm">
           <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 shadow-lg">
-            <div className="flex items-start">
-              <svg
-                className="w-5 h-5 text-yellow-400 mt-0.5 mr-2 flex-shrink-0"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                aria-hidden="true"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              <div>
-                <p className="text-sm text-yellow-800 font-medium">
-                  Offline Mode
-                </p>
-                <p className="text-xs text-yellow-700 mt-1">{state.error}</p>
+            <div className="flex items-start justify-between">
+              <div className="flex items-start">
+                <svg
+                  className="w-5 h-5 text-yellow-400 mt-0.5 mr-2 flex-shrink-0"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  aria-hidden="true"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                <div>
+                  <p className="text-sm text-yellow-800 font-medium">
+                    Offline Mode
+                  </p>
+                  <p className="text-xs text-yellow-700 mt-1">
+                    {state.error || 'Working in offline mode. Changes may not be saved to the server.'}
+                  </p>
+                </div>
               </div>
+              <button
+                onClick={() => setState(prev => ({ ...prev, error: null }))}
+                className="ml-2 text-yellow-400 hover:text-yellow-600 transition-colors"
+                aria-label="Dismiss notification"
+              >
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+              </button>
             </div>
           </div>
         </div>

@@ -1,10 +1,13 @@
 // File Path: src/courseBuilder/api/dndSession.ts
 // Date Created: 2025-06-24 08:50:00
-// Current Date and Time (UTC): 2025-06-24 08:49:22
+// Current Date and Time (UTC): 2025-06-25 04:25:11
 // Author: saiacupunctureFolllow
-// Version: 1.1.0
+// Version: 1.3.0
+// Last Modified: 2025-06-25 04:25:11 UTC
 
-import api from "@/services/api";
+// ✅ CORRECT - imports the actual Axios instance
+import { apiClient } from "@/services/api";
+import { API_ENDPOINTS } from "@/services/http/endpoints";
 import { CourseData } from "../store/schema";
 
 interface SessionResponse {
@@ -37,7 +40,7 @@ export class BuilderApiService {
     async createSession(): Promise<string> {
         try {
             const { data } = await this.executeWithRetry<SessionResponse>(
-                () => api.post("/instructor/dnd/sessions/start/")
+                () => apiClient.post(API_ENDPOINTS.INSTRUCTOR.DND.SESSION_START)
             );
             return data.session_id;
         } catch (error) {
@@ -53,7 +56,7 @@ export class BuilderApiService {
     async reorderBlocks(items: { id: number; order: number }[]): Promise<void> {
         try {
             await this.executeWithRetry<void>(
-                () => api.patch("/instructor/draft_course_content/reorder/", { items })
+                () => apiClient.patch(API_ENDPOINTS.INSTRUCTOR.DND.REORDER_BLOCKS, { items })
             );
         } catch (error) {
             this.handleApiError(error, "Failed to reorder content blocks");
@@ -73,7 +76,7 @@ export class BuilderApiService {
     ): Promise<PublishResponse> {
         try {
             const { data } = await this.executeWithRetry<PublishResponse>(
-                () => api.post(`/instructor/dnd/sessions/${sessionId}/publish/`, payload)
+                () => apiClient.post(API_ENDPOINTS.INSTRUCTOR.DND.SESSION_PUBLISH(sessionId), payload)
             );
             return data;
         } catch (error) {
@@ -90,7 +93,7 @@ export class BuilderApiService {
     async getSession(sessionId: string): Promise<CourseData> {
         try {
             const { data } = await this.executeWithRetry<CourseData>(
-                () => api.get(`/instructor/dnd/sessions/${sessionId}/`)
+                () => apiClient.get(API_ENDPOINTS.INSTRUCTOR.DND.SESSION_GET(sessionId))
             );
             return data;
         } catch (error) {
@@ -119,8 +122,10 @@ export class BuilderApiService {
             }
 
             if (retries < this.maxRetries) {
-                // Exponential backoff
-                const delay = Math.pow(2, retries) * 1000;
+                // Exponential backoff with jitter to prevent thundering herd
+                const baseDelay = Math.pow(2, retries) * 1000;
+                const jitter = Math.random() * 1000;
+                const delay = baseDelay + jitter;
                 await new Promise((resolve) => setTimeout(resolve, delay));
                 return this.executeWithRetry(apiCall, retries + 1);
             }
@@ -141,8 +146,18 @@ export class BuilderApiService {
 
         if (error.response) {
             apiError.code = `HTTP_${error.response.status}`;
-            apiError.message = error.response.data?.detail || defaultMessage;
+            apiError.message = error.response.data?.detail ||
+                error.response.data?.message ||
+                defaultMessage;
             apiError.details = error.response.data || {};
+        } else if (error.request) {
+            // Network error
+            apiError.code = 'NETWORK_ERROR';
+            apiError.message = 'Network request failed';
+        } else {
+            // Other errors
+            apiError.code = 'UNKNOWN_ERROR';
+            apiError.message = error.message || defaultMessage;
         }
 
         // Log to monitoring service in production

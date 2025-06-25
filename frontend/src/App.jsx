@@ -40,7 +40,6 @@ import { ToastContainer } from 'react-toastify';
 import { AuthProvider } from './contexts/AuthContext';
 
 // Development Tools
-import NetworkDebugger from './courseBuilder/components/NetworkDebugger';
 
 // Layouts
 import MainLayout from './components/layouts/MainLayout';
@@ -530,7 +529,7 @@ function App() {
           />
 
           {/* Network Debugger - Development Mode Only */}
-          {process.env.NODE_ENV === 'development' && <NetworkDebugger />}
+          {/*  {process.env.NODE_ENV === 'development' && <NetworkDebugger />} */}
         </HelmetProvider>
       </AuthProvider>
     </Router>
