@@ -1,4 +1,13 @@
 """
+File: backend/educore/urls.py
+Folder Path: backend/educore/
+Date Created: 2025-06-01 00:00:00
+Date Revised: 2025-06-26 06:49:21
+Current User: softTechSolutions2001
+Last Modified By: softTechSolutions2001
+Last Modified: 2025-06-26 06:49:21 UTC
+Version: 1.2.0
+
 URL configuration for educore project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -28,40 +37,40 @@ from instructor_portal.views import debug_courses
 
 
 urlpatterns = [
+    # Admin site
     path('admin/', admin.site.urls),
 
-    # Test views for static files
-    path('test-static/', test_static, name='test-static'),
-    path('test-admin-static/', test_admin_static, name='test-admin-static'),
-      # Direct debug view for courses (non-API) - Direct import
-    path('instructor/debug/courses/', debug_courses, name='debug-courses-direct'),
-    path('instructor/debug/courses/simple/', debug_courses, {'template': 'simple'}, name='debug-courses-simple'),
-
-    # API endpoints
-    # Important: Order matters here! The router URLs should come AFTER courses.urls
-    # to ensure the course slug lookups work correctly    # Include courses app URLs first (has more specific patterns)
+    # API endpoints - organized in priority order
+    # Core API endpoints (courses first to ensure proper slug lookups)
     path('api/', include('courses.urls')),
 
     # User authentication endpoints using JWT
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
-    # System endpoints
-    path('api/system/db-status/', db_status, name='db-status'),
-    path('api/system/db-stats/', db_stats, name='db-stats'),    # Include user app URLs
+    # App-specific API endpoints (no version prefixes)
     path('api/user/', include('users.urls')),
     path('api/instructor/', include('instructor_portal.urls')),
-    # Direct API endpoint for courses debug
-    path('api/debug/courses/', debug_courses, name='api-debug-courses'),
 
-    # Include content app URLs (new)
+    # Content API endpoints (may shadow paths in courses.urls)
     path('api/', include('content.urls')),
 
-    # Include AI course builder URLs
+    # System endpoints
+    path('api/system/db-status/', db_status, name='db-status'),
+    path('api/system/db-stats/', db_stats, name='db-stats'),
+
+    # Include AI course builder URLs (non-API)
     path('', include('ai_course_builder.urls')),
 
     # Django REST browsable API authentication
     path('api-auth/', include('rest_framework.urls')),
+
+    # Debug and test endpoints
+    path('test-static/', test_static, name='test-static'),
+    path('test-admin-static/', test_admin_static, name='test-admin-static'),
+    path('instructor/debug/courses/', debug_courses, name='debug-courses-direct'),
+    path('instructor/debug/courses/simple/', debug_courses, {'template': 'simple'}, name='debug-courses-simple'),
+    path('api/debug/courses/', debug_courses, name='api-debug-courses'),
 ]
 
 # Add debug toolbar URLs
@@ -75,6 +84,5 @@ if settings.DEBUG:
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)
-    # Add this line to serve static files in development
     urlpatterns += static(settings.STATIC_URL,
                           document_root=settings.STATIC_ROOT)

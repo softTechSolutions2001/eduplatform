@@ -374,6 +374,21 @@ CORS_ALLOW_HEADERS = [
     'x-requested-with',
 ]
 
+# Configurable instructor roles for permissions system
+ALLOWED_INSTRUCTOR_ROLES = [
+    'instructor',
+    'administrator',
+    'lead_instructor',
+    'content_creator'
+]
+
+# Configurable admin roles for reporting permissions
+ALLOWED_ADMIN_ROLES = [
+    'administrator',
+    'super_admin',
+    'analytics_manager'
+]
+
 # Custom user model
 AUTH_USER_MODEL = 'users.CustomUser'
 

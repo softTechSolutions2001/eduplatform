@@ -1,0 +1,3374 @@
+[
+  {
+    "url": "/__debug__/history_refresh",
+    "name": "history_refresh",
+    "view": "history_refresh",
+    "namespace": "djdt",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/__debug__/history_sidebar",
+    "name": "history_sidebar",
+    "view": "history_sidebar",
+    "namespace": "djdt",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/__debug__/render_panel",
+    "name": "render_panel",
+    "view": "render_panel",
+    "namespace": "djdt",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/__debug__/sql_explain",
+    "name": "sql_explain",
+    "view": "sql_explain",
+    "namespace": "djdt",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/__debug__/sql_profile",
+    "name": "sql_profile",
+    "view": "sql_profile",
+    "namespace": "djdt",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/__debug__/sql_select",
+    "name": "sql_select",
+    "view": "sql_select",
+    "namespace": "djdt",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/__debug__/template_source",
+    "name": "template_source",
+    "view": "template_source",
+    "namespace": "djdt",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin",
+    "name": "index",
+    "view": "index",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/<app_label>",
+    "name": "app_list",
+    "view": "app_index",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/<url>",
+    "name": "unnamed",
+    "view": "catch_all_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/account/emailaddress",
+    "name": "account_emailaddress_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/account/emailaddress/<path:object_id>/change",
+    "name": "account_emailaddress_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/account/emailaddress/<path:object_id>/delete",
+    "name": "account_emailaddress_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/account/emailaddress/<path:object_id>/history",
+    "name": "account_emailaddress_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/account/emailaddress/add",
+    "name": "account_emailaddress_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/auth/group",
+    "name": "auth_group_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/auth/group/<path:object_id>/change",
+    "name": "auth_group_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/auth/group/<path:object_id>/delete",
+    "name": "auth_group_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/auth/group/<path:object_id>/history",
+    "name": "auth_group_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/auth/group/add",
+    "name": "auth_group_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/autocomplete",
+    "name": "autocomplete",
+    "view": "autocomplete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/content/instructorstatistics",
+    "name": "content_instructorstatistics_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/content/instructorstatistics/<path:object_id>/change",
+    "name": "content_instructorstatistics_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/content/instructorstatistics/<path:object_id>/delete",
+    "name": "content_instructorstatistics_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/content/instructorstatistics/<path:object_id>/history",
+    "name": "content_instructorstatistics_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/content/instructorstatistics/add",
+    "name": "content_instructorstatistics_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/content/platformstatistics",
+    "name": "content_platformstatistics_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/content/platformstatistics/<path:object_id>/change",
+    "name": "content_platformstatistics_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/content/platformstatistics/<path:object_id>/delete",
+    "name": "content_platformstatistics_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/content/platformstatistics/<path:object_id>/history",
+    "name": "content_platformstatistics_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/content/platformstatistics/add",
+    "name": "content_platformstatistics_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/content/testimonial",
+    "name": "content_testimonial_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/content/testimonial/<path:object_id>/change",
+    "name": "content_testimonial_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/content/testimonial/<path:object_id>/delete",
+    "name": "content_testimonial_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/content/testimonial/<path:object_id>/history",
+    "name": "content_testimonial_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/content/testimonial/add",
+    "name": "content_testimonial_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/content/userlearningstatistics",
+    "name": "content_userlearningstatistics_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/content/userlearningstatistics/<path:object_id>/change",
+    "name": "content_userlearningstatistics_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/content/userlearningstatistics/<path:object_id>/delete",
+    "name": "content_userlearningstatistics_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/content/userlearningstatistics/<path:object_id>/history",
+    "name": "content_userlearningstatistics_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/content/userlearningstatistics/add",
+    "name": "content_userlearningstatistics_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/courses/category",
+    "name": "courses_category_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/courses/category/<path:object_id>/change",
+    "name": "courses_category_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/courses/category/<path:object_id>/delete",
+    "name": "courses_category_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/courses/category/<path:object_id>/history",
+    "name": "courses_category_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/courses/category/add",
+    "name": "courses_category_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/courses/course",
+    "name": "courses_course_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/courses/course/<path:object_id>/change",
+    "name": "courses_course_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/courses/course/<path:object_id>/delete",
+    "name": "courses_course_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/courses/course/<path:object_id>/history",
+    "name": "courses_course_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/courses/course/add",
+    "name": "courses_course_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/courses/enrollment",
+    "name": "courses_enrollment_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/courses/enrollment/<path:object_id>/change",
+    "name": "courses_enrollment_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/courses/enrollment/<path:object_id>/delete",
+    "name": "courses_enrollment_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/courses/enrollment/<path:object_id>/history",
+    "name": "courses_enrollment_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/courses/enrollment/add",
+    "name": "courses_enrollment_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/courses/lesson",
+    "name": "courses_lesson_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/courses/lesson/<path:object_id>/change",
+    "name": "courses_lesson_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/courses/lesson/<path:object_id>/delete",
+    "name": "courses_lesson_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/courses/lesson/<path:object_id>/history",
+    "name": "courses_lesson_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/courses/lesson/add",
+    "name": "courses_lesson_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/courses/module",
+    "name": "courses_module_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/courses/module/<path:object_id>/change",
+    "name": "courses_module_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/courses/module/<path:object_id>/delete",
+    "name": "courses_module_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/courses/module/<path:object_id>/history",
+    "name": "courses_module_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/courses/module/add",
+    "name": "courses_module_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/courses/resource",
+    "name": "courses_resource_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/courses/resource/<path:object_id>/change",
+    "name": "courses_resource_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/courses/resource/<path:object_id>/delete",
+    "name": "courses_resource_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/courses/resource/<path:object_id>/history",
+    "name": "courses_resource_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/courses/resource/add",
+    "name": "courses_resource_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/django_celery_beat/clockedschedule",
+    "name": "django_celery_beat_clockedschedule_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/django_celery_beat/clockedschedule/<path:object_id>/change",
+    "name": "django_celery_beat_clockedschedule_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/django_celery_beat/clockedschedule/<path:object_id>/delete",
+    "name": "django_celery_beat_clockedschedule_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/django_celery_beat/clockedschedule/<path:object_id>/history",
+    "name": "django_celery_beat_clockedschedule_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/django_celery_beat/clockedschedule/add",
+    "name": "django_celery_beat_clockedschedule_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/django_celery_beat/crontabschedule",
+    "name": "django_celery_beat_crontabschedule_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/django_celery_beat/crontabschedule/<path:object_id>/change",
+    "name": "django_celery_beat_crontabschedule_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/django_celery_beat/crontabschedule/<path:object_id>/delete",
+    "name": "django_celery_beat_crontabschedule_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/django_celery_beat/crontabschedule/<path:object_id>/history",
+    "name": "django_celery_beat_crontabschedule_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/django_celery_beat/crontabschedule/add",
+    "name": "django_celery_beat_crontabschedule_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/django_celery_beat/intervalschedule",
+    "name": "django_celery_beat_intervalschedule_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/django_celery_beat/intervalschedule/<path:object_id>/change",
+    "name": "django_celery_beat_intervalschedule_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/django_celery_beat/intervalschedule/<path:object_id>/delete",
+    "name": "django_celery_beat_intervalschedule_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/django_celery_beat/intervalschedule/<path:object_id>/history",
+    "name": "django_celery_beat_intervalschedule_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/django_celery_beat/intervalschedule/add",
+    "name": "django_celery_beat_intervalschedule_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/django_celery_beat/periodictask",
+    "name": "django_celery_beat_periodictask_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/django_celery_beat/periodictask/<path:object_id>/change",
+    "name": "django_celery_beat_periodictask_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/django_celery_beat/periodictask/<path:object_id>/delete",
+    "name": "django_celery_beat_periodictask_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/django_celery_beat/periodictask/<path:object_id>/history",
+    "name": "django_celery_beat_periodictask_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/django_celery_beat/periodictask/add",
+    "name": "django_celery_beat_periodictask_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/django_celery_beat/solarschedule",
+    "name": "django_celery_beat_solarschedule_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/django_celery_beat/solarschedule/<path:object_id>/change",
+    "name": "django_celery_beat_solarschedule_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/django_celery_beat/solarschedule/<path:object_id>/delete",
+    "name": "django_celery_beat_solarschedule_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/django_celery_beat/solarschedule/<path:object_id>/history",
+    "name": "django_celery_beat_solarschedule_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/django_celery_beat/solarschedule/add",
+    "name": "django_celery_beat_solarschedule_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/coursecontentdraft",
+    "name": "instructor_portal_coursecontentdraft_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/coursecontentdraft/<path:object_id>/change",
+    "name": "instructor_portal_coursecontentdraft_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/coursecontentdraft/<path:object_id>/delete",
+    "name": "instructor_portal_coursecontentdraft_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/coursecontentdraft/<path:object_id>/history",
+    "name": "instructor_portal_coursecontentdraft_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/coursecontentdraft/add",
+    "name": "instructor_portal_coursecontentdraft_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/coursecreationsession",
+    "name": "instructor_portal_coursecreationsession_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/coursecreationsession/<path:object_id>/change",
+    "name": "instructor_portal_coursecreationsession_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/coursecreationsession/<path:object_id>/delete",
+    "name": "instructor_portal_coursecreationsession_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/coursecreationsession/<path:object_id>/history",
+    "name": "instructor_portal_coursecreationsession_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/coursecreationsession/add",
+    "name": "instructor_portal_coursecreationsession_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/courseinstructor",
+    "name": "instructor_portal_courseinstructor_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/courseinstructor/<path:object_id>/change",
+    "name": "instructor_portal_courseinstructor_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/courseinstructor/<path:object_id>/delete",
+    "name": "instructor_portal_courseinstructor_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/courseinstructor/<path:object_id>/history",
+    "name": "instructor_portal_courseinstructor_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/courseinstructor/add",
+    "name": "instructor_portal_courseinstructor_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/coursetemplate",
+    "name": "instructor_portal_coursetemplate_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/coursetemplate/<path:object_id>/change",
+    "name": "instructor_portal_coursetemplate_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/coursetemplate/<path:object_id>/delete",
+    "name": "instructor_portal_coursetemplate_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/coursetemplate/<path:object_id>/history",
+    "name": "instructor_portal_coursetemplate_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/coursetemplate/add",
+    "name": "instructor_portal_coursetemplate_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/draftcoursecontent",
+    "name": "instructor_portal_draftcoursecontent_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/draftcoursecontent/<path:object_id>/change",
+    "name": "instructor_portal_draftcoursecontent_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/draftcoursecontent/<path:object_id>/delete",
+    "name": "instructor_portal_draftcoursecontent_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/draftcoursecontent/<path:object_id>/history",
+    "name": "instructor_portal_draftcoursecontent_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/draftcoursecontent/add",
+    "name": "instructor_portal_draftcoursecontent_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/instructoranalytics",
+    "name": "instructor_portal_instructoranalytics_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/instructoranalytics/<path:object_id>/change",
+    "name": "instructor_portal_instructoranalytics_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/instructoranalytics/<path:object_id>/delete",
+    "name": "instructor_portal_instructoranalytics_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/instructoranalytics/<path:object_id>/history",
+    "name": "instructor_portal_instructoranalytics_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/instructoranalytics/add",
+    "name": "instructor_portal_instructoranalytics_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/instructordashboard",
+    "name": "instructor_portal_instructordashboard_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/instructordashboard/<path:object_id>/change",
+    "name": "instructor_portal_instructordashboard_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/instructordashboard/<path:object_id>/delete",
+    "name": "instructor_portal_instructordashboard_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/instructordashboard/<path:object_id>/history",
+    "name": "instructor_portal_instructordashboard_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/instructordashboard/add",
+    "name": "instructor_portal_instructordashboard_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/instructorprofile",
+    "name": "instructor_portal_instructorprofile_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/instructorprofile/<path:object_id>/change",
+    "name": "instructor_portal_instructorprofile_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/instructorprofile/<path:object_id>/delete",
+    "name": "instructor_portal_instructorprofile_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/instructorprofile/<path:object_id>/history",
+    "name": "instructor_portal_instructorprofile_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/instructor_portal/instructorprofile/add",
+    "name": "instructor_portal_instructorprofile_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/jsi18n",
+    "name": "jsi18n",
+    "view": "i18n_javascript",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/login",
+    "name": "login",
+    "view": "login",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/logout",
+    "name": "logout",
+    "view": "logout",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/password_change",
+    "name": "password_change",
+    "view": "password_change",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/password_change/done",
+    "name": "password_change_done",
+    "view": "password_change_done",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/r/<path:content_type_id>/<path:object_id>",
+    "name": "view_on_site",
+    "view": "shortcut",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/sites/site",
+    "name": "sites_site_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/sites/site/<path:object_id>/change",
+    "name": "sites_site_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/sites/site/<path:object_id>/delete",
+    "name": "sites_site_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/sites/site/<path:object_id>/history",
+    "name": "sites_site_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/sites/site/add",
+    "name": "sites_site_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/social_django/association",
+    "name": "social_django_association_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/social_django/association/<path:object_id>/change",
+    "name": "social_django_association_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/social_django/association/<path:object_id>/delete",
+    "name": "social_django_association_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/social_django/association/<path:object_id>/history",
+    "name": "social_django_association_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/social_django/association/add",
+    "name": "social_django_association_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/social_django/nonce",
+    "name": "social_django_nonce_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/social_django/nonce/<path:object_id>/change",
+    "name": "social_django_nonce_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/social_django/nonce/<path:object_id>/delete",
+    "name": "social_django_nonce_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/social_django/nonce/<path:object_id>/history",
+    "name": "social_django_nonce_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/social_django/nonce/add",
+    "name": "social_django_nonce_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/social_django/usersocialauth",
+    "name": "social_django_usersocialauth_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/social_django/usersocialauth/<path:object_id>/change",
+    "name": "social_django_usersocialauth_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/social_django/usersocialauth/<path:object_id>/delete",
+    "name": "social_django_usersocialauth_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/social_django/usersocialauth/<path:object_id>/history",
+    "name": "social_django_usersocialauth_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/social_django/usersocialauth/add",
+    "name": "social_django_usersocialauth_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/socialaccount/socialaccount",
+    "name": "socialaccount_socialaccount_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/socialaccount/socialaccount/<path:object_id>/change",
+    "name": "socialaccount_socialaccount_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/socialaccount/socialaccount/<path:object_id>/delete",
+    "name": "socialaccount_socialaccount_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/socialaccount/socialaccount/<path:object_id>/history",
+    "name": "socialaccount_socialaccount_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/socialaccount/socialaccount/add",
+    "name": "socialaccount_socialaccount_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/socialaccount/socialapp",
+    "name": "socialaccount_socialapp_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/socialaccount/socialapp/<path:object_id>/change",
+    "name": "socialaccount_socialapp_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/socialaccount/socialapp/<path:object_id>/delete",
+    "name": "socialaccount_socialapp_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/socialaccount/socialapp/<path:object_id>/history",
+    "name": "socialaccount_socialapp_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/socialaccount/socialapp/add",
+    "name": "socialaccount_socialapp_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/socialaccount/socialtoken",
+    "name": "socialaccount_socialtoken_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/socialaccount/socialtoken/<path:object_id>/change",
+    "name": "socialaccount_socialtoken_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/socialaccount/socialtoken/<path:object_id>/delete",
+    "name": "socialaccount_socialtoken_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/socialaccount/socialtoken/<path:object_id>/history",
+    "name": "socialaccount_socialtoken_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/socialaccount/socialtoken/add",
+    "name": "socialaccount_socialtoken_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/token_blacklist/blacklistedtoken",
+    "name": "token_blacklist_blacklistedtoken_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/token_blacklist/blacklistedtoken/<path:object_id>/change",
+    "name": "token_blacklist_blacklistedtoken_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/token_blacklist/blacklistedtoken/<path:object_id>/delete",
+    "name": "token_blacklist_blacklistedtoken_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/token_blacklist/blacklistedtoken/<path:object_id>/history",
+    "name": "token_blacklist_blacklistedtoken_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/token_blacklist/blacklistedtoken/add",
+    "name": "token_blacklist_blacklistedtoken_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/token_blacklist/outstandingtoken",
+    "name": "token_blacklist_outstandingtoken_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/token_blacklist/outstandingtoken/<path:object_id>/change",
+    "name": "token_blacklist_outstandingtoken_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/token_blacklist/outstandingtoken/<path:object_id>/delete",
+    "name": "token_blacklist_outstandingtoken_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/token_blacklist/outstandingtoken/<path:object_id>/history",
+    "name": "token_blacklist_outstandingtoken_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/token_blacklist/outstandingtoken/add",
+    "name": "token_blacklist_outstandingtoken_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/users/customuser",
+    "name": "users_customuser_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/users/customuser/<id>/password",
+    "name": "auth_user_password_change",
+    "view": "user_change_password",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/users/customuser/<path:object_id>/change",
+    "name": "users_customuser_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/users/customuser/<path:object_id>/delete",
+    "name": "users_customuser_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/users/customuser/<path:object_id>/history",
+    "name": "users_customuser_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/users/customuser/add",
+    "name": "users_customuser_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/users/emailverification",
+    "name": "users_emailverification_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/users/emailverification/<path:object_id>/change",
+    "name": "users_emailverification_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/users/emailverification/<path:object_id>/delete",
+    "name": "users_emailverification_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/users/emailverification/<path:object_id>/history",
+    "name": "users_emailverification_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/users/emailverification/add",
+    "name": "users_emailverification_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/users/loginlog",
+    "name": "users_loginlog_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/users/loginlog/<path:object_id>/change",
+    "name": "users_loginlog_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/users/loginlog/<path:object_id>/delete",
+    "name": "users_loginlog_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/users/loginlog/<path:object_id>/history",
+    "name": "users_loginlog_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/users/loginlog/add",
+    "name": "users_loginlog_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/users/passwordreset",
+    "name": "users_passwordreset_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/users/passwordreset/<path:object_id>/change",
+    "name": "users_passwordreset_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/users/passwordreset/<path:object_id>/delete",
+    "name": "users_passwordreset_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/users/passwordreset/<path:object_id>/history",
+    "name": "users_passwordreset_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/users/passwordreset/add",
+    "name": "users_passwordreset_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/users/usersession",
+    "name": "users_usersession_changelist",
+    "view": "changelist_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/users/usersession/<path:object_id>/change",
+    "name": "users_usersession_change",
+    "view": "change_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/users/usersession/<path:object_id>/delete",
+    "name": "users_usersession_delete",
+    "view": "delete_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/users/usersession/<path:object_id>/history",
+    "name": "users_usersession_history",
+    "view": "history_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/admin/users/usersession/add",
+    "name": "users_usersession_add",
+    "view": "add_view",
+    "namespace": "admin",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api",
+    "name": "api-root",
+    "view": "APIRootView",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api-auth/login",
+    "name": "login",
+    "view": "LoginView",
+    "namespace": "rest_framework",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT"
+    ]
+  },
+  {
+    "url": "/api-auth/logout",
+    "name": "logout",
+    "view": "LogoutView",
+    "namespace": "rest_framework",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "POST"
+    ]
+  },
+  {
+    "url": "/api/categories",
+    "name": "category-list",
+    "view": "CategoryViewSet",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/categories/<slug>",
+    "name": "category-detail",
+    "view": "CategoryViewSet",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/certificates",
+    "name": "certificate-list",
+    "view": "CertificateViewSet",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/certificates/<pk>",
+    "name": "certificate-detail",
+    "view": "CertificateViewSet",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/certificates/verify/<slug>",
+    "name": "verify-certificate",
+    "view": "CertificateVerificationView",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/courses",
+    "name": "course-list",
+    "view": "CourseViewSet",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/courses/<slug>",
+    "name": "course-detail",
+    "view": "CourseViewSet",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/courses/<slug>/clone",
+    "name": "course-clone",
+    "view": "CourseViewSet",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/courses/<slug>/enroll",
+    "name": "course-enroll",
+    "view": "CourseViewSet",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/courses/<slug>/enrollment",
+    "name": "course-enrollment",
+    "view": "CourseEnrollmentView",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "POST"
+    ]
+  },
+  {
+    "url": "/api/courses/<slug>/progress",
+    "name": "course-progress",
+    "view": "CourseProgressView",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/courses/<slug>/versions",
+    "name": "course-versions",
+    "view": "CourseViewSet",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/courses/featured",
+    "name": "course-featured",
+    "view": "CourseViewSet",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/debug/cache-stats",
+    "name": "debug-cache-stats",
+    "view": "CacheStatsView",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/debug/courses",
+    "name": "api-debug-courses",
+    "view": "debug_courses",
+    "namespace": "",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/debug/url-patterns",
+    "name": "debug-url-patterns",
+    "view": "URLPatternsView",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/enrollments",
+    "name": "enrollment-list",
+    "view": "EnrollmentViewSet",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/enrollments/<pk>",
+    "name": "enrollment-detail",
+    "view": "EnrollmentViewSet",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/enrollments/<pk>/unenroll",
+    "name": "enrollment-unenroll",
+    "view": "EnrollmentViewSet",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/featured",
+    "name": "featured",
+    "view": "FeaturedContentView",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/health",
+    "name": "api-health-check",
+    "view": "APIHealthCheckView",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/instructor/ai-course-builder",
+    "name": "ai-course-builder-list",
+    "view": "AICourseBuilderDraftViewSet",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/instructor/ai-course-builder/<pk>",
+    "name": "ai-course-builder-detail",
+    "view": "AICourseBuilderDraftViewSet",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/instructor/ai-course-builder/<pk>/finalize",
+    "name": "ai-course-builder-finalize",
+    "view": "AICourseBuilderDraftViewSet",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/instructor/ai-course-builder/<pk>/task-status/<task_id>",
+    "name": "ai-course-builder-task-status",
+    "view": "AICourseBuilderDraftViewSet",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/instructor/ai-course-builder/health",
+    "name": "ai-course-builder-health",
+    "view": "AICourseBuilderHealthView",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/instructor/ai-course-builder/initialize",
+    "name": "ai-course-builder-initialize",
+    "view": "AICourseBuilderDraftViewSet",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/instructor/courses/<slug>/analytics",
+    "name": "course-analytics",
+    "view": "CourseAnalyticsView",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/instructor/dashboard",
+    "name": "instructor-dashboard",
+    "view": "InstructorDashboardView",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/instructor/debug",
+    "name": "debug",
+    "view": "basic_debug_view",
+    "namespace": "instructor_portal",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/lessons",
+    "name": "lesson-list",
+    "view": "LessonViewSet",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/lessons/<pk>",
+    "name": "lesson-detail",
+    "view": "LessonViewSet",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/modules",
+    "name": "module-list",
+    "view": "ModuleViewSet",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/modules/<pk>",
+    "name": "module-detail",
+    "view": "ModuleViewSet",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/notes",
+    "name": "note-list",
+    "view": "NoteViewSet",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/notes/<pk>",
+    "name": "note-detail",
+    "view": "NoteViewSet",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/progress",
+    "name": "progress-list",
+    "view": "ProgressViewSet",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/progress/<pk>",
+    "name": "progress-detail",
+    "view": "ProgressViewSet",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/reviews",
+    "name": "review-list",
+    "view": "ReviewViewSet",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/reviews/<pk>",
+    "name": "review-detail",
+    "view": "ReviewViewSet",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/search",
+    "name": "search",
+    "view": "UnifiedSearchView",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/statistics/instructor",
+    "name": "instructor-statistics",
+    "view": "instructor_statistics",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/statistics/platform",
+    "name": "platform-statistics",
+    "view": "platform_statistics",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/statistics/user/learning",
+    "name": "user-learning-statistics",
+    "view": "user_learning_statistics",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/system/db-stats",
+    "name": "db-stats",
+    "view": "db_stats",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/system/db-status",
+    "name": "db-status",
+    "view": "db_status",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/testimonials",
+    "name": "testimonial-list",
+    "view": "TestimonialViewSet",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/testimonials/<pk>",
+    "name": "testimonial-detail",
+    "view": "TestimonialViewSet",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/testimonials/featured",
+    "name": "featured-testimonials",
+    "view": "FeaturedTestimonialsView",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/token",
+    "name": "token_obtain_pair",
+    "view": "TokenObtainPairView",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "POST"
+    ]
+  },
+  {
+    "url": "/api/token/refresh",
+    "name": "token_refresh",
+    "view": "TokenRefreshView",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "POST"
+    ]
+  },
+  {
+    "url": "/api/user",
+    "name": "api-root",
+    "view": "APIRootView",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/user/email/verify",
+    "name": "email-verify",
+    "view": "EmailVerificationView",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "POST"
+    ]
+  },
+  {
+    "url": "/api/user/email/verify/resend",
+    "name": "email-verify-resend",
+    "view": "ResendVerificationView",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "POST"
+    ]
+  },
+  {
+    "url": "/api/user/login",
+    "name": "login",
+    "view": "LoginView",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "POST"
+    ]
+  },
+  {
+    "url": "/api/user/logout",
+    "name": "logout",
+    "view": "LogoutView",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "POST"
+    ]
+  },
+  {
+    "url": "/api/user/me",
+    "name": "user-detail",
+    "view": "UserView",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET",
+      "PATCH",
+      "PUT"
+    ]
+  },
+  {
+    "url": "/api/user/password/change",
+    "name": "password-change",
+    "view": "PasswordChangeView",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "POST"
+    ]
+  },
+  {
+    "url": "/api/user/password/reset",
+    "name": "password-reset-request",
+    "view": "PasswordResetRequestView",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "POST"
+    ]
+  },
+  {
+    "url": "/api/user/password/reset/confirm",
+    "name": "password-reset-confirm",
+    "view": "PasswordResetConfirmView",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "POST"
+    ]
+  },
+  {
+    "url": "/api/user/profile",
+    "name": "user-profile",
+    "view": "ProfileView",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET",
+      "PATCH",
+      "PUT"
+    ]
+  },
+  {
+    "url": "/api/user/profile/comprehensive",
+    "name": "profile-comprehensive",
+    "view": "UpdateProfileView",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "PUT"
+    ]
+  },
+  {
+    "url": "/api/user/progress-stats",
+    "name": "user-progress-stats-legacy",
+    "view": "UserProgressStatsView",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/user/progress/stats",
+    "name": "user-progress-stats",
+    "view": "UserProgressStatsView",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/user/register",
+    "name": "register",
+    "view": "RegisterView",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "POST"
+    ]
+  },
+  {
+    "url": "/api/user/sessions",
+    "name": "user-sessions-list",
+    "view": "UserSessionViewSet",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/user/sessions/<pk>",
+    "name": "user-sessions-detail",
+    "view": "UserSessionViewSet",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/user/social-auth/complete/<str>",
+    "name": "complete",
+    "view": "complete",
+    "namespace": "social",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/user/social-auth/disconnect/<str>",
+    "name": "disconnect",
+    "view": "disconnect",
+    "namespace": "social",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/user/social-auth/disconnect/<str>/<int>",
+    "name": "disconnect_individual",
+    "view": "disconnect",
+    "namespace": "social",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/user/social-auth/login/<str>",
+    "name": "begin",
+    "view": "auth",
+    "namespace": "social",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/user/social/complete",
+    "name": "social-complete",
+    "view": "SocialAuthCompleteView",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "POST"
+    ]
+  },
+  {
+    "url": "/api/user/social/error",
+    "name": "social-error",
+    "view": "SocialAuthErrorView",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/user/social/github",
+    "name": "social-github",
+    "view": "SocialAuthGithubView",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/user/social/google",
+    "name": "social-google",
+    "view": "SocialAuthGoogleView",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/user/subscription",
+    "name": "user-subscription-list",
+    "view": "SubscriptionViewSet",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/user/subscription/<pk>",
+    "name": "user-subscription-detail",
+    "view": "SubscriptionViewSet",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/user/subscription/cancel",
+    "name": "user-subscription-cancel",
+    "view": "SubscriptionViewSet",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/user/subscription/current",
+    "name": "user-subscription-current",
+    "view": "SubscriptionViewSet",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/user/subscription/downgrade",
+    "name": "user-subscription-downgrade",
+    "view": "SubscriptionViewSet",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/user/subscription/upgrade",
+    "name": "user-subscription-upgrade",
+    "view": "SubscriptionViewSet",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/api/user/token",
+    "name": "token_obtain_pair",
+    "view": "TokenObtainPairView",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "POST"
+    ]
+  },
+  {
+    "url": "/api/user/token/refresh",
+    "name": "token_refresh",
+    "view": "TokenRefreshView",
+    "namespace": "",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "POST"
+    ]
+  },
+  {
+    "url": "/api/version",
+    "name": "api-version",
+    "view": "APIVersionView",
+    "namespace": "courses",
+    "is_api": true,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/instructor/debug/courses",
+    "name": "debug-courses-direct",
+    "view": "debug_courses",
+    "namespace": "",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/instructor/debug/courses/simple",
+    "name": "debug-courses-simple",
+    "view": "debug_courses",
+    "namespace": "",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/media/<path>",
+    "name": "unnamed",
+    "view": "serve",
+    "namespace": "",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/static/<path>",
+    "name": "unnamed",
+    "view": "serve",
+    "namespace": "",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/test-admin-static",
+    "name": "test-admin-static",
+    "view": "test_admin_static",
+    "namespace": "",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "url": "/test-static",
+    "name": "test-static",
+    "view": "test_static",
+    "namespace": "",
+    "is_api": false,
+    "pattern_type": "URLPattern",
+    "methods": [
+      "GET"
+    ]
+  }
+]

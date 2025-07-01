@@ -1,11 +1,13 @@
 /**
  * File: src/services/http/endpoints.ts
- * Version: 2.0.0
+ * Path: src/services/http/endpoints.ts
  * Created: 2025-06-25
- * Author: softTechSolutions2001
+ * Last Modified: 2025-06-26 08:00:04
+ * Modified By: softTechSolutions2001
+ * Version: 2.2.0
  *
  * API endpoint definitions for the EduPlatform frontend
- * Enhanced with role-based routing and utility functions
+ * Updated with correct API paths to match backend routing structure
  */
 
 import { API_BASE_URL } from './constants';
@@ -39,6 +41,16 @@ export function validateEndpoint(url: string): boolean {
     }
 }
 
+/**
+ * IMPORTANT HTTP METHOD REQUIREMENTS:
+ * The following operations MUST use POST (not GET):
+ * - Course enrollment/unenrollment
+ * - Course publishing
+ * - Bulk operations (import/export)
+ * - Content reordering
+ * - Auto-save operations
+ * - Password operations (change/reset)
+ */
 export const API_ENDPOINTS = {
     AUTH: {
         LOGIN: `${API_BASE_URL}/user/login/`,
@@ -57,12 +69,25 @@ export const API_ENDPOINTS = {
     },
     COURSE: {
         BASE: `${API_BASE_URL}/courses/`,
-        FEATURED: `${API_BASE_URL}/courses/featured/`,
+        // FIXED: Moved outside courses namespace to match backend
+        FEATURED: `${API_BASE_URL}/featured/`,
+        // Legacy path for backward compatibility
+        FEATURED_OLD: `${API_BASE_URL}/courses/featured/`,
+
+        // WARNING: These endpoints are not implemented server-side yet
         POPULAR: `${API_BASE_URL}/courses/popular/`,
         LATEST: `${API_BASE_URL}/courses/latest/`,
-        SEARCH: `${API_BASE_URL}/courses/search/`,
+
+        // FIXED: Moved outside courses namespace to match backend
+        SEARCH: `${API_BASE_URL}/search/`,
+        // Legacy path for backward compatibility
+        SEARCH_OLD: `${API_BASE_URL}/courses/search/`,
+
         COURSE_BY_SLUG: (slug: string) => `${API_BASE_URL}/courses/${slug}/`,
-        ENROLL: (slug: string) => `${API_BASE_URL}/courses/${slug}/enroll/`,
+        // FIXED: Changed "enroll" to "enrollment" to match backend path
+        ENROLLMENT: (slug: string) => `${API_BASE_URL}/courses/${slug}/enrollment/`,
+        // TODO: Remove after Q4 2025 - maintained for backward compatibility
+        ENROLL: (slug: string) => `${API_BASE_URL}/courses/${slug}/enrollment/`,
         MODULES: (slug: string) => `${API_BASE_URL}/courses/${slug}/modules/`,
         REVIEWS: (slug: string) => `${API_BASE_URL}/courses/${slug}/reviews/`,
         REVIEW: (slug: string) => `${API_BASE_URL}/courses/${slug}/review/`,
@@ -133,8 +158,9 @@ export const API_ENDPOINTS = {
     SYSTEM: {
         STATUS: `${API_BASE_URL}/system/status/`,
         DB_STATUS: `${API_BASE_URL}/system/db-status/`,
-        HEALTH: `${API_BASE_URL}${BASE_PATHS.SYSTEM}/health/`,
-        VERSION: `${API_BASE_URL}${BASE_PATHS.SYSTEM}/version/`,
+        // FIXED: Health and version endpoints moved to top-level
+        HEALTH: `${API_BASE_URL}/health/`,
+        VERSION: `${API_BASE_URL}/version/`,
     },
     STATISTICS: {
         PLATFORM: `${API_BASE_URL}/statistics/platform/`,
@@ -152,6 +178,18 @@ export const API_ENDPOINTS = {
         RESOURCES: `${API_BASE_URL}/instructor/resources/`,
         ASSESSMENTS: `${API_BASE_URL}/instructor/assessments/`,
         STATISTICS: `${API_BASE_URL}/instructor/statistics/`,
+        // ADDED: Explicit analytics helper
+        ANALYTICS: `${API_BASE_URL}/instructor/analytics/`,
+        // ADDED: Explicit modules reorder helper
+        MODULES_REORDER: (courseSlug: string) => `${API_BASE_URL}/instructor/courses/${courseSlug}/modules/reorder/`,
+        // ADDED: Explicit course publish helper to ensure POST usage
+        COURSE_PUBLISH: (slug: string) => `${API_BASE_URL}/instructor/courses/${slug}/publish/`,
+        // ADDED: Bulk operation helpers only available in development
+        BULK: process.env.NODE_ENV === 'development' ? {
+            IMPORT: `${API_BASE_URL}/instructor/bulk/import/`,
+            EXPORT: `${API_BASE_URL}/instructor/bulk/export/`,
+            STATUS: (taskId: string) => `${API_BASE_URL}/instructor/bulk/status/${taskId}/`,
+        } : null,
 
         // DND session endpoints
         DND: {
@@ -184,6 +222,8 @@ export const API_ROUTES = {
         RESOURCES: `${API_BASE_URL}${BASE_PATHS.INSTRUCTOR}/resources/`,
         ASSESSMENTS: `${API_BASE_URL}${BASE_PATHS.INSTRUCTOR}/assessments/`,
         STATISTICS: `${API_BASE_URL}${BASE_PATHS.INSTRUCTOR}/statistics/`,
+        // ADDED: Analytics endpoint
+        ANALYTICS: `${API_BASE_URL}${BASE_PATHS.INSTRUCTOR}/analytics/`,
 
         // DND session routes
         DND: {
@@ -203,10 +243,10 @@ export const API_ROUTES = {
         PROGRESS: `${API_BASE_URL}${BASE_PATHS.STUDENT}/progress/`,
     },
 
-    // System routes
+    // System routes - FIXED: Now pointing to top-level health/version endpoints
     SYSTEM: {
-        HEALTH: `${API_BASE_URL}${BASE_PATHS.SYSTEM}/health/`,
-        VERSION: `${API_BASE_URL}${BASE_PATHS.SYSTEM}/version/`,
+        HEALTH: `${API_BASE_URL}/health/`,
+        VERSION: `${API_BASE_URL}/version/`,
     },
 } as const;
 

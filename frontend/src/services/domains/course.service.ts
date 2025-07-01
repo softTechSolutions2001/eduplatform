@@ -1,7 +1,7 @@
 /**
  * File: src/services/domains/course.service.ts
- * Version: 1.0.1
- * Modified: 2025-06-25
+ * Version: 1.0.2
+ * Modified: 2025-06-26
  * Author: softTechSolutions2001
  *
  * Course service for operations related to course management
@@ -13,6 +13,7 @@ import { ALLOW_MOCK_FALLBACK, DEBUG_MODE } from '../http/constants';
 import { API_ENDPOINTS } from '../http/endpoints';
 import { contentCache, createFormData } from '../utils/apiUtils';
 import { handlePublicRequest, handleRequest } from '../utils/handleRequest';
+
 export const courseService = {
     getAllCourses: async (params = {}) => {
         return handleRequest(
@@ -408,15 +409,76 @@ export const courseService = {
         );
     },
 
+    // FIXED: Enhanced featured courses function to handle new API response structure
     getFeaturedCourses: async (limit = 3) => {
+        const useLocalStorage = typeof window !== 'undefined' && window.localStorage;
+        const cacheKey = `featured_courses_${limit}`;
+        let cachedData = null;
+
+        // Try to get data from cache first
+        if (useLocalStorage) {
+            try {
+                cachedData = contentCache.get(cacheKey);
+                if (cachedData && Array.isArray(cachedData) && cachedData.length > 0) {
+                    if (DEBUG_MODE) console.log('Using cached featured courses data');
+                    return cachedData;
+                }
+            } catch (error) {
+                console.error('Error accessing cached featured courses:', error);
+            }
+        }
+
         try {
-            return await handleRequest(
-                async () =>
-                    await apiClient.get(API_ENDPOINTS.COURSE.FEATURED, {
-                        params: { limit },
-                    }),
-                'Failed to fetch featured courses'
-            );
+            // Try the new API endpoint with updated structure
+            try {
+                const response = await handleRequest(
+                    async () =>
+                        await apiClient.get(API_ENDPOINTS.COURSE.FEATURED, {
+                            params: { limit },
+                        }),
+                    'Failed to fetch featured courses'
+                );
+
+                // Extract courses from the new nested response format
+                if (response && response.courses && Array.isArray(response.courses)) {
+                    if (DEBUG_MODE) console.log('Using new featured courses API structure');
+
+                    // Cache the courses array for future use
+                    if (useLocalStorage) {
+                        contentCache.set(cacheKey, response.courses, 5 * 60); // Cache for 5 minutes
+                    }
+
+                    return response.courses;
+                } else {
+                    // Response exists but doesn't have expected structure
+                    throw new Error('Invalid response structure from featured courses API');
+                }
+            } catch (error) {
+                console.warn('New featured endpoint failed, trying legacy endpoint', error);
+
+                // Try the legacy/old endpoint as fallback
+                if (API_ENDPOINTS.COURSE.FEATURED_OLD) {
+                    const legacyResponse = await handleRequest(
+                        async () =>
+                            await apiClient.get(API_ENDPOINTS.COURSE.FEATURED_OLD, {
+                                params: { limit },
+                            }),
+                        'Failed to fetch featured courses (legacy endpoint)'
+                    );
+
+                    if (DEBUG_MODE) console.log('Using legacy featured courses API');
+
+                    // Cache the legacy response for future use
+                    if (useLocalStorage && legacyResponse) {
+                        contentCache.set(cacheKey, legacyResponse, 5 * 60);
+                    }
+
+                    return legacyResponse;
+                }
+
+                // If we can't use legacy endpoint, re-throw the error
+                throw error;
+            }
         } catch (error) {
             if (!ALLOW_MOCK_FALLBACK) {
                 throw error;
@@ -424,6 +486,7 @@ export const courseService = {
 
             logWarning('Falling back to mock featured courses data', { error });
 
+            // Return standardized mock data
             return [
                 {
                     id: 1,

@@ -1,0 +1,5497 @@
+{
+  "summary": {
+    "total_endpoints": 96,
+    "successful_endpoints": 0,
+    "failed_endpoints": 96,
+    "success_rate": 0.0,
+    "total_tests": 480,
+    "successful_tests": 0,
+    "failed_tests": 480,
+    "test_success_rate": 0.0,
+    "success_threshold": 400,
+    "status_code_distribution": {
+      "400": 480
+    },
+    "error_types": {}
+  },
+  "detailed_results": [
+    {
+      "endpoint": {
+        "url": "/__debug__/history_refresh",
+        "name": "history_refresh",
+        "view": "history_refresh",
+        "namespace": "djdt",
+        "is_api": false,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/__debug__/history_refresh",
+      "name": "history_refresh",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/__debug__/history_sidebar",
+        "name": "history_sidebar",
+        "view": "history_sidebar",
+        "namespace": "djdt",
+        "is_api": false,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/__debug__/history_sidebar",
+      "name": "history_sidebar",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/__debug__/render_panel",
+        "name": "render_panel",
+        "view": "render_panel",
+        "namespace": "djdt",
+        "is_api": false,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/__debug__/render_panel",
+      "name": "render_panel",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/__debug__/sql_explain",
+        "name": "sql_explain",
+        "view": "sql_explain",
+        "namespace": "djdt",
+        "is_api": false,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/__debug__/sql_explain",
+      "name": "sql_explain",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/__debug__/sql_profile",
+        "name": "sql_profile",
+        "view": "sql_profile",
+        "namespace": "djdt",
+        "is_api": false,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/__debug__/sql_profile",
+      "name": "sql_profile",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/__debug__/sql_select",
+        "name": "sql_select",
+        "view": "sql_select",
+        "namespace": "djdt",
+        "is_api": false,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/__debug__/sql_select",
+      "name": "sql_select",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/__debug__/template_source",
+        "name": "template_source",
+        "view": "template_source",
+        "namespace": "djdt",
+        "is_api": false,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/__debug__/template_source",
+      "name": "template_source",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api",
+        "name": "api-root",
+        "view": "APIRootView",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api",
+      "name": "api-root",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api-auth/login",
+        "name": "login",
+        "view": "LoginView",
+        "namespace": "rest_framework",
+        "is_api": false,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET",
+          "POST",
+          "PUT"
+        ]
+      },
+      "url": "/api-auth/login",
+      "name": "login",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api-auth/logout",
+        "name": "logout",
+        "view": "LogoutView",
+        "namespace": "rest_framework",
+        "is_api": false,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "POST"
+        ]
+      },
+      "url": "/api-auth/logout",
+      "name": "logout",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/categories",
+        "name": "category-list",
+        "view": "CategoryViewSet",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/categories",
+      "name": "category-list",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/categories/<slug>",
+        "name": "category-detail",
+        "view": "CategoryViewSet",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/categories/<slug>",
+      "name": "category-detail",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/certificates",
+        "name": "certificate-list",
+        "view": "CertificateViewSet",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/certificates",
+      "name": "certificate-list",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/certificates/<pk>",
+        "name": "certificate-detail",
+        "view": "CertificateViewSet",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/certificates/<pk>",
+      "name": "certificate-detail",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/certificates/verify/<slug>",
+        "name": "verify-certificate",
+        "view": "CertificateVerificationView",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/certificates/verify/<slug>",
+      "name": "verify-certificate",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/courses",
+        "name": "course-list",
+        "view": "CourseViewSet",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/courses",
+      "name": "course-list",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/courses/<slug>",
+        "name": "course-detail",
+        "view": "CourseViewSet",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/courses/<slug>",
+      "name": "course-detail",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/courses/<slug>/clone",
+        "name": "course-clone",
+        "view": "CourseViewSet",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/courses/<slug>/clone",
+      "name": "course-clone",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/courses/<slug>/enroll",
+        "name": "course-enroll",
+        "view": "CourseViewSet",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/courses/<slug>/enroll",
+      "name": "course-enroll",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/courses/<slug>/enrollment",
+        "name": "course-enrollment",
+        "view": "CourseEnrollmentView",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "POST"
+        ]
+      },
+      "url": "/api/courses/<slug>/enrollment",
+      "name": "course-enrollment",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/courses/<slug>/progress",
+        "name": "course-progress",
+        "view": "CourseProgressView",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/courses/<slug>/progress",
+      "name": "course-progress",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/courses/<slug>/versions",
+        "name": "course-versions",
+        "view": "CourseViewSet",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/courses/<slug>/versions",
+      "name": "course-versions",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/courses/featured",
+        "name": "course-featured",
+        "view": "CourseViewSet",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/courses/featured",
+      "name": "course-featured",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/debug/cache-stats",
+        "name": "debug-cache-stats",
+        "view": "CacheStatsView",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/debug/cache-stats",
+      "name": "debug-cache-stats",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/debug/courses",
+        "name": "api-debug-courses",
+        "view": "debug_courses",
+        "namespace": "",
+        "is_api": false,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/debug/courses",
+      "name": "api-debug-courses",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/debug/url-patterns",
+        "name": "debug-url-patterns",
+        "view": "URLPatternsView",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/debug/url-patterns",
+      "name": "debug-url-patterns",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/enrollments",
+        "name": "enrollment-list",
+        "view": "EnrollmentViewSet",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/enrollments",
+      "name": "enrollment-list",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/enrollments/<pk>",
+        "name": "enrollment-detail",
+        "view": "EnrollmentViewSet",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/enrollments/<pk>",
+      "name": "enrollment-detail",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/enrollments/<pk>/unenroll",
+        "name": "enrollment-unenroll",
+        "view": "EnrollmentViewSet",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/enrollments/<pk>/unenroll",
+      "name": "enrollment-unenroll",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/featured",
+        "name": "featured",
+        "view": "FeaturedContentView",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/featured",
+      "name": "featured",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/health",
+        "name": "api-health-check",
+        "view": "APIHealthCheckView",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/health",
+      "name": "api-health-check",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/instructor/ai-course-builder",
+        "name": "ai-course-builder-list",
+        "view": "AICourseBuilderDraftViewSet",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/instructor/ai-course-builder",
+      "name": "ai-course-builder-list",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/instructor/ai-course-builder/<pk>",
+        "name": "ai-course-builder-detail",
+        "view": "AICourseBuilderDraftViewSet",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/instructor/ai-course-builder/<pk>",
+      "name": "ai-course-builder-detail",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/instructor/ai-course-builder/<pk>/finalize",
+        "name": "ai-course-builder-finalize",
+        "view": "AICourseBuilderDraftViewSet",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/instructor/ai-course-builder/<pk>/finalize",
+      "name": "ai-course-builder-finalize",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/instructor/ai-course-builder/<pk>/task-status/<task_id>",
+        "name": "ai-course-builder-task-status",
+        "view": "AICourseBuilderDraftViewSet",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/instructor/ai-course-builder/<pk>/task-status/<task_id>",
+      "name": "ai-course-builder-task-status",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/instructor/ai-course-builder/health",
+        "name": "ai-course-builder-health",
+        "view": "AICourseBuilderHealthView",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/instructor/ai-course-builder/health",
+      "name": "ai-course-builder-health",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/instructor/ai-course-builder/initialize",
+        "name": "ai-course-builder-initialize",
+        "view": "AICourseBuilderDraftViewSet",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/instructor/ai-course-builder/initialize",
+      "name": "ai-course-builder-initialize",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/instructor/courses/<slug>/analytics",
+        "name": "course-analytics",
+        "view": "CourseAnalyticsView",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/instructor/courses/<slug>/analytics",
+      "name": "course-analytics",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/instructor/dashboard",
+        "name": "instructor-dashboard",
+        "view": "InstructorDashboardView",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/instructor/dashboard",
+      "name": "instructor-dashboard",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/instructor/debug",
+        "name": "debug",
+        "view": "basic_debug_view",
+        "namespace": "instructor_portal",
+        "is_api": false,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/instructor/debug",
+      "name": "debug",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/lessons",
+        "name": "lesson-list",
+        "view": "LessonViewSet",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/lessons",
+      "name": "lesson-list",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/lessons/<pk>",
+        "name": "lesson-detail",
+        "view": "LessonViewSet",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/lessons/<pk>",
+      "name": "lesson-detail",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/modules",
+        "name": "module-list",
+        "view": "ModuleViewSet",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/modules",
+      "name": "module-list",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/modules/<pk>",
+        "name": "module-detail",
+        "view": "ModuleViewSet",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/modules/<pk>",
+      "name": "module-detail",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/notes",
+        "name": "note-list",
+        "view": "NoteViewSet",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/notes",
+      "name": "note-list",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/notes/<pk>",
+        "name": "note-detail",
+        "view": "NoteViewSet",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/notes/<pk>",
+      "name": "note-detail",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/progress",
+        "name": "progress-list",
+        "view": "ProgressViewSet",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/progress",
+      "name": "progress-list",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/progress/<pk>",
+        "name": "progress-detail",
+        "view": "ProgressViewSet",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/progress/<pk>",
+      "name": "progress-detail",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/reviews",
+        "name": "review-list",
+        "view": "ReviewViewSet",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/reviews",
+      "name": "review-list",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/reviews/<pk>",
+        "name": "review-detail",
+        "view": "ReviewViewSet",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/reviews/<pk>",
+      "name": "review-detail",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/search",
+        "name": "search",
+        "view": "UnifiedSearchView",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/search",
+      "name": "search",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/statistics/instructor",
+        "name": "instructor-statistics",
+        "view": "instructor_statistics",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/statistics/instructor",
+      "name": "instructor-statistics",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/statistics/platform",
+        "name": "platform-statistics",
+        "view": "platform_statistics",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/statistics/platform",
+      "name": "platform-statistics",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/statistics/user/learning",
+        "name": "user-learning-statistics",
+        "view": "user_learning_statistics",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/statistics/user/learning",
+      "name": "user-learning-statistics",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/system/db-stats",
+        "name": "db-stats",
+        "view": "db_stats",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/system/db-stats",
+      "name": "db-stats",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/system/db-status",
+        "name": "db-status",
+        "view": "db_status",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/system/db-status",
+      "name": "db-status",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/testimonials",
+        "name": "testimonial-list",
+        "view": "TestimonialViewSet",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/testimonials",
+      "name": "testimonial-list",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/testimonials/<pk>",
+        "name": "testimonial-detail",
+        "view": "TestimonialViewSet",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/testimonials/<pk>",
+      "name": "testimonial-detail",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/testimonials/featured",
+        "name": "featured-testimonials",
+        "view": "FeaturedTestimonialsView",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/testimonials/featured",
+      "name": "featured-testimonials",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/token",
+        "name": "token_obtain_pair",
+        "view": "TokenObtainPairView",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "POST"
+        ]
+      },
+      "url": "/api/token",
+      "name": "token_obtain_pair",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/token/refresh",
+        "name": "token_refresh",
+        "view": "TokenRefreshView",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "POST"
+        ]
+      },
+      "url": "/api/token/refresh",
+      "name": "token_refresh",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/user",
+        "name": "api-root",
+        "view": "APIRootView",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/user",
+      "name": "api-root",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/user/email/verify",
+        "name": "email-verify",
+        "view": "EmailVerificationView",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "POST"
+        ]
+      },
+      "url": "/api/user/email/verify",
+      "name": "email-verify",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/user/email/verify/resend",
+        "name": "email-verify-resend",
+        "view": "ResendVerificationView",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "POST"
+        ]
+      },
+      "url": "/api/user/email/verify/resend",
+      "name": "email-verify-resend",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/user/login",
+        "name": "login",
+        "view": "LoginView",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "POST"
+        ]
+      },
+      "url": "/api/user/login",
+      "name": "login",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/user/logout",
+        "name": "logout",
+        "view": "LogoutView",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "POST"
+        ]
+      },
+      "url": "/api/user/logout",
+      "name": "logout",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/user/me",
+        "name": "user-detail",
+        "view": "UserView",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET",
+          "PATCH",
+          "PUT"
+        ]
+      },
+      "url": "/api/user/me",
+      "name": "user-detail",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/user/password/change",
+        "name": "password-change",
+        "view": "PasswordChangeView",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "POST"
+        ]
+      },
+      "url": "/api/user/password/change",
+      "name": "password-change",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/user/password/reset",
+        "name": "password-reset-request",
+        "view": "PasswordResetRequestView",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "POST"
+        ]
+      },
+      "url": "/api/user/password/reset",
+      "name": "password-reset-request",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/user/password/reset/confirm",
+        "name": "password-reset-confirm",
+        "view": "PasswordResetConfirmView",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "POST"
+        ]
+      },
+      "url": "/api/user/password/reset/confirm",
+      "name": "password-reset-confirm",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/user/profile",
+        "name": "user-profile",
+        "view": "ProfileView",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET",
+          "PATCH",
+          "PUT"
+        ]
+      },
+      "url": "/api/user/profile",
+      "name": "user-profile",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/user/profile/comprehensive",
+        "name": "profile-comprehensive",
+        "view": "UpdateProfileView",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "PUT"
+        ]
+      },
+      "url": "/api/user/profile/comprehensive",
+      "name": "profile-comprehensive",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/user/progress-stats",
+        "name": "user-progress-stats-legacy",
+        "view": "UserProgressStatsView",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/user/progress-stats",
+      "name": "user-progress-stats-legacy",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/user/progress/stats",
+        "name": "user-progress-stats",
+        "view": "UserProgressStatsView",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/user/progress/stats",
+      "name": "user-progress-stats",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/user/register",
+        "name": "register",
+        "view": "RegisterView",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "POST"
+        ]
+      },
+      "url": "/api/user/register",
+      "name": "register",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/user/sessions",
+        "name": "user-sessions-list",
+        "view": "UserSessionViewSet",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/user/sessions",
+      "name": "user-sessions-list",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/user/sessions/<pk>",
+        "name": "user-sessions-detail",
+        "view": "UserSessionViewSet",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/user/sessions/<pk>",
+      "name": "user-sessions-detail",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/user/social-auth/complete/<str>",
+        "name": "complete",
+        "view": "complete",
+        "namespace": "social",
+        "is_api": false,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/user/social-auth/complete/<str>",
+      "name": "complete",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/user/social-auth/disconnect/<str>",
+        "name": "disconnect",
+        "view": "disconnect",
+        "namespace": "social",
+        "is_api": false,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/user/social-auth/disconnect/<str>",
+      "name": "disconnect",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/user/social-auth/disconnect/<str>/<int>",
+        "name": "disconnect_individual",
+        "view": "disconnect",
+        "namespace": "social",
+        "is_api": false,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/user/social-auth/disconnect/<str>/<int>",
+      "name": "disconnect_individual",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/user/social-auth/login/<str>",
+        "name": "begin",
+        "view": "auth",
+        "namespace": "social",
+        "is_api": false,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/user/social-auth/login/<str>",
+      "name": "begin",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/user/social/complete",
+        "name": "social-complete",
+        "view": "SocialAuthCompleteView",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "POST"
+        ]
+      },
+      "url": "/api/user/social/complete",
+      "name": "social-complete",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/user/social/error",
+        "name": "social-error",
+        "view": "SocialAuthErrorView",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/user/social/error",
+      "name": "social-error",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/user/social/github",
+        "name": "social-github",
+        "view": "SocialAuthGithubView",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/user/social/github",
+      "name": "social-github",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/user/social/google",
+        "name": "social-google",
+        "view": "SocialAuthGoogleView",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/user/social/google",
+      "name": "social-google",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/user/subscription",
+        "name": "user-subscription-list",
+        "view": "SubscriptionViewSet",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/user/subscription",
+      "name": "user-subscription-list",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/user/subscription/<pk>",
+        "name": "user-subscription-detail",
+        "view": "SubscriptionViewSet",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/user/subscription/<pk>",
+      "name": "user-subscription-detail",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/user/subscription/cancel",
+        "name": "user-subscription-cancel",
+        "view": "SubscriptionViewSet",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/user/subscription/cancel",
+      "name": "user-subscription-cancel",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/user/subscription/current",
+        "name": "user-subscription-current",
+        "view": "SubscriptionViewSet",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/user/subscription/current",
+      "name": "user-subscription-current",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/user/subscription/downgrade",
+        "name": "user-subscription-downgrade",
+        "view": "SubscriptionViewSet",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/user/subscription/downgrade",
+      "name": "user-subscription-downgrade",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/user/subscription/upgrade",
+        "name": "user-subscription-upgrade",
+        "view": "SubscriptionViewSet",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/user/subscription/upgrade",
+      "name": "user-subscription-upgrade",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/user/token",
+        "name": "token_obtain_pair",
+        "view": "TokenObtainPairView",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "POST"
+        ]
+      },
+      "url": "/api/user/token",
+      "name": "token_obtain_pair",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/user/token/refresh",
+        "name": "token_refresh",
+        "view": "TokenRefreshView",
+        "namespace": "",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "POST"
+        ]
+      },
+      "url": "/api/user/token/refresh",
+      "name": "token_refresh",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/api/version",
+        "name": "api-version",
+        "view": "APIVersionView",
+        "namespace": "courses",
+        "is_api": true,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/api/version",
+      "name": "api-version",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/instructor/debug/courses",
+        "name": "debug-courses-direct",
+        "view": "debug_courses",
+        "namespace": "",
+        "is_api": false,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/instructor/debug/courses",
+      "name": "debug-courses-direct",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    },
+    {
+      "endpoint": {
+        "url": "/instructor/debug/courses/simple",
+        "name": "debug-courses-simple",
+        "view": "debug_courses",
+        "namespace": "",
+        "is_api": false,
+        "pattern_type": "URLPattern",
+        "methods": [
+          "GET"
+        ]
+      },
+      "url": "/instructor/debug/courses/simple",
+      "name": "debug-courses-simple",
+      "tests": {
+        "GET_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "POST_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PUT_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "PATCH_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        },
+        "DELETE_anonymous": {
+          "status_code": 400,
+          "success": false,
+          "content_type": "text/html; charset=utf-8",
+          "has_content": true,
+          "error": null
+        }
+      },
+      "summary": {
+        "total_tests": 5,
+        "successful_tests": 0,
+        "failed_tests": 5
+      }
+    }
+  ]
+}

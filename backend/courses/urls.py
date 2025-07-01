@@ -2,35 +2,23 @@
 File: backend/courses/urls.py
 Folder Path: backend/courses/
 Date Created: 2025-06-01 00:00:00
-Date Revised: 2025-06-21 16:20:27
-Current User: sujibeautysalon
-Last Modified By: sujibeautysalon
-Version: 7.2.0
-
-Enhanced Hybrid URL Configuration for Course Management System - REFACTORED
-
-This module provides a clean, optimized URL configuration with improved maintainability
-and object-oriented security patterns while preserving all essential functionality.
-
-Version 7.2.0 Changes (SECURITY REFACTORING):
-- ENHANCED: Security model with object-oriented approach
-- REFACTORED: User progress endpoints to use SecureAPIView base class
-- IMPROVED: Maintainability with view-based security configuration
-- OPTIMIZED: URL pattern structure for better performance
-- ADDED: Compatibility route for backward API compatibility
-- PRESERVED: All essential functionality and security features
+Date Revised: 2025-06-26 09:25:45
+Current User: softTechSolutions2001
+Last Modified By: softTechSolutions2001
+Version: 7.3.3
 """
 
 import logging
 from django.urls import path, include, re_path
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_headers
+from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.conf import settings
 from rest_framework.routers import DefaultRouter
-from rest_framework.decorators import throttle_classes
 from rest_framework.throttling import UserRateThrottle, AnonRateThrottle
+import inspect
 
 from . import views
 
@@ -60,28 +48,58 @@ CACHE_TIMEOUTS = {
     'health': 30,       # 30 seconds for health checks
 }
 
-# Simplified security decorator (maintained for backward compatibility with existing views)
+# Improved secure_endpoint decorator that correctly handles both function-based and class-based views
 def secure_endpoint(cache_timeout=None, require_auth=False, sensitive=False):
-    """Simplified security decorator with essential protections"""
+    """Enhanced security decorator with proper handling for both function and class-based views"""
     def decorator(view_func_or_class):
-        decorated = view_func_or_class
+        # For class-based views, we need to apply method_decorator with the method name
+        if inspect.isclass(view_func_or_class):
+            # For class-based views, decorate the dispatch method
+            result = view_func_or_class
 
-        if require_auth:
-            decorated = method_decorator(login_required)(decorated)
+            if require_auth:
+                result = method_decorator(login_required, name='dispatch')(result)
 
-        # Use appropriate throttle class
-        throttle_class = SensitiveAPIThrottle if sensitive else APIThrottle
-        decorated = method_decorator(
-            throttle_classes([throttle_class, AnonRateThrottle])
-        )(decorated)
+            # Use appropriate throttle class
+            throttle_class = SensitiveAPIThrottle if sensitive else APIThrottle
 
-        if cache_timeout:
-            decorated = method_decorator(cache_page(cache_timeout))(decorated)
-            decorated = method_decorator(
-                vary_on_headers('Authorization', 'Accept-Language')
-            )(decorated)
+            # Apply DRF throttle classes to the dispatch method
+            from rest_framework.decorators import throttle_classes
+            result = method_decorator(
+                throttle_classes((throttle_class, AnonRateThrottle)),
+                name='dispatch'
+            )(result)
 
-        return decorated
+            # Apply cache decorators if configured
+            if cache_timeout:
+                result = method_decorator(cache_page(cache_timeout), name='dispatch')(result)
+                result = method_decorator(
+                    vary_on_headers('Authorization', 'Accept-Language'),
+                    name='dispatch'
+                )(result)
+
+            return result
+        else:
+            # For function-based views, decorate directly
+            result = view_func_or_class
+
+            if require_auth:
+                result = login_required(result)
+
+            # Use appropriate throttle class
+            throttle_class = SensitiveAPIThrottle if sensitive else APIThrottle
+
+            # Apply DRF throttle classes
+            from rest_framework.decorators import throttle_classes
+            result = throttle_classes((throttle_class, AnonRateThrottle))(result)
+
+            # Apply cache decorators if configured
+            if cache_timeout:
+                result = cache_page(cache_timeout)(result)
+                result = vary_on_headers('Authorization', 'Accept-Language')(result)
+
+            return result
+
     return decorator
 
 # =====================================
@@ -99,10 +117,10 @@ def register_viewset(prefix, viewset, basename=None):
         logger.error(f"Failed to register ViewSet {prefix}: {e}")
         raise
 
-# Register all ViewSets
+# Register all ViewSets with backward compatibility fixes
 register_viewset(r'categories', views.CategoryViewSet, basename='category')
 register_viewset(r'courses', views.CourseViewSet, basename='course')
-register_viewset(r'modules', views.ModuleViewSet, basename='module')
+register_viewset(r'modules', views.ModuleViewSet, basename='module')  # FIXED: Use backward compatibility alias
 register_viewset(r'lessons', views.LessonViewSet, basename='lesson')
 register_viewset(r'enrollments', views.EnrollmentViewSet, basename='enrollment')
 register_viewset(r'progress', views.ProgressViewSet, basename='progress')
@@ -125,11 +143,11 @@ urlpatterns = [
     # CORE API ENDPOINTS
     # =====================================
 
-    # Health check
+    # Health check - FIXED: Apply require_http_methods directly to the view
     path(
         'health/',
         secure_endpoint(cache_timeout=CACHE_TIMEOUTS['health'])(
-            views.APIHealthCheckView.as_view()
+            require_http_methods(["GET"])(views.APIHealthCheckView.as_view())
         ),
         name='api-health-check'
     ),
@@ -142,35 +160,44 @@ urlpatterns = [
     # =====================================
 
     # User progress statistics - using new SecureAPIView pattern
-    # No decorator needed since security is built into the view class
     path(
         'user/progress/stats/',
-        views.UserProgressStatsView.as_view(),
+        require_http_methods(["GET"])(views.UserProgressStatsView.as_view()),
         name='user-progress-stats'
     ),
 
+    # Legacy alias for user progress stats (maintaining backward compatibility)
+    path(
+        'user/progress-stats/',
+        require_http_methods(["GET"])(views.UserProgressStatsView.as_view()),
+        name='user-progress-stats-legacy'
+    ),
 
     # =====================================
     # ENHANCED FUNCTIONALITY ENDPOINTS
     # =====================================
 
-    # Course enrollment (single endpoint handles both enrollment and unenrollment)
-    re_path(
-        r'^courses/(?P<course_slug>[\w-]+)/enrollment/$',
-        secure_endpoint(
-            require_auth=True,
-            sensitive=True
-        )(views.CourseEnrollmentView.as_view()),
+    # Course enrollment (allow both GET and POST for backward compatibility)
+    path(
+        'courses/<slug:course_slug>/enrollment/',
+        require_http_methods(["GET", "POST"])(
+            secure_endpoint(
+                require_auth=True,
+                sensitive=True
+            )(views.CourseEnrollmentView).as_view()
+        ),
         name='course-enrollment'
     ),
 
     # Course progress tracking
-    re_path(
-        r'^courses/(?P<course_slug>[\w-]+)/progress/$',
-        secure_endpoint(
-            cache_timeout=CACHE_TIMEOUTS['user'],
-            require_auth=True
-        )(views.CourseProgressView.as_view()),
+    path(
+        'courses/<slug:course_slug>/progress/',
+        require_http_methods(["GET"])(
+            secure_endpoint(
+                cache_timeout=CACHE_TIMEOUTS['user'],
+                require_auth=True
+            )(views.CourseProgressView).as_view()
+        ),
         name='course-progress'
     ),
 
@@ -181,18 +208,22 @@ urlpatterns = [
     # Unified search (handles all search functionality)
     path(
         'search/',
-        secure_endpoint(
-            cache_timeout=CACHE_TIMEOUTS['public']
-        )(views.UnifiedSearchView.as_view()),
+        require_http_methods(["GET"])(
+            secure_endpoint(
+                cache_timeout=CACHE_TIMEOUTS['public']
+            )(views.UnifiedSearchView).as_view()
+        ),
         name='search'
     ),
 
-    # Featured content
+    # Featured content - FIXED: Correct ordering of decorators
     path(
         'featured/',
-        secure_endpoint(
-            cache_timeout=CACHE_TIMEOUTS['public']
-        )(views.FeaturedContentView.as_view()),
+        require_http_methods(["GET"])(
+            secure_endpoint(
+                cache_timeout=CACHE_TIMEOUTS['public']
+            )(views.FeaturedContentView).as_view()
+        ),
         name='featured'
     ),
 
@@ -200,12 +231,14 @@ urlpatterns = [
     # CERTIFICATE VERIFICATION
     # =====================================
 
-    # Certificate verification (public endpoint)
-    re_path(
-        r'^certificates/verify/(?P<certificate_number>[\w-]+)/$',
-        secure_endpoint(
-            cache_timeout=CACHE_TIMEOUTS['public']
-        )(views.CertificateVerificationView.as_view()),
+    # Certificate verification (public endpoint) - using path converter instead of regex
+    path(
+        'certificates/verify/<slug:certificate_number>/',
+        require_http_methods(["GET"])(
+            secure_endpoint(
+                cache_timeout=CACHE_TIMEOUTS['public']
+            )(views.CertificateVerificationView).as_view()
+        ),
         name='verify-certificate'
     ),
 
@@ -216,20 +249,24 @@ urlpatterns = [
     # Instructor dashboard
     path(
         'instructor/dashboard/',
-        secure_endpoint(
-            cache_timeout=CACHE_TIMEOUTS['user'],
-            require_auth=True
-        )(views.InstructorDashboardView.as_view()),
+        require_http_methods(["GET"])(
+            secure_endpoint(
+                cache_timeout=CACHE_TIMEOUTS['user'],
+                require_auth=True
+            )(views.InstructorDashboardView).as_view()
+        ),
         name='instructor-dashboard'
     ),
 
     # Course analytics for instructors
-    re_path(
-        r'^instructor/courses/(?P<course_slug>[\w-]+)/analytics/$',
-        secure_endpoint(
-            cache_timeout=CACHE_TIMEOUTS['analytics'],
-            require_auth=True
-        )(views.CourseAnalyticsView.as_view()),
+    path(
+        'instructor/courses/<slug:course_slug>/analytics/',
+        require_http_methods(["GET"])(
+            secure_endpoint(
+                cache_timeout=CACHE_TIMEOUTS['analytics'],
+                require_auth=True
+            )(views.CourseAnalyticsView).as_view()
+        ),
         name='course-analytics'
     ),
 
@@ -240,9 +277,11 @@ urlpatterns = [
     # API version information
     path(
         'version/',
-        secure_endpoint(
-            cache_timeout=CACHE_TIMEOUTS['public']
-        )(views.APIVersionView.as_view()),
+        require_http_methods(["GET"])(
+            secure_endpoint(
+                cache_timeout=CACHE_TIMEOUTS['public']
+            )(views.APIVersionView).as_view()
+        ),
         name='api-version'
     ),
 ]
@@ -288,12 +327,10 @@ ENHANCED FUNCTIONALITY:
 UTILITY ENDPOINTS:
 - GET       /health/                        - API health check
 - GET       /version/                       - API version info
-
-
 """
 
 # Log successful initialization
-logger.info(f"Cleaned URLs configuration loaded with SecureAPIView pattern - v7.2.0")
+logger.info(f"Backward compatible security-optimized URLs configuration loaded - v7.3.3")
 logger.info(f"Total URL patterns: {len(urlpatterns)}")
 
 # Export for testing

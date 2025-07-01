@@ -6,5 +6,5 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.debug_courses, name='debug-courses-direct'),
+    path('instructor/debug/courses/', views.debug_courses, name='debug-courses-direct'),
 ]

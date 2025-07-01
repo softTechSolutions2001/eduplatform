@@ -8,10 +8,7 @@
  */
 
 // Use the base URL from environment in production, but rely on Vite proxy in development
-export const API_BASE_URL =
-    process.env.NODE_ENV === 'production'
-        ? import.meta.env.VITE_API_BASE_URL || '/api'
-        : '/api';
+export const API_BASE_URL: string = import.meta.env.VITE_API_BASE_URL || '/api';
 
 export const TOKEN_STORAGE_KEYS = {
     ACCESS: 'accessToken',

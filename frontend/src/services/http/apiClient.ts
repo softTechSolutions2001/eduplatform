@@ -1,8 +1,10 @@
 /**
  * File: src/services/http/apiClient.ts
- * Version: 1.0.2
+ * Path: src/services/http/apiClient.ts
  * Created: 2025-06-25
- * Author: softTechSolutions2001
+ * Last Modified: 2025-06-26 08:10:15
+ * Modified By: softTechSolutions2001
+ * Version: 1.0.4
  *
  * Axios client configuration and interceptors for API requests
  * Enhanced with improved error handling and TypeScript support
@@ -63,14 +65,15 @@ export const apiClient = axios.create({
         'Accept': 'application/json',
     },
     timeout: REQUEST_TIMEOUT,
-    // Enhanced request validation
-    validateStatus: (status: number) => status < 500, // Don't throw on 4xx errors
+    // FIXED: Treat 4xx responses as errors so 405 handler works correctly
+    validateStatus: (status: number) => status < 400,
 }) as CustomAxiosInstance;
 
 // Add convenience method for multipart/form-data POST requests
 apiClient.postForm = function (url: string, data: any, config: AxiosRequestConfig = {}) {
     return this.post(url, objectToSnakeFormData(data), {
         ...config,
+        skipTransform: true, // ADDED: Flag to prevent double transformation
         headers: {
             'Content-Type': 'multipart/form-data',
             ...config.headers
@@ -82,6 +85,7 @@ apiClient.postForm = function (url: string, data: any, config: AxiosRequestConfi
 apiClient.putForm = function (url: string, data: any, config: AxiosRequestConfig = {}) {
     return this.put(url, objectToSnakeFormData(data), {
         ...config,
+        skipTransform: true, // ADDED: Flag to prevent double transformation
         headers: {
             'Content-Type': 'multipart/form-data',
             ...config.headers
@@ -164,15 +168,27 @@ function sanitizeLogData(data: any): any {
     // Comprehensive list of sensitive fields
     const sensitiveFields = [
         'password', 'token', 'accessToken', 'refreshToken', 'access', 'refresh',
-        'access_token', 'refresh_token', 'authorization', 'email', 'phone',
-        'credit_card', 'cardNumber', 'cvv', 'cvc', 'expiry', 'code_verifier',
-        'secret', 'key', 'pin', 'otp', 'verification_code', 'ssn', 'social_security'
+        'access_token', 'refresh_token', 'authorization', 'cardNumber', 'cvv', 'cvc',
+        'expiry', 'code_verifier', 'secret', 'key', 'pin', 'otp',
+        'verification_code', 'ssn', 'social_security'
     ];
+
+    // IMPROVED: Mask email but preserve domain for debugging
+    function maskEmail(email: string): string {
+        if (!email || typeof email !== 'string') return email;
+        const parts = email.split('@');
+        if (parts.length !== 2) return '[REDACTED]';
+        return `${parts[0].charAt(0)}***@${parts[1]}`;
+    }
 
     // Recursively sanitize nested objects
     Object.keys(sanitized).forEach(key => {
         const lowerKey = key.toLowerCase();
-        if (sensitiveFields.some(field => lowerKey.includes(field))) {
+
+        if (lowerKey.includes('email')) {
+            // Handle email fields specially
+            sanitized[key] = maskEmail(sanitized[key]);
+        } else if (sensitiveFields.some(field => lowerKey.includes(field))) {
             sanitized[key] = '[REDACTED]';
         } else if (typeof sanitized[key] === 'object' && sanitized[key] !== null) {
             sanitized[key] = sanitizeLogData(sanitized[key]);
@@ -197,20 +213,21 @@ apiClient.interceptors.request.use(
             }
         }
 
-        // Handle data transformation for JSON requests
+        // FIXED: Skip transformation for form data (already handled by postForm/putForm)
         if (
             config.data &&
             typeof config.data === 'object' &&
             !(config.data instanceof FormData) &&
             !(config.data instanceof File) &&
             !(config.data instanceof Blob) &&
-            !(config.data instanceof ArrayBuffer)
+            !(config.data instanceof ArrayBuffer) &&
+            !config.skipTransform
         ) {
             config.data = camelToSnake(config.data);
         }
 
         // Enhanced FormData handling
-        if (config.data instanceof FormData) {
+        if (config.data instanceof FormData && !config.skipTransform) {
             const isMultipart = config.headers?.['Content-Type']?.includes('multipart');
             if (isMultipart) {
                 const transformedFormData = new FormData();
@@ -244,7 +261,7 @@ apiClient.interceptors.request.use(
     }
 );
 
-// Enhanced response interceptor
+// Enhanced response interceptor with 405 Method Not Allowed handling
 apiClient.interceptors.response.use(
     (response: any) => {
         // Transform response data if it's a serializable object
@@ -270,6 +287,39 @@ apiClient.interceptors.response.use(
     async (error: any) => {
         const originalRequest = error.config;
         const requestId = originalRequest?.metadata?.requestId || 'unknown';
+
+        // Handle 405 Method Not Allowed specifically
+        if (error.response?.status === 405) {
+            // IMPROVED: Check 'Allow' header to give more accurate guidance
+            const allowHeader = error.response.headers?.allow || '';
+            const methodsAllowed = allowHeader.split(',').map((m: string) => m.trim());
+            const mustBeGet = methodsAllowed.includes('GET');
+            const mustBePost = methodsAllowed.includes('POST');
+
+            let userMessage: string;
+            if (mustBeGet) {
+                userMessage = 'This endpoint is read-only (use GET method).';
+            } else if (mustBePost) {
+                userMessage = 'This action requires a POST request.';
+            } else if (methodsAllowed.length > 0) {
+                userMessage = `This endpoint only accepts ${methodsAllowed.join(', ')} requests.`;
+            } else {
+                userMessage = 'Method not allowed for this endpoint.';
+            }
+
+            if (DEBUG_MODE) {
+                console.error(`⚠️ [${requestId}] Method Not Allowed (405): ${originalRequest?.method?.toUpperCase()} ${originalRequest?.url}`);
+                console.log(`💡 ${userMessage}`);
+            }
+
+            // Enhance error with user-friendly message
+            error.userMessage = userMessage;
+
+            // Log as a warning rather than error for 405s
+            logWarning(`Method Not Allowed (405): ${originalRequest?.method?.toUpperCase()} ${originalRequest?.url}`);
+
+            return Promise.reject(error);
+        }
 
         // Enhanced error logging
         if (DEBUG_MODE) {
@@ -313,6 +363,13 @@ apiClient.interceptors.response.use(
 
                 return apiClient(originalRequest);
             } catch (refreshError) {
+                // FIXED: Return original 401 error instead of refresh error
+                // for better UX when there are network issues during refresh
+                if (refreshError instanceof Error && refreshError.message.includes('network')) {
+                    logWarning('Network error during token refresh, returning original 401 error');
+                    return Promise.reject(error);
+                }
+
                 logError(refreshError as Error);
                 if (DEBUG_MODE) console.error(`❌ [${requestId}] Token refresh failed, rejecting original request`);
                 return Promise.reject(error);

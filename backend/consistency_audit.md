@@ -1,0 +1,11 @@
+
+
+| Phase | Files / Folders                                                    | Why we do this piece first                                                              | Output you’ll receive                                                                       |
+| ----- | ------------------------------------------------------------------ | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| **1** | `courses/models/**` + `utils/**` + `validators.py`                 | Data layer = foundation for everything else; bad models break migrations & serializers. | Full surgical diff (like earlier), green migrations, unit-tests for constraints & ordering. |
+| **2** | `courses/serializers/**`                                           | They sit directly on models.                                                            | Field-parity checklist, validation symmetry, serializers tests.                             |
+| **3** | `courses/views/**` + `urls.py` + `permissions.py`                  | Exposes the API; must match serializers and auth model.                                 | Endpoint matrix, RBAC audit, performance guardrails.                                        |
+| **4** | `instructor_portal/**` (models → serializers → views)              | Second domain that builds on courses.                                                   | Same deep dive & tests.                                                                     |
+| **5** | Cross-cutting apps (`users`, `content`, `ai_course_builder`, etc.) | Smaller, but depend on previous layers.                                                 | Focused patches & spec.                                                                     |
+| **6** | Management commands, Celery tasks, signals                         | Prevent silent data corruption & race conditions.                                       | Idempotent, race-safe patterns; diff patches.                                               |
+| **7** | Docs, lint, CI                                                     | Polish and guard rails.                                                                 | Complete docs set, Ruff + Mypy config, GitHub Actions workflow.                             |

@@ -2,27 +2,31 @@
 # File Path: backend/courses/constants.py
 # Folder Path: backend/courses/
 # Date Created: 2025-06-15 06:41:03
-# Date Revised: 2025-06-20 16:04:58
-# Current Date and Time (UTC): 2025-06-20 16:04:58
-# Current User's Login: sujibeautysalon
+# Date Revised: 2025-07-01 04:55:58
+# Current Date and Time (UTC): 2025-07-01 04:55:58
+# Current User's Login: cadsanthanamNew
 # Author: sujibeautysalon
-# Last Modified By: sujibeautysalon
-# Last Modified: 2025-06-20 16:04:58 UTC
-# User: sujibeautysalon
-# Version: 2.0.1
+# Last Modified By: cadsanthanamNew
+# Last Modified: 2025-07-01 04:55:58 UTC
+# User: cadsanthanamNew
+# Version: 2.1.0
 #
 # Production-Ready Constants for Course Management System
 #
-# FIXED: Enum value assignment issue in Python 3.13
-# - Removed self.value assignments from __init__ methods
-# - Used proper enum initialization patterns
-# - Maintained backward compatibility
+# Version 2.1.0 Changes - CRITICAL AUDIT FIXES:
+# - FIXED 🔴: Environment variable casting with proper validation (P0 Critical)
+# - FIXED 🟡: Enhanced get_file_size_limit with comprehensive error handling
+# - ENHANCED: All helper functions now use specific exception handling
+# - MAINTAINED: 100% backward compatibility with all existing constants
 
 import os
-from decimal import Decimal
+import logging
+from decimal import Decimal, InvalidOperation
 from enum import Enum, IntEnum
 from typing import Dict, List, Tuple, Union, Final
 from django.conf import settings
+
+logger = logging.getLogger(__name__)
 
 # =====================================
 # TYPE-SAFE ENUMS - FIXED FOR PYTHON 3.13
@@ -248,16 +252,132 @@ class Priority(IntEnum):
 
 
 # =====================================
+# ENHANCED ENVIRONMENT HELPERS
+# =====================================
+
+def get_file_size_limit(file_type: str, default_mb: int) -> int:
+    """
+    Get file size limit from environment or default with comprehensive validation
+    FIXED: Proper error handling and validation for environment variables
+    """
+    env_key = f"MAX_{file_type.upper()}_FILE_SIZE_MB"
+
+    try:
+        # Get the environment variable value
+        env_value = os.environ.get(env_key)
+
+        if env_value is None:
+            # Environment variable not set, use default
+            mb_limit = default_mb
+        else:
+            # Try to convert environment variable to integer
+            try:
+                mb_limit = int(env_value)
+                # Validate the parsed value
+                if mb_limit <= 0:
+                    logger.warning(f"Invalid {env_key} value: {env_value} (must be positive). Using default: {default_mb}")
+                    mb_limit = default_mb
+                elif mb_limit > 10000:  # 10GB limit for sanity check
+                    logger.warning(f"Excessive {env_key} value: {env_value}MB (max 10GB). Using default: {default_mb}")
+                    mb_limit = default_mb
+            except (ValueError, TypeError) as e:
+                logger.error(f"Invalid {env_key} environment variable: {env_value}. Error: {e}. Using default: {default_mb}")
+                mb_limit = default_mb
+
+        return mb_limit * 1024 * 1024  # Convert to bytes
+
+    except Exception as e:
+        logger.error(f"Unexpected error getting file size limit for {file_type}: {e}. Using default: {default_mb}")
+        return default_mb * 1024 * 1024
+
+
+def get_env_decimal(key: str, default: Union[str, Decimal]) -> Decimal:
+    """Get decimal value from environment with enhanced validation"""
+    try:
+        env_value = os.environ.get(key)
+        if env_value is None:
+            return Decimal(str(default))
+
+        # Clean the environment value
+        cleaned_value = env_value.strip()
+        if not cleaned_value:
+            return Decimal(str(default))
+
+        return Decimal(cleaned_value)
+    except (ValueError, TypeError, InvalidOperation) as e:
+        logger.warning(f"Invalid decimal environment variable {key}: {os.environ.get(key)}. Error: {e}. Using default: {default}")
+        return Decimal(str(default))
+    except Exception as e:
+        logger.error(f"Unexpected error parsing decimal environment variable {key}: {e}. Using default: {default}")
+        return Decimal(str(default))
+
+
+def get_env_int(key: str, default: int) -> int:
+    """Get integer value from environment with enhanced validation"""
+    try:
+        env_value = os.environ.get(key)
+        if env_value is None:
+            return default
+
+        # Clean and validate the environment value
+        cleaned_value = env_value.strip()
+        if not cleaned_value:
+            return default
+
+        parsed_value = int(cleaned_value)
+
+        # Basic sanity checks for common integer settings
+        if key.endswith('_TIMEOUT') and parsed_value < 0:
+            logger.warning(f"Negative timeout value for {key}: {parsed_value}. Using default: {default}")
+            return default
+        elif key.endswith('_SIZE') and parsed_value < 0:
+            logger.warning(f"Negative size value for {key}: {parsed_value}. Using default: {default}")
+            return default
+        elif key.endswith('_LIMIT') and parsed_value <= 0:
+            logger.warning(f"Non-positive limit value for {key}: {parsed_value}. Using default: {default}")
+            return default
+
+        return parsed_value
+    except (ValueError, TypeError) as e:
+        logger.warning(f"Invalid integer environment variable {key}: {os.environ.get(key)}. Error: {e}. Using default: {default}")
+        return default
+    except Exception as e:
+        logger.error(f"Unexpected error parsing integer environment variable {key}: {e}. Using default: {default}")
+        return default
+
+
+def get_env_bool(key: str, default: bool) -> bool:
+    """Get boolean value from environment with enhanced validation"""
+    try:
+        env_value = os.environ.get(key)
+        if env_value is None:
+            return default
+
+        cleaned_value = env_value.strip().lower()
+        if not cleaned_value:
+            return default
+
+        # Support common boolean representations
+        true_values = {'true', '1', 'yes', 'on', 'enable', 'enabled'}
+        false_values = {'false', '0', 'no', 'off', 'disable', 'disabled'}
+
+        if cleaned_value in true_values:
+            return True
+        elif cleaned_value in false_values:
+            return False
+        else:
+            logger.warning(f"Invalid boolean environment variable {key}: {env_value}. Using default: {default}")
+            return default
+    except Exception as e:
+        logger.error(f"Unexpected error parsing boolean environment variable {key}: {e}. Using default: {default}")
+        return default
+
+
+# =====================================
 # SECURITY AND VALIDATION CONSTANTS
 # =====================================
 
 # File size limits with environment-aware configuration
-def get_file_size_limit(file_type: str, default_mb: int) -> int:
-    """Get file size limit from environment or default"""
-    env_key = f"MAX_{file_type.upper()}_FILE_SIZE_MB"
-    mb_limit = int(os.environ.get(env_key, default_mb))
-    return mb_limit * 1024 * 1024  # Convert to bytes
-
 MAX_FILE_SIZE: Final[Dict[str, int]] = {
     'image': get_file_size_limit('image', 5),
     'video': get_file_size_limit('video', 100),
@@ -353,21 +473,6 @@ ALLOWED_MIME_TYPES: Final[Dict[str, Tuple[str, ...]]] = {
 # CONFIGURATION CONSTANTS
 # =====================================
 
-# Environment-aware defaults
-def get_env_decimal(key: str, default: Union[str, Decimal]) -> Decimal:
-    """Get decimal value from environment with fallback"""
-    try:
-        return Decimal(os.environ.get(key, str(default)))
-    except Exception:
-        return Decimal(str(default))
-
-def get_env_int(key: str, default: int) -> int:
-    """Get integer value from environment with fallback"""
-    try:
-        return int(os.environ.get(key, default))
-    except Exception:
-        return default
-
 # Pricing and financial constants
 DEFAULT_COURSE_PRICE: Final[Decimal] = get_env_decimal('DEFAULT_COURSE_PRICE', '49.99')
 DEFAULT_CURRENCY: Final[str] = os.environ.get('DEFAULT_CURRENCY', 'USD')
@@ -391,12 +496,12 @@ MAX_BULK_OPERATIONS: Final[int] = 100
 
 # Cache timeouts (seconds)
 CACHE_TIMEOUTS: Final[Dict[str, int]] = {
-    'course_list': 300,      # 5 minutes
-    'course_detail': 600,    # 10 minutes
-    'user_permissions': 180, # 3 minutes
-    'analytics': 900,        # 15 minutes
-    'search_results': 300,   # 5 minutes
-    'static_content': 3600   # 1 hour
+    'course_list': get_env_int('CACHE_COURSE_LIST_TIMEOUT', 300),      # 5 minutes
+    'course_detail': get_env_int('CACHE_COURSE_DETAIL_TIMEOUT', 600),    # 10 minutes
+    'user_permissions': get_env_int('CACHE_USER_PERMISSIONS_TIMEOUT', 180), # 3 minutes
+    'analytics': get_env_int('CACHE_ANALYTICS_TIMEOUT', 900),        # 15 minutes
+    'search_results': get_env_int('CACHE_SEARCH_RESULTS_TIMEOUT', 300),   # 5 minutes
+    'static_content': get_env_int('CACHE_STATIC_CONTENT_TIMEOUT', 3600)   # 1 hour
 }
 
 # Rate limiting
@@ -532,7 +637,10 @@ __all__ = [
     # Utility functions
     'validate_file_type', 'validate_file_size', 'validate_content_length',
     'get_business_constraint', 'is_valid_choice', 'get_access_level_hierarchy',
-    'can_user_access_content',
+    'can_user_access_content', 'get_file_size_limit',
+
+    # Enhanced environment helpers
+    'get_env_decimal', 'get_env_int', 'get_env_bool',
 
     # Legacy (deprecated)
     'LEVEL_CHOICES', 'CREATION_METHODS', 'COMPLETION_STATUSES',

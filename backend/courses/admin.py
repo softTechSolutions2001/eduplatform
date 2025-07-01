@@ -1,31 +1,3 @@
-#
-# File Path: backend/courses/admin.py
-# Folder Path: backend/courses/
-# Date Created: 2025-06-01 00:00:00
-# Date Revised: 2025-06-18 14:42:29
-# Current Date and Time (UTC): 2025-06-18 14:42:29
-# Current User's Login: sujibeautysalon
-# Author: sujibeautysalon
-# Last Modified By: sujibeautysalon
-# Last Modified: 2025-06-18 14:42:29 UTC
-# User: sujibeautysalon
-# Version: 3.0.0
-#
-# Production-Ready Django Admin Configuration for Course Management System
-#
-# This module provides comprehensive Django admin interface configurations with
-# fixes from three code reviews including security enhancements, performance
-# optimizations, authorization hardening, and production-ready error handling.
-#
-# Version 3.0.0 Changes (ALL THREE REVIEWS CONSOLIDATED):
-# - FIXED: Admin interface security vulnerabilities and permission bypasses
-# - FIXED: Query optimization and N+1 problems with comprehensive prefetching
-# - FIXED: Bulk operation security with validation and authorization
-# - FIXED: Data exposure and filtering with proper permission checking
-# - ADDED: Comprehensive audit logging and security monitoring
-# - ADDED: Performance optimizations with caching and efficient queries
-# - ENHANCED: Custom admin actions with proper validation
-
 import logging
 from typing import Any, Dict, List, Optional, Union
 from decimal import Decimal
@@ -400,8 +372,8 @@ class CategoryAdmin(SecureAdminMixin, admin.ModelAdmin):
     Enhanced Category Admin with comprehensive security and optimization
     FIXED: Security vulnerabilities and performance optimization
     """
-    list_display = ('name', 'course_count_display', 'sort_order', 'is_active', 'created_date')
-    list_filter = ('is_active', DateRangeFilter)
+    list_display = ('name', 'course_count_display', 'sort_order', 'is_active', 'featured', 'created_date')
+    list_filter = ('is_active', 'featured', DateRangeFilter)
     search_fields = ('name', 'description')
     ordering = ['sort_order', 'name']
     prepopulated_fields = {'slug': ('name',)}
@@ -413,13 +385,14 @@ class CategoryAdmin(SecureAdminMixin, admin.ModelAdmin):
             'fields': ('name', 'slug', 'description', 'icon')
         }),
         ('Display Settings', {
-            'fields': ('sort_order', 'is_active')
+            'fields': ('sort_order', 'is_active', 'featured')
         }),
         ('Timestamps', {
             'fields': ('created_date', 'updated_date'),
             'classes': ('collapse',)
         })
     )
+
 
     def get_queryset(self, request: HttpRequest):
         """Optimize queries with annotation for course counts"""
@@ -543,7 +516,7 @@ class CourseAdmin(SecureAdminMixin, admin.ModelAdmin):
         ).annotate(
             enrollment_count=Count('enrollments', filter=Q(enrollments__status='active')),
             review_avg=Avg('reviews__rating', filter=Q(reviews__is_approved=True))
-        )
+        ).distinct()
 
     def enrolled_students_display(self, obj):
         """Display enrollment count with secure link"""
