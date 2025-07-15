@@ -1,1 +1,1 @@
-﻿# Legacy model compatibility shims
+# Legacy model compatibility shims

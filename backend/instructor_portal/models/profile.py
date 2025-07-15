@@ -1,4 +1,4 @@
-﻿
+
 # InstructorProfile, TierManager models
 #
 # File Path: instructor_portal/models/profile.py

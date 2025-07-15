@@ -1,4 +1,4 @@
-﻿#
+#
 # File Path: instructor_portal/views/creation_views.py
 # Folder Path: instructor_portal/views/
 # Date Created: 2025-06-27 06:42:13

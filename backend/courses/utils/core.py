@@ -1,4 +1,4 @@
-﻿# File Path: backend/courses/utils/core.py
+# File Path: backend/courses/utils/core.py
 # Folder Path: backend/courses/utils/
 # Date Revised: 2025-06-30 17:33:14
 # Current Date and Time (UTC): 2025-06-30 17:33:14

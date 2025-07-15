@@ -1,4 +1,4 @@
-﻿# Serializers for courses app
+# Serializers for courses app
 #
 # File Path: backend/courses/serializers/__init__.py
 # Folder Path: backend/courses/serializers/

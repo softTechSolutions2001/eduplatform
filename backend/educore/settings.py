@@ -18,6 +18,7 @@ Added configurations for:
 - Enhanced security settings for file uploads
 - Improved CORS configuration
 - Better error handling and logging
+- Security enhancements (FIXED: S-001, S-002, V-302, S-006, A-202, V-306, A-205, A-203)
 
 Connected files that depend on these settings:
 - backend/instructor_portal/views.py - File upload handling
@@ -25,12 +26,14 @@ Connected files that depend on these settings:
 - backend/educore/urls.py - Media file serving
 - frontend/src/services/instructorService.js - File upload API calls
 """
-import os
-from pathlib import Path
-from datetime import timedelta
-from .db_settings import *
-from dotenv import load_dotenv
 import mimetypes
+import os
+from datetime import timedelta
+from pathlib import Path
+
+from dotenv import load_dotenv
+
+from .db_settings import *
 
 load_dotenv()
 
@@ -54,6 +57,24 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
 ]
 
+# SECURITY CONSTANTS
+# FIXED: S-001, S-002, V-302 - Security constants for consistency
+MIN_PASSWORD_LENGTH = 12
+
+# FIXED: S-006 - Centralized reserved usernames
+RESERVED_USERNAMES = ["admin", "root", "api", "www", "mail", "support", "help"]
+
+# FIXED: V-306 - SSRF protection for OAuth redirects
+ALLOWED_FRONTEND_DOMAINS = [
+    'localhost',
+    '127.0.0.1',
+    '0.0.0.0',
+    'yourdomain.com',  # Add your production domain
+]
+
+# FIXED: A-205 - Separate JWT signing key from SECRET_KEY
+JWT_SIGNING_KEY = os.getenv('JWT_SIGNING_KEY', SECRET_KEY)  # Use separate key in production
+
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -71,6 +92,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'debug_toolbar',
     'django_celery_beat',
+    'django_redis',  # Added for cache configuration
     # Social authentication apps
     'social_django',  # For Python Social Auth
     'allauth',        # For additional OAuth providers
@@ -84,12 +106,15 @@ INSTALLED_APPS = [
     'instructor_portal',
     'content',
     'ai_course_builder',
+
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'users.authentication.SecurityMiddleware',  # ADDED: Custom security middleware
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -134,6 +159,17 @@ DATABASES = {
         'HOST': os.getenv('DB_HOST', 'localhost'),
         'PORT': os.getenv('DB_PORT', '5432'),
         'CONN_MAX_AGE': 600,
+    }
+}
+
+# FIXED: A-203 - Cache configuration for delete_pattern support
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': os.getenv('REDIS_URL', 'redis://127.0.0.1:6379/1'),
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
     }
 }
 
@@ -214,13 +250,16 @@ SOCIAL_AUTH_RAISE_EXCEPTIONS = True
 SITE_ID = 1
 ACCOUNT_EMAIL_VERIFICATION = 'none'  # Override previous value
 
-# Password validation
+# Password validation - FIXED: V-302 - Use consistent minimum length
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 12,  # FIXED: V-302 - Use consistent length
+        }
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
@@ -326,9 +365,11 @@ REST_FRAMEWORK = {
         'register': '10/hour',     # Registration throttle
         'password_reset': '5/hour' # Password reset throttle
     },
+
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
-# JWT Authentication settings
+# JWT Authentication settings - FIXED: A-205 - Use separate JWT signing key
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
@@ -336,7 +377,7 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
     'UPDATE_LAST_LOGIN': True,
     'ALGORITHM': 'HS256',
-    'SIGNING_KEY': SECRET_KEY,
+    'SIGNING_KEY': JWT_SIGNING_KEY,  # FIXED: A-205 - Use separate key
     'AUTH_HEADER_TYPES': ('Bearer',),
     'USER_ID_FIELD': 'id',
     'USER_ID_CLAIM': 'user_id',
@@ -395,10 +436,9 @@ AUTH_USER_MODEL = 'users.CustomUser'
 # Email verification settings
 EMAIL_VERIFICATION_TIMEOUT_DAYS = 2  # Days
 
-# Security settings
-SECURE_SSL_REDIRECT = os.getenv(
-    'SECURE_SSL_REDIRECT', 'False').lower() == 'true'
-SECURE_HSTS_SECONDS = 3600
+# Security settings - FIXED: A-202 - Enhanced security headers
+SECURE_SSL_REDIRECT = os.getenv('SECURE_SSL_REDIRECT', 'False').lower() == 'true'
+SECURE_HSTS_SECONDS = 63072000  # FIXED: A-202 - Extended HSTS duration
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 SECURE_BROWSER_XSS_FILTER = True
@@ -480,3 +520,27 @@ AI_GENERATION_TIMEOUT = int(os.environ.get('AI_GENERATION_TIMEOUT', 60000))  # m
 
 # File version: 4.1.0
 # Last updated: 2025-06-06 by AI course builder implementation
+# Add this to your SPECTACULAR_SETTINGS dictionary
+
+# settings.py
+SPECTACULAR_SETTINGS = {
+    # Other settings...
+    "ENUM_NAME_OVERRIDES": {
+        # For enum classes in constants.py
+        "courses.constants.CourseLevel": "CourseLevelEnum",
+        "courses.constants.CreationMethod": "CreationMethodEnum",
+        "courses.constants.CompletionStatus": "CompletionStatusEnum",
+        "courses.constants.LessonType": "LessonTypeEnum",
+        "courses.constants.AccessLevel": "AccessLevelEnum",
+        "courses.constants.ResourceType": "ResourceTypeEnum",
+        "courses.constants.QuestionType": "QuestionTypeEnum",
+        "courses.constants.EnrollmentStatus": "EnrollmentStatusEnum",
+
+        # For TextChoices models
+        "courses.models.core.ActivityType": "ActivityTypeEnum",
+
+        # For AICourseBuilderDraft - Map to same enum as constants.CourseLevel
+        "ai_course_builder.models.AICourseBuilderDraft.LEVEL_CHOICES": "CourseLevelEnum",
+        "ai_course_builder.models.AICourseBuilderDraft.STATUS_CHOICES": "DraftStatusEnum",
+    },
+}

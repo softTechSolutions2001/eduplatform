@@ -1,4 +1,4 @@
-﻿eduplatform/frontend\.env
+eduplatform/frontend\.env
 eduplatform/frontend\.env.development
 eduplatform/frontend\.env.template
 eduplatform/frontend\.env.test

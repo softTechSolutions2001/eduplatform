@@ -1,4 +1,4 @@
-﻿# File Path: instructor_portal/models/__init__.py
+# File Path: instructor_portal/models/__init__.py
 # Folder Path: instructor_portal/models/
 # Date Created: 2025-06-26 13:09:54
 # Date Revised: 2025-06-27 04:03:52

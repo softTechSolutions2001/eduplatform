@@ -1,4 +1,4 @@
-﻿#
+#
 # File Path: backend/courses/utils/__init__.py
 # Folder Path: backend/courses/utils/
 # Date Created: 2025-06-27 10:27:34

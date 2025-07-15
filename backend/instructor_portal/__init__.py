@@ -1,1 +1,1 @@
-﻿# Instructor Portal Django App
+# Instructor Portal Django App

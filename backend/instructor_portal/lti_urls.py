@@ -1,1 +1,1 @@
-﻿# LTI URLs (unchanged)
+# LTI URLs (unchanged)

@@ -11,27 +11,32 @@
 # User: cadsanthanamNew
 # Version: 3.1.0
 #
-# Production-Ready Course Permissions - AUDIT FIXES IMPLEMENTED
-#
-# Version 3.1.0 Changes - AUDIT CRITICAL FIXES:
-# - FIXED 🔴: Course resolution caching optimization (reduced 4 paths to 1)
-# - FIXED 🟡: Performance optimization with cached queries and select_related
-# - FIXED 🟡: Instructor role configuration moved to settings
-# - ENHANCED: Added comprehensive error handling and logging
-# - MAINTAINED: 100% backward compatibility with existing code
+
 
 import logging
-from typing import Optional, Any
+from typing import Any, Optional
+
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.db.models import Exists, OuterRef
-from django.conf import settings
+from instructor_portal.models import CourseInstructor
 from rest_framework import permissions
 from rest_framework.request import Request
 from rest_framework.views import APIView
 
-from .models import Enrollment, Course
-from instructor_portal.models import CourseInstructor
+from .models import Course, Enrollment
+
+
+def get_course_from_object(obj):
+    """
+    Lazy import to avoid circular dependency with courses.views.mixins
+    and instructor_portal.views.mixins.
+    """
+    from courses.views.mixins import extract_course_from_object
+
+    return extract_course_from_object(obj)
+
 
 logger = logging.getLogger(__name__)
 User = get_user_model()
@@ -39,70 +44,13 @@ User = get_user_model()
 # Cache timeouts for performance optimization
 ENROLLMENT_CACHE_TIMEOUT = 300  # 5 minutes
 INSTRUCTOR_CACHE_TIMEOUT = 600  # 10 minutes
-COURSE_CACHE_TIMEOUT = 300      # 5 minutes - NEW: Added course caching
+COURSE_CACHE_TIMEOUT = 300  # 5 minutes - NEW: Added course caching
 
 
 # =====================================
 # PRODUCTION-READY HELPER FUNCTIONS
 # =====================================
 
-def get_course_from_object(obj) -> Optional[Course]:
-    """
-    Unified course resolution function with caching optimization
-    FIXED: Added caching to eliminate repeated introspection and reduce load
-    """
-    if obj is None:
-        return None
-
-    # FIXED: Check cache first to avoid repeated introspection
-    if hasattr(obj, '_cached_course'):
-        return obj._cached_course
-
-    course = None
-
-    # Direct course object
-    if isinstance(obj, Course) or obj.__class__.__name__ == 'Course':
-        course = obj
-
-    # Course attribute
-    elif hasattr(obj, 'course') and obj.course:
-        course = obj.course
-
-    # Module -> Course
-    elif hasattr(obj, 'module') and obj.module and hasattr(obj.module, 'course'):
-        course = obj.module.course
-
-    # Lesson -> Module -> Course
-    elif hasattr(obj, 'lesson') and obj.lesson:
-        if hasattr(obj.lesson, 'module') and obj.lesson.module:
-            course = obj.lesson.module.course
-
-    # Enrollment -> Course
-    elif hasattr(obj, 'enrollment') and obj.enrollment and hasattr(obj.enrollment, 'course'):
-        course = obj.enrollment.course
-
-    # Assessment -> Lesson -> Module -> Course
-    elif hasattr(obj, 'assessment') and obj.assessment:
-        if hasattr(obj.assessment, 'lesson') and obj.assessment.lesson:
-            if hasattr(obj.assessment.lesson, 'module') and obj.assessment.lesson.module:
-                course = obj.assessment.lesson.module.course
-
-    # Progress -> Enrollment -> Course
-    elif hasattr(obj, 'progress') and obj.progress:
-        if hasattr(obj.progress, 'enrollment') and obj.progress.enrollment:
-            course = obj.progress.enrollment.course
-
-    # FIXED: Cache the result to avoid repeated introspection
-    if course:
-        try:
-            obj._cached_course = course
-        except AttributeError:
-            # Object doesn't support attribute assignment, skip caching
-            pass
-    else:
-        logger.warning(f"Could not determine course for object {obj.__class__.__name__} (id: {getattr(obj, 'id', 'unknown')})")
-
-    return course
 
 def is_user_enrolled_cached(user, course) -> bool:
     """
@@ -122,18 +70,20 @@ def is_user_enrolled_cached(user, course) -> bool:
     # Database query with optimization
     try:
         # FIXED: Added select_related to prevent additional queries
-        is_enrolled = Enrollment.objects.select_related('user', 'course').filter(
-            user=user,
-            course=course,
-            status='active'
-        ).exists()
+        is_enrolled = (
+            Enrollment.objects.select_related("user", "course")
+            .filter(user=user, course=course, status="active")
+            .exists()
+        )
 
         # Cache the result
         cache.set(cache_key, is_enrolled, ENROLLMENT_CACHE_TIMEOUT)
         return is_enrolled
 
     except Exception as e:
-        logger.error(f"Error checking enrollment for user {user.id} in course {course.id}: {e}")
+        logger.error(
+            f"Error checking enrollment for user {user.id} in course {course.id}: {e}"
+        )
         return False
 
 
@@ -150,10 +100,12 @@ def is_user_instructor_cached(user, course=None) -> bool:
         return True
 
     # FIXED: Use configurable instructor roles from settings
-    allowed_instructor_roles = getattr(settings, 'ALLOWED_INSTRUCTOR_ROLES', ['instructor', 'administrator'])
+    allowed_instructor_roles = getattr(
+        settings, "ALLOWED_INSTRUCTOR_ROLES", ["instructor", "administrator"]
+    )
 
     # Check user role if available
-    if hasattr(user, 'role') and user.role in allowed_instructor_roles:
+    if hasattr(user, "role") and user.role in allowed_instructor_roles:
         return True
 
     # Course-specific instructor check with caching
@@ -165,17 +117,19 @@ def is_user_instructor_cached(user, course=None) -> bool:
 
         try:
             # FIXED: Added select_related to prevent additional queries
-            is_instructor = CourseInstructor.objects.select_related('course', 'instructor').filter(
-                course=course,
-                instructor=user,
-                is_active=True
-            ).exists()
+            is_instructor = (
+                CourseInstructor.objects.select_related("course", "instructor")
+                .filter(course=course, instructor=user, is_active=True)
+                .exists()
+            )
 
             cache.set(cache_key, is_instructor, INSTRUCTOR_CACHE_TIMEOUT)
             return is_instructor
 
         except Exception as e:
-            logger.error(f"Error checking instructor status for user {user.id} in course {course.id}: {e}")
+            logger.error(
+                f"Error checking instructor status for user {user.id} in course {course.id}: {e}"
+            )
             return False
 
     # General instructor check with caching
@@ -186,16 +140,19 @@ def is_user_instructor_cached(user, course=None) -> bool:
 
     try:
         # FIXED: Added select_related to prevent additional queries
-        is_instructor = CourseInstructor.objects.select_related('instructor').filter(
-            instructor=user,
-            is_active=True
-        ).exists()
+        is_instructor = (
+            CourseInstructor.objects.select_related("instructor")
+            .filter(instructor=user, is_active=True)
+            .exists()
+        )
 
         cache.set(cache_key, is_instructor, INSTRUCTOR_CACHE_TIMEOUT)
         return is_instructor
 
     except Exception as e:
-        logger.error(f"Error checking general instructor status for user {user.id}: {e}")
+        logger.error(
+            f"Error checking general instructor status for user {user.id}: {e}"
+        )
         return False
 
 
@@ -205,7 +162,7 @@ def get_user_access_level_safe(user) -> str:
     FIXED: Enhanced error handling and caching
     """
     if not user or not user.is_authenticated:
-        return 'guest'
+        return "guest"
 
     # FIXED: Add caching for access level determination
     cache_key = f"access_level:{user.id}"
@@ -216,6 +173,7 @@ def get_user_access_level_safe(user) -> str:
     try:
         # Import here to avoid circular imports - consolidated access logic
         from .validation import get_unified_user_access_level
+
         access_level = get_unified_user_access_level(user)
         # Cache for 5 minutes
         cache.set(cache_key, access_level, 300)
@@ -224,25 +182,28 @@ def get_user_access_level_safe(user) -> str:
         logger.warning("Could not import get_unified_user_access_level, using fallback")
         # Fallback logic
         if user.is_staff or user.is_superuser:
-            access_level = 'premium'
-        elif hasattr(user, 'subscription') and getattr(user.subscription, 'is_active', False):
-            access_level = 'premium'
+            access_level = "premium"
+        elif hasattr(user, "subscription") and getattr(
+            user.subscription, "is_active", False
+        ):
+            access_level = "premium"
         elif user.is_authenticated:
-            access_level = 'registered'
+            access_level = "registered"
         else:
-            access_level = 'guest'
+            access_level = "guest"
 
         # Cache fallback result too
         cache.set(cache_key, access_level, 300)
         return access_level
     except Exception as e:
         logger.error(f"Error determining user access level for user {user.id}: {e}")
-        return 'registered' if user.is_authenticated else 'guest'
+        return "registered" if user.is_authenticated else "guest"
 
 
 # =====================================
 # PRODUCTION-READY PERMISSION CLASSES
 # =====================================
+
 
 class IsEnrolledOrReadOnly(permissions.BasePermission):
     """
@@ -279,7 +240,9 @@ class IsEnrolledOrReadOnly(permissions.BasePermission):
             # FIXED: Use optimized course resolution with caching
             course = get_course_from_object(obj)
             if not course:
-                logger.warning(f"Could not resolve course for object in IsEnrolledOrReadOnly")
+                logger.warning(
+                    f"Could not resolve course for object in IsEnrolledOrReadOnly"
+                )
                 return False
 
             # Staff and instructors always have access
@@ -322,15 +285,21 @@ class IsEnrolled(permissions.BasePermission):
 
             # Staff and instructors always have access
             if is_user_instructor_cached(request.user, course):
-                logger.debug(f"User {request.user.id} has instructor access to course {course.id}")
+                logger.debug(
+                    f"User {request.user.id} has instructor access to course {course.id}"
+                )
                 return True
 
             # Check enrollment status with caching
             is_enrolled = is_user_enrolled_cached(request.user, course)
             if is_enrolled:
-                logger.debug(f"User {request.user.id} is enrolled in course {course.id}")
+                logger.debug(
+                    f"User {request.user.id} is enrolled in course {course.id}"
+                )
             else:
-                logger.debug(f"User {request.user.id} is not enrolled in course {course.id}")
+                logger.debug(
+                    f"User {request.user.id} is not enrolled in course {course.id}"
+                )
 
             return is_enrolled
 
@@ -392,8 +361,10 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
                 return False
 
             # Check object ownership
-            if not hasattr(obj, 'user'):
-                logger.warning(f"Object {obj.__class__.__name__} does not have 'user' attribute")
+            if not hasattr(obj, "user"):
+                logger.warning(
+                    f"Object {obj.__class__.__name__} does not have 'user' attribute"
+                )
                 return False
 
             return obj.user == request.user
@@ -424,7 +395,7 @@ class IsInstructorOrOwner(permissions.BasePermission):
                 return False
 
             # Check object ownership first (most efficient)
-            if hasattr(obj, 'user') and obj.user == request.user:
+            if hasattr(obj, "user") and obj.user == request.user:
                 return True
 
             # Check instructor privileges with caching
@@ -456,7 +427,7 @@ class IsPremiumUser(permissions.BasePermission):
                 return False
 
             user_access_level = get_user_access_level_safe(request.user)
-            return user_access_level == 'premium'
+            return user_access_level == "premium"
 
         except Exception as e:
             logger.error(f"Error in IsPremiumUser.has_permission: {e}")
@@ -472,11 +443,11 @@ class IsPremiumUser(permissions.BasePermission):
             user_access_level = get_user_access_level_safe(request.user)
 
             # Check if content requires premium access
-            if hasattr(obj, 'premium') and obj.premium:
-                return user_access_level == 'premium'
+            if hasattr(obj, "premium") and obj.premium:
+                return user_access_level == "premium"
 
-            if hasattr(obj, 'access_level') and obj.access_level == 'premium':
-                return user_access_level == 'premium'
+            if hasattr(obj, "access_level") and obj.access_level == "premium":
+                return user_access_level == "premium"
 
             # Default allow for non-premium content
             return True
@@ -538,7 +509,7 @@ class CanManageCourse(permissions.BasePermission):
                 return False
 
             # For creating new courses
-            if getattr(view, 'action', None) == 'create':
+            if getattr(view, "action", None) == "create":
                 return is_user_instructor_cached(request.user)
 
             return True
@@ -556,7 +527,9 @@ class CanManageCourse(permissions.BasePermission):
             # FIXED: Use optimized course resolution with caching
             course = get_course_from_object(obj)
             if not course:
-                logger.warning(f"Could not resolve course for management permission check")
+                logger.warning(
+                    f"Could not resolve course for management permission check"
+                )
                 return False
 
             # Check instructor status for the specific course
@@ -598,7 +571,7 @@ class IsAuthorOrReadOnly(permissions.BasePermission):
                 return False
 
             # Check if user is the author
-            author_field = getattr(obj, 'author', None) or getattr(obj, 'user', None)
+            author_field = getattr(obj, "author", None) or getattr(obj, "user", None)
             if author_field:
                 return author_field == request.user
 
@@ -631,8 +604,13 @@ class CanViewReports(permissions.BasePermission):
                 return True
 
             # FIXED: Use configurable roles
-            allowed_admin_roles = getattr(settings, 'ALLOWED_ADMIN_ROLES', ['administrator'])
-            if hasattr(request.user, 'role') and request.user.role in allowed_admin_roles:
+            allowed_admin_roles = getattr(
+                settings, "ALLOWED_ADMIN_ROLES", ["administrator"]
+            )
+            if (
+                hasattr(request.user, "role")
+                and request.user.role in allowed_admin_roles
+            ):
                 return True
 
             # Instructors can view reports for their courses
@@ -653,8 +631,13 @@ class CanViewReports(permissions.BasePermission):
                 return True
 
             # FIXED: Use configurable roles
-            allowed_admin_roles = getattr(settings, 'ALLOWED_ADMIN_ROLES', ['administrator'])
-            if hasattr(request.user, 'role') and request.user.role in allowed_admin_roles:
+            allowed_admin_roles = getattr(
+                settings, "ALLOWED_ADMIN_ROLES", ["administrator"]
+            )
+            if (
+                hasattr(request.user, "role")
+                and request.user.role in allowed_admin_roles
+            ):
                 return True
 
             # Instructors can view reports for their courses
@@ -690,16 +673,16 @@ class IsCourseInstructor(permissions.BasePermission):
                 return False
 
             # Check if the object is a course or has a course attribute
-            if hasattr(obj, 'instructor'):
+            if hasattr(obj, "instructor"):
                 # Direct course object
                 return obj.instructor.user == request.user
-            elif hasattr(obj, 'course') and hasattr(obj.course, 'instructor'):
+            elif hasattr(obj, "course") and hasattr(obj.course, "instructor"):
                 # Course-related object
                 return obj.course.instructor.user == request.user
-            elif hasattr(obj, 'instructor_profile'):
+            elif hasattr(obj, "instructor_profile"):
                 # CourseCreationSession or similar
                 return obj.instructor_profile.user == request.user
-            elif hasattr(obj, 'instructor') and hasattr(obj.instructor, 'user'):
+            elif hasattr(obj, "instructor") and hasattr(obj.instructor, "user"):
                 # CourseCreationSession with instructor profile
                 return obj.instructor.user == request.user
 
@@ -720,6 +703,7 @@ class IsCourseInstructor(permissions.BasePermission):
 # UTILITY FUNCTIONS FOR EXTERNAL USE
 # =====================================
 
+
 def clear_permission_cache(user_id: int, course_id: int = None):
     """
     Clear permission-related cache entries for a user
@@ -732,10 +716,12 @@ def clear_permission_cache(user_id: int, course_id: int = None):
         ]
 
         if course_id:
-            cache_keys.extend([
-                f"enrollment:{user_id}:{course_id}",
-                f"instructor:{user_id}:{course_id}",
-            ])
+            cache_keys.extend(
+                [
+                    f"enrollment:{user_id}:{course_id}",
+                    f"instructor:{user_id}:{course_id}",
+                ]
+            )
 
         cache.delete_many(cache_keys)
         logger.debug(f"Cleared permission cache for user {user_id}")
@@ -754,18 +740,15 @@ def bulk_check_enrollments(user, course_ids: list) -> dict:
             return {course_id: False for course_id in course_ids}
 
         # FIXED: Get all enrollments in one optimized query
-        enrollments = Enrollment.objects.select_related('user', 'course').filter(
-            user=user,
-            course_id__in=course_ids,
-            status='active'
-        ).values_list('course_id', flat=True)
+        enrollments = (
+            Enrollment.objects.select_related("user", "course")
+            .filter(user=user, course_id__in=course_ids, status="active")
+            .values_list("course_id", flat=True)
+        )
 
         enrolled_course_ids = set(enrollments)
 
-        return {
-            course_id: course_id in enrolled_course_ids
-            for course_id in course_ids
-        }
+        return {course_id: course_id in enrolled_course_ids for course_id in course_ids}
 
     except Exception as e:
         logger.error(f"Error in bulk enrollment check: {e}")
@@ -774,9 +757,20 @@ def bulk_check_enrollments(user, course_ids: list) -> dict:
 
 # Export all permission classes
 __all__ = [
-    'IsEnrolledOrReadOnly', 'IsEnrolled', 'IsInstructorOrAdmin', 'IsOwnerOrReadOnly',
-    'IsInstructorOrOwner', 'IsPremiumUser', 'CanAccessAssessment', 'CanManageCourse',
-    'IsAuthorOrReadOnly', 'CanViewReports', 'get_course_from_object',
-    'is_user_enrolled_cached', 'is_user_instructor_cached', 'clear_permission_cache',
-    'bulk_check_enrollments', 'IsCourseInstructor'
+    "IsEnrolledOrReadOnly",
+    "IsEnrolled",
+    "IsInstructorOrAdmin",
+    "IsOwnerOrReadOnly",
+    "IsInstructorOrOwner",
+    "IsPremiumUser",
+    "CanAccessAssessment",
+    "CanManageCourse",
+    "IsAuthorOrReadOnly",
+    "CanViewReports",
+    "get_course_from_object",
+    "is_user_enrolled_cached",
+    "is_user_instructor_cached",
+    "clear_permission_cache",
+    "bulk_check_enrollments",
+    "IsCourseInstructor",
 ]

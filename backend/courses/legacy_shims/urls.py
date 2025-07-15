@@ -1,1 +1,1 @@
-﻿# Legacy URL compatibility shims
+# Legacy URL compatibility shims

@@ -1,4 +1,4 @@
-﻿# File Path: instructor_portal/models/drafts.py
+# File Path: instructor_portal/models/drafts.py
 # Folder Path: instructor_portal/models/
 # Date Created: 2025-06-26 13:09:54
 # Date Revised: 2025-06-27 03:27:18

@@ -1,4 +1,4 @@
-﻿#
+#
 # File Path: instructor_portal/views/dashboard_views.py
 # Folder Path: instructor_portal/views/
 # Date Created: 2025-06-26 14:49:15

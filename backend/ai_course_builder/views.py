@@ -10,44 +10,51 @@ Classes:
 - AICourseBuilderDraftViewSet: Main viewset for draft management
 """
 
-from rest_framework import viewsets, status, permissions
+from celery.result import AsyncResult
+from courses.models import Assessment, Course, Lesson, Module, Question
+from courses.serializers import CourseSerializer
+from courses.serializers.utils import HealthCheckSerializer
+from django.core.exceptions import ValidationError
+from django.db import transaction
+from django.shortcuts import get_object_or_404
+from django.utils import timezone
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import OpenApiParameter, extend_schema
+from instructor_portal.models import CourseInstructor
+from rest_framework import permissions, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.shortcuts import get_object_or_404
-from django.db import transaction
-from django.core.exceptions import ValidationError
-from django.utils import timezone
-from celery.result import AsyncResult
 
 from .models import AICourseBuilderDraft
 from .serializers import AICourseBuilderDraftSerializer
 from .tasks import (
+    generate_assessments_task,
     generate_course_outline_task,
-    generate_module_content_task,
     generate_lesson_content_task,
-    generate_assessments_task
+    generate_module_content_task,
 )
-from courses.models import Course, Module, Lesson, Assessment, Question
-from instructor_portal.models import CourseInstructor
-from courses.serializers import CourseSerializer
 
 
 class AICourseBuilderHealthView(APIView):
     """
     Simple health check endpoint for AI course builder services.
     """
+
     permission_classes = [permissions.IsAuthenticated]
+    serializer_class = HealthCheckSerializer  # Add this line
 
     def get(self, request):
         """
         Returns a simple status check to verify the API is operational.
         """
-        return Response({
-            "status": "ok",
-            "message": "AI Course Builder API is operational",
-            "timestamp": timezone.now().isoformat()
-        })
+        return Response(
+            {
+                "status": "ok",
+                "message": "AI Course Builder API is operational",
+                "timestamp": timezone.now().isoformat(),
+            }
+        )
 
 
 class AICourseBuilderDraftViewSet(viewsets.ModelViewSet):
@@ -67,18 +74,25 @@ class AICourseBuilderDraftViewSet(viewsets.ModelViewSet):
     - assessments: Generate assessments for the course (async)
     - task_status: Check the status of an async task
     """
+
     serializer_class = AICourseBuilderDraftSerializer
     permission_classes = [permissions.IsAuthenticated]
-    lookup_field = 'pk'
+    lookup_field = "id"  # Changed from "pk" to "id" for consistency
+    lookup_value_regex = r"\d+"  # Ensure it's treated as an integer
 
     def get_queryset(self):
         """
         Filter drafts to only include those belonging to the current user.
         """
-        user = self.request.user
-        return AICourseBuilderDraft.objects.filter(instructor=user).order_by('-updated_at')
+        user = getattr(self.request, "user", None)
+        if not user or not getattr(user, "is_authenticated", False):
+            return AICourseBuilderDraft.objects.none()
 
-    @action(detail=False, methods=['post'])
+        return AICourseBuilderDraft.objects.filter(instructor=user).order_by(
+            "-updated_at"
+        )
+
+    @action(detail=False, methods=["post"])
     def initialize(self, request):
         """
         Create a new AI course builder draft.
@@ -88,17 +102,19 @@ class AICourseBuilderDraftViewSet(viewsets.ModelViewSet):
         """
         # Create a new draft owned by the current user
         draft = AICourseBuilderDraft.objects.create(
-            instructor=request.user,
-            status='DRAFT'
+            instructor=request.user, status="DRAFT"
         )
 
         serializer = self.get_serializer(draft)
-        return Response({
-            'status': 'success',
-            'message': 'New course draft initialized',
-            'draftId': draft.id,
-            'data': serializer.data
-        }, status=status.HTTP_201_CREATED)
+        return Response(
+            {
+                "status": "success",
+                "message": "New course draft initialized",
+                "draftId": draft.id,
+                "data": serializer.data,
+            },
+            status=status.HTTP_201_CREATED,
+        )
 
     def partial_update(self, request, *args, **kwargs):
         """
@@ -114,26 +130,29 @@ class AICourseBuilderDraftViewSet(viewsets.ModelViewSet):
 
         # Only allow the owner to update their draft
         if instance.instructor != request.user:
-            return Response({
-                'status': 'error',
-                'message': 'You do not have permission to update this draft'
-            }, status=status.HTTP_403_FORBIDDEN)
+            return Response(
+                {
+                    "status": "error",
+                    "message": "You do not have permission to update this draft",
+                },
+                status=status.HTTP_403_FORBIDDEN,
+            )
 
         # Update the draft with the provided data
-        serializer = self.get_serializer(
-            instance,
-            data=request.data,
-            partial=True
-        )
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
-        return Response({
-            'status': 'success',
-            'message': 'Draft updated successfully',
-            'data': serializer.data
-        })    @action(detail=True, methods=['post'])
-    def outline(self, request, pk=None):
+        return Response(
+            {
+                "status": "success",
+                "message": "Draft updated successfully",
+                "data": serializer.data,
+            }
+        )
+
+    @action(detail=True, methods=["post"])
+    def outline(self, request, id=None):
         """
         Generate a course outline based on basic course information.
 
@@ -147,15 +166,15 @@ class AICourseBuilderDraftViewSet(viewsets.ModelViewSet):
         draft = self.get_object()
 
         # Get basic course info from the request or draft
-        course_info = request.data.get('courseInfo', {})
+        course_info = request.data.get("courseInfo", {})
         if not course_info:
             # If no course info provided, use data from the draft
             course_info = {
-                'title': draft.title,
-                'description': draft.description,
-                'objectives': draft.course_objectives,
-                'target_audience': draft.target_audience,
-                'difficulty_level': draft.difficulty_level,
+                "title": draft.title,
+                "description": draft.description,
+                "objectives": draft.course_objectives,
+                "target_audience": draft.target_audience,
+                "difficulty_level": draft.difficulty_level,
             }
 
         # Enqueue a Celery task for outline generation
@@ -165,16 +184,21 @@ class AICourseBuilderDraftViewSet(viewsets.ModelViewSet):
         if not draft.generation_metadata:
             draft.generation_metadata = {}
 
-        draft.generation_metadata['outline_task_id'] = task.id
-        draft.save(update_fields=['generation_metadata'])
+        draft.generation_metadata["outline_task_id"] = task.id
+        draft.save(update_fields=["generation_metadata"])
 
-        return Response({
-            'status': 'pending',
-            'message': 'Course outline generation started',
-            'taskId': task.id,
-            'pollUrl': f'/api/instructor/ai-course-builder/{draft.id}/task-status/{task.id}/'
-        }, status=status.HTTP_202_ACCEPTED)    @action(detail=True, methods=['post'])
-    def module(self, request, pk=None):
+        return Response(
+            {
+                "status": "pending",
+                "message": "Course outline generation started",
+                "taskId": task.id,
+                "pollUrl": f"/api/instructor/ai-course-builder/{draft.id}/task-status/{task.id}/",
+            },
+            status=status.HTTP_202_ACCEPTED,
+        )
+
+    @action(detail=True, methods=["post"])
+    def module(self, request, id=None):
         """
         Generate detailed content for a specific module.
 
@@ -187,30 +211,36 @@ class AICourseBuilderDraftViewSet(viewsets.ModelViewSet):
             Response with task info for the module generation
         """
         draft = self.get_object()
-        module_index = request.data.get('moduleIndex')
+        module_index = request.data.get("moduleIndex")
 
         if module_index is None:
-            return Response({
-                'status': 'error',
-                'message': 'Module index is required'
-            }, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"status": "error", "message": "Module index is required"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
         try:
             # Convert to integer if it's a string
             module_index = int(module_index)
         except ValueError:
-            return Response({
-                'status': 'error',
-                'message': 'Module index must be an integer'
-            }, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"status": "error", "message": "Module index must be an integer"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
         # Ensure the module exists in the outline
-        if not draft.has_outline or not draft.outline.get('modules') or \
-           module_index >= len(draft.outline['modules']):
-            return Response({
-                'status': 'error',
-                'message': 'Invalid module index or outline not generated'
-            }, status=status.HTTP_400_BAD_REQUEST)
+        if (
+            not draft.has_outline
+            or not draft.outline.get("modules")
+            or module_index >= len(draft.outline["modules"])
+        ):
+            return Response(
+                {
+                    "status": "error",
+                    "message": "Invalid module index or outline not generated",
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
         # Enqueue a Celery task for module content generation
         task = generate_module_content_task.delay(draft.id, module_index)
@@ -219,23 +249,30 @@ class AICourseBuilderDraftViewSet(viewsets.ModelViewSet):
         if not draft.generation_metadata:
             draft.generation_metadata = {}
 
-        if 'module_tasks' not in draft.generation_metadata:
-            draft.generation_metadata['module_tasks'] = {}
+        if "module_tasks" not in draft.generation_metadata:
+            draft.generation_metadata["module_tasks"] = {}
 
-        draft.generation_metadata['module_tasks'][str(module_index)] = task.id
-        draft.save(update_fields=['generation_metadata'])
+        draft.generation_metadata["module_tasks"][str(module_index)] = task.id
+        draft.save(update_fields=["generation_metadata"])
 
         # Get the module title for better UX
-        module_title = draft.outline['modules'][module_index].get('title', f'Module {module_index + 1}')
+        module_title = draft.outline["modules"][module_index].get(
+            "title", f"Module {module_index + 1}"
+        )
 
-        return Response({
-            'status': 'pending',
-            'message': f"Generation started for module: {module_title}",
-            'taskId': task.id,
-            'moduleIndex': module_index,
-            'pollUrl': f'/api/instructor/ai-course-builder/{draft.id}/task-status/{task.id}/'
-        }, status=status.HTTP_202_ACCEPTED)    @action(detail=True, methods=['post'])
-    def lesson(self, request, pk=None):
+        return Response(
+            {
+                "status": "pending",
+                "message": f"Generation started for module: {module_title}",
+                "taskId": task.id,
+                "moduleIndex": module_index,
+                "pollUrl": f"/api/instructor/ai-course-builder/{draft.id}/task-status/{task.id}/",
+            },
+            status=status.HTTP_202_ACCEPTED,
+        )
+
+    @action(detail=True, methods=["post"])
+    def lesson(self, request, id=None):
         """
         Generate detailed content for a specific lesson within a module.
 
@@ -249,34 +286,40 @@ class AICourseBuilderDraftViewSet(viewsets.ModelViewSet):
             Response with task info for the lesson generation
         """
         draft = self.get_object()
-        module_index = request.data.get('moduleIndex')
-        lesson_index = request.data.get('lessonIndex')
+        module_index = request.data.get("moduleIndex")
+        lesson_index = request.data.get("lessonIndex")
 
         if module_index is None or lesson_index is None:
-            return Response({
-                'status': 'error',
-                'message': 'Module index and lesson index are required'
-            }, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {
+                    "status": "error",
+                    "message": "Module index and lesson index are required",
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
         try:
             # Convert to integers if they're strings
             module_index = int(module_index)
             lesson_index = int(lesson_index)
         except ValueError:
-            return Response({
-                'status': 'error',
-                'message': 'Module and lesson indices must be integers'
-            }, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {
+                    "status": "error",
+                    "message": "Module and lesson indices must be integers",
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
         # Validate the indices
         try:
-            module = draft.outline['modules'][module_index]
-            lesson_info = module['lessons'][lesson_index]
+            module = draft.outline["modules"][module_index]
+            lesson_info = module["lessons"][lesson_index]
         except (KeyError, IndexError):
-            return Response({
-                'status': 'error',
-                'message': 'Invalid module or lesson index'
-            }, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"status": "error", "message": "Invalid module or lesson index"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
         # Enqueue a Celery task for lesson content generation
         task = generate_lesson_content_task.delay(draft.id, module_index, lesson_index)
@@ -285,25 +328,30 @@ class AICourseBuilderDraftViewSet(viewsets.ModelViewSet):
         if not draft.generation_metadata:
             draft.generation_metadata = {}
 
-        if 'lesson_tasks' not in draft.generation_metadata:
-            draft.generation_metadata['lesson_tasks'] = {}
+        if "lesson_tasks" not in draft.generation_metadata:
+            draft.generation_metadata["lesson_tasks"] = {}
 
         lesson_key = f"{module_index}-{lesson_index}"
-        draft.generation_metadata['lesson_tasks'][lesson_key] = task.id
-        draft.save(update_fields=['generation_metadata'])
+        draft.generation_metadata["lesson_tasks"][lesson_key] = task.id
+        draft.save(update_fields=["generation_metadata"])
 
         # Get the lesson title for better UX
-        lesson_title = lesson_info.get('title', f'Lesson {lesson_index + 1}')
+        lesson_title = lesson_info.get("title", f"Lesson {lesson_index + 1}")
 
-        return Response({
-            'status': 'pending',
-            'message': f"Generation started for lesson: {lesson_title}",
-            'taskId': task.id,
-            'moduleIndex': module_index,
-            'lessonIndex': lesson_index,
-            'pollUrl': f'/api/instructor/ai-course-builder/{draft.id}/task-status/{task.id}/'
-        }, status=status.HTTP_202_ACCEPTED)    @action(detail=True, methods=['post'])
-    def assessments(self, request, pk=None):
+        return Response(
+            {
+                "status": "pending",
+                "message": f"Generation started for lesson: {lesson_title}",
+                "taskId": task.id,
+                "moduleIndex": module_index,
+                "lessonIndex": lesson_index,
+                "pollUrl": f"/api/instructor/ai-course-builder/{draft.id}/task-status/{task.id}/",
+            },
+            status=status.HTTP_202_ACCEPTED,
+        )
+
+    @action(detail=True, methods=["post"])
+    def assessments(self, request, id=None):
         """
         Generate assessments (quizzes) for the course.
 
@@ -316,10 +364,13 @@ class AICourseBuilderDraftViewSet(viewsets.ModelViewSet):
 
         # Ensure the draft has modules and lessons
         if not draft.has_outline or not draft.has_modules or not draft.has_lessons:
-            return Response({
-                'status': 'error',
-                'message': 'Cannot generate assessments: draft must have outline, modules, and lessons'
-            }, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {
+                    "status": "error",
+                    "message": "Cannot generate assessments: draft must have outline, modules, and lessons",
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
         # Enqueue a Celery task for assessments generation
         task = generate_assessments_task.delay(draft.id)
@@ -328,63 +379,73 @@ class AICourseBuilderDraftViewSet(viewsets.ModelViewSet):
         if not draft.generation_metadata:
             draft.generation_metadata = {}
 
-        draft.generation_metadata['assessments_task_id'] = task.id
-        draft.save(update_fields=['generation_metadata'])
+        draft.generation_metadata["assessments_task_id"] = task.id
+        draft.save(update_fields=["generation_metadata"])
 
-        return Response({
-            'status': 'pending',
-            'message': 'Assessment generation started',
-            'taskId': task.id,
-            'pollUrl': f'/api/instructor/ai-course-builder/{draft.id}/task-status/{task.id}/'
-        }, status=status.HTTP_202_ACCEPTED)
+        return Response(
+            {
+                "status": "pending",
+                "message": "Assessment generation started",
+                "taskId": task.id,
+                "pollUrl": f"/api/instructor/ai-course-builder/{draft.id}/task-status/{task.id}/",
+            },
+            status=status.HTTP_202_ACCEPTED,
+        )
 
-    @action(detail=True, methods=['get'], url_path=r'task-status/(?P<task_id>[^/.]+)')
-    def task_status(self, request, pk=None, task_id=None):
+    # File: ai_course_builder/views.py
+    @action(detail=True, methods=["get"], url_path=r"task-status/(?P<task_id>[^/.]+)")
+    @extend_schema(
+        parameters=[
+            OpenApiParameter("id", OpenApiTypes.INT, location=OpenApiParameter.PATH),
+            OpenApiParameter(
+                "task_id", OpenApiTypes.STR, location=OpenApiParameter.PATH
+            ),
+        ],
+        responses={200: AICourseBuilderDraftSerializer},
+    )
+    def task_status(self, request, id=None, task_id=None):
         """
         Check the status of an asynchronous task.
 
         This endpoint allows the frontend to poll for the status of
         long-running tasks like outline or content generation.
-
-        Path Parameters:
-            task_id (str): The Celery task ID to check
-
-        Returns:
-            Response with the current task status and result if completed
         """
-        # Make sure the task belongs to this draft
         draft = self.get_object()
 
         # Verify the task ID exists in this draft's metadata
         # This prevents accessing tasks that belong to other drafts
         if not draft.generation_metadata:
-            return Response({
-                'status': 'error',
-                'message': 'No tasks found for this draft'
-            }, status=status.HTTP_404_NOT_FOUND)
+            return Response(
+                {"status": "error", "message": "No tasks found for this draft"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
 
         # Check all possible task locations in metadata
         task_locations = [
-            draft.generation_metadata.get('outline_task_id'),
-            draft.generation_metadata.get('assessments_task_id')
+            draft.generation_metadata.get("outline_task_id"),
+            draft.generation_metadata.get("assessments_task_id"),
         ]
 
         # Check module tasks
-        module_tasks = draft.generation_metadata.get('module_tasks', {})
+        module_tasks = draft.generation_metadata.get("module_tasks", {})
         if module_tasks:
             task_locations.extend(module_tasks.values())
-              # Check lesson tasks
-        lesson_tasks = draft.generation_metadata.get('lesson_tasks', {})
+
+        # Check lesson tasks
+        lesson_tasks = draft.generation_metadata.get("lesson_tasks", {})
         if lesson_tasks:
             task_locations.extend(lesson_tasks.values())
 
         # If task_id not in our known tasks, reject access
         if task_id not in task_locations:
-            return Response({
-                'status': 'error',
-                'message': 'Task ID is not associated with this draft',
-                'draftId': draft.id
-            }, status=status.HTTP_403_FORBIDDEN)
+            return Response(
+                {
+                    "status": "error",
+                    "message": "Task ID is not associated with this draft",
+                    "draftId": draft.id,
+                },
+                status=status.HTTP_403_FORBIDDEN,
+            )
 
         # Check the task status via AsyncResult
         task_result = AsyncResult(task_id)
@@ -393,67 +454,38 @@ class AICourseBuilderDraftViewSet(viewsets.ModelViewSet):
         if task_result.ready():
             if task_result.successful():
                 result = task_result.result
-                return Response({
-                    'status': 'success',
-                    'state': 'COMPLETED',
-                    'result': result
-                })
+                return Response(
+                    {"status": "success", "state": "COMPLETED", "result": result}
+                )
             else:
                 # Task failed
-                error = str(task_result.result) if task_result.result else "Unknown error"
-                return Response({
-                    'status': 'error',
-                    'state': 'FAILED',
-                    'message': f"Task failed: {error}"
-                }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                error = (
+                    str(task_result.result) if task_result.result else "Unknown error"
+                )
+                return Response(
+                    {
+                        "status": "error",
+                        "state": "FAILED",
+                        "message": f"Task failed: {error}",
+                    },
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                )
         else:
             # Task is still running
             progress = {}
-            if hasattr(task_result, 'info') and task_result.info:
-                if isinstance(task_result.info, dict) and 'progress' in task_result.info:
-                    progress = task_result.info.get('progress', {})
+            if hasattr(task_result, "info") and task_result.info:
+                if (
+                    isinstance(task_result.info, dict)
+                    and "progress" in task_result.info
+                ):
+                    progress = task_result.info.get("progress", {})
 
-            return Response({
-                'status': 'pending',
-                'state': task_result.state,
-                'progress': progress
-            })
-            task_locations.extend(lesson_tasks.values())
+            return Response(
+                {"status": "pending", "state": task_result.state, "progress": progress}
+            )
 
-        if task_id not in task_locations:
-            return Response({
-                'status': 'error',
-                'message': 'Task does not belong to this draft'
-            }, status=status.HTTP_404_NOT_FOUND)
-
-        # Get the task status
-        result = AsyncResult(task_id)
-
-        if result.ready():
-            # Task is complete
-            if result.successful():
-                return Response({
-                    'status': 'success',
-                    'state': result.state,
-                    'result': result.result
-                })
-            else:
-                # Task failed
-                return Response({
-                    'status': 'error',
-                    'state': result.state,
-                    'error': str(result.result)
-                }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        else:
-            # Task is still pending or in progress
-            return Response({
-                'status': 'pending',
-                'state': result.state,
-                'message': 'Task is still processing'
-            }, status=status.HTTP_200_OK)
-
-    @action(detail=True, methods=['post'])
-    def finalize(self, request, pk=None):
+    @action(detail=True, methods=["post"])
+    def finalize(self, request, id=None):
         """
         Finalize a draft by creating a published course from it.
 
@@ -466,111 +498,129 @@ class AICourseBuilderDraftViewSet(viewsets.ModelViewSet):
         draft = self.get_object()
 
         # Validate the draft has all required components
-        if not all([
-            draft.title,
-            draft.description,
-            draft.has_outline,
-            draft.has_modules,
-            draft.has_lessons
-        ]):
-            return Response({
-                'status': 'error',
-                'message': 'Draft is incomplete and cannot be finalized',
-                'missing_components': {
-                    'title': not bool(draft.title),
-                    'description': not bool(draft.description),
-                    'outline': not draft.has_outline,
-                    'modules': not draft.has_modules,
-                    'lessons': not draft.has_lessons
-                }
-            }, status=status.HTTP_400_BAD_REQUEST)
+        if not all(
+            [
+                draft.title,
+                draft.description,
+                draft.has_outline,
+                draft.has_modules,
+                draft.has_lessons,
+            ]
+        ):
+            return Response(
+                {
+                    "status": "error",
+                    "message": "Draft is incomplete and cannot be finalized",
+                    "missing_components": {
+                        "title": not bool(draft.title),
+                        "description": not bool(draft.description),
+                        "outline": not draft.has_outline,
+                        "modules": not draft.has_modules,
+                        "lessons": not draft.has_lessons,
+                    },
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
         try:
             # Use a transaction to ensure all-or-nothing creation
-            with transaction.atomic():                # Create the course
+            with transaction.atomic():
+                # Create the course
                 course = Course.objects.create(
                     title=draft.title,
                     description=draft.description,
                     price=draft.price or 0.00,
                     duration_minutes=draft.duration_minutes or 0,
                     level=draft.difficulty_level or "all_levels",
-                    is_published=True
+                    is_published=True,
                 )
 
                 # Add the instructor
                 CourseInstructor.objects.create(
-                    course=course,
-                    instructor=draft.instructor,
-                    is_lead=True
+                    course=course, instructor=draft.instructor, is_lead=True
                 )
 
                 # Create modules and lessons
-                for i, module_data in enumerate(draft.outline.get('modules', [])):
+                for i, module_data in enumerate(draft.outline.get("modules", [])):
                     module = Module.objects.create(
                         course=course,
-                        title=module_data.get('title', f'Module {i+1}'),
-                        description=module_data.get('description', ''),
-                        order=i+1
+                        title=module_data.get("title", f"Module {i+1}"),
+                        description=module_data.get("description", ""),
+                        order=i + 1,
                     )
 
                     # Create lessons for this module
-                    for j, lesson_info in enumerate(module_data.get('lessons', [])):
+                    for j, lesson_info in enumerate(module_data.get("lessons", [])):
                         # Get detailed lesson content if available
                         lesson_key = f"{i}-{j}"
-                        lesson_content = draft.content.get('lessons', {}).get(
-                            lesson_key, {'content': ''}
+                        lesson_content = draft.content.get("lessons", {}).get(
+                            lesson_key, {"content": ""}
                         )
 
                         lesson = Lesson.objects.create(
                             module=module,
-                            title=lesson_info.get('title', f'Lesson {j+1}'),
-                            content=lesson_content.get('content', ''),
-                            type=lesson_info.get('type', 'reading'),
-                            order=j+1
+                            title=lesson_info.get("title", f"Lesson {j+1}"),
+                            content=lesson_content.get("content", ""),
+                            type=lesson_info.get("type", "reading"),
+                            order=j + 1,
                         )
 
                         # Create assessment if this module has one in the draft
-                        if draft.has_assessments and draft.assessments.get('quizzes'):
-                            for quiz in draft.assessments['quizzes']:
-                                if quiz.get('moduleIndex') == i:
+                        if draft.has_assessments and draft.assessments.get("quizzes"):
+                            for quiz in draft.assessments["quizzes"]:
+                                if quiz.get("moduleIndex") == i:
                                     assessment = Assessment.objects.create(
                                         lesson=lesson,
-                                        title=quiz.get('title', f'Quiz for {lesson.title}'),
-                                        passing_score=70
+                                        title=quiz.get(
+                                            "title", f"Quiz for {lesson.title}"
+                                        ),
+                                        passing_score=70,
                                     )
 
                                     # Create questions for this assessment
-                                    for q_idx, q_data in enumerate(quiz.get('questions', [])):
+                                    for q_idx, q_data in enumerate(
+                                        quiz.get("questions", [])
+                                    ):
                                         Question.objects.create(
                                             assessment=assessment,
-                                            question_text=q_data.get('question', f'Question {q_idx+1}'),
-                                            question_type='multiple_choice',
-                                            order=q_idx+1
+                                            question_text=q_data.get(
+                                                "question", f"Question {q_idx+1}"
+                                            ),
+                                            question_type="multiple_choice",
+                                            order=q_idx + 1,
                                         )
 
                 # Update the draft status
-                draft.status = 'PUBLISHED'
+                draft.status = "PUBLISHED"
                 draft.save()
 
                 # Return the new course details
                 course_data = CourseSerializer(course).data
 
-                return Response({
-                    'status': 'success',
-                    'message': 'Course published successfully',
-                    'courseId': course.id,
-                    'course': course_data
-                })
+                return Response(
+                    {
+                        "status": "success",
+                        "message": "Course published successfully",
+                        "courseId": course.id,
+                        "course": course_data,
+                    }
+                )
 
         except ValidationError as e:
-            return Response({
-                'status': 'error',
-                'message': 'Failed to create course',
-                'errors': str(e)
-            }, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {
+                    "status": "error",
+                    "message": "Failed to create course",
+                    "errors": str(e),
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
         except Exception as e:
-            return Response({
-                'status': 'error',
-                'message': 'An unexpected error occurred',
-                'errors': str(e)
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(
+                {
+                    "status": "error",
+                    "message": "An unexpected error occurred",
+                    "errors": str(e),
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )

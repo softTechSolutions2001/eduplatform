@@ -2,34 +2,36 @@
 # File Path: backend/courses/models/mixins.py
 # Folder Path: backend/courses/models/
 # Date Created: 2025-06-15 06:41:03
-# Date Revised: 2025-06-30 10:00:00
-# Current Date and Time (UTC): 2025-06-30 10:00:00
+# Date Revised: 2025-07-02 10:00:00
+# Current Date and Time (UTC): 2025-07-02 10:00:00
 # Current User's Login: softTechSolutions2001
 # Author: softTechSolutions2001
 # Last Modified By: softTechSolutions2001
-# Last Modified: 2025-06-30 10:00:00 UTC
+# Last Modified: 2025-07-02 10:00:00 UTC
 # User: softTechSolutions2001
-# Version: 1.4.0
+# Version: 1.4.1
 #
-# FIXED: Code Review Issues - Centralized Utils, N+1 Query Fix, Sharding Support
+# FIXED: Race Condition in Slug Generation - Atomic Transaction Support
 #
 # This module provides reusable abstract mixins to eliminate code duplication
 # across models and provide consistent behavior patterns.
 #
-# Version 1.4.0 Changes:
-# - FIXED 🔴: SlugMixin now uses centralized utils.generate_unique_slug() to prevent drift
-# - FIXED 🟡: OrderedMixin.get_next_order() optimized to prevent N+1 queries with caching
-# - FIXED 🟢: create_index_list() now supports explicit db_tablespace for sharded setups
+# Version 1.4.1 Changes:
+# - FIXED 🔴: generate_unique_slug() now uses atomic transactions to prevent race conditions
+# - FIXED 🔴: SlugMixin.save() wraps slug generation in same atomic block as save operation
+# - ENHANCED: Added retry mechanism for slug generation under high concurrency
 # - MAINTAINED: All existing functionality and backward compatibility
-# - ENHANCED: Performance optimizations and better error handling
+# - IMPROVED: Better error handling and logging for slug generation failures
 
-from django.db import models, transaction
+from django.db import models, transaction, IntegrityError
 from django.utils.text import slugify
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from django.core.cache import cache
 import uuid
 import logging
+import time
+import random
 
 logger = logging.getLogger(__name__)
 
@@ -37,20 +39,29 @@ logger = logging.getLogger(__name__)
 # CENTRALIZED UTILITY FUNCTIONS
 # =====================================
 
-def generate_unique_slug(instance, base_text, slug_field='slug', source_field='title'):
+def generate_unique_slug(instance, base_text, slug_field='slug', source_field='title', max_retries=5):
     """
-    Centralized unique slug generation utility to prevent code drift
+    Centralized unique slug generation utility with atomic transaction support
+    FIXED: Now uses atomic transactions to prevent race conditions under heavy load
 
     Args:
         instance: Model instance
         base_text: Text to slugify
         slug_field: Field name for the slug (default: 'slug')
         source_field: Source field name (default: 'title')
+        max_retries: Maximum number of retries for slug generation (default: 5)
 
     Returns:
         str: Unique slug
+
+    Raises:
+        ValidationError: If unable to generate unique slug after max_retries
     """
     base_slug = slugify(base_text)
+
+    if not base_slug:
+        # Fallback for empty slugs
+        base_slug = f"{instance.__class__.__name__.lower()}-{str(uuid.uuid4())[:8]}"
 
     # Handle course versioning if applicable
     if all(hasattr(instance, attr) for attr in ['version', 'is_draft']):
@@ -59,21 +70,63 @@ def generate_unique_slug(instance, base_text, slug_field='slug', source_field='t
         elif instance.version > 1.0:
             base_slug = f"{base_slug}-v{str(instance.version).replace('.', '-')}"
 
-    # Ensure uniqueness
-    slug, counter = base_slug, 1
-    queryset = instance.__class__.objects.filter(**{slug_field: slug})
+    # Use atomic transaction to prevent race conditions
+    for attempt in range(max_retries):
+        try:
+            with transaction.atomic():
+                # Use select_for_update to lock the query during uniqueness check
+                slug, counter = base_slug, 1
 
-    if instance.pk:
-        queryset = queryset.exclude(pk=instance.pk)
+                # Build initial queryset
+                queryset = instance.__class__.objects.filter(**{slug_field: slug})
+                if instance.pk:
+                    queryset = queryset.exclude(pk=instance.pk)
 
-    while queryset.exists():
-        slug = f"{base_slug}-{counter}"
-        counter += 1
-        queryset = instance.__class__.objects.filter(**{slug_field: slug})
-        if instance.pk:
-            queryset = queryset.exclude(pk=instance.pk)
+                # Check for existing slug with row-level locking
+                if queryset.select_for_update().exists():
+                    # Generate numbered variants until unique
+                    while counter <= 1000:  # Safety limit to prevent infinite loops
+                        slug = f"{base_slug}-{counter}"
+                        counter += 1
 
-    return slug
+                        queryset = instance.__class__.objects.filter(**{slug_field: slug})
+                        if instance.pk:
+                            queryset = queryset.exclude(pk=instance.pk)
+
+                        if not queryset.select_for_update().exists():
+                            break
+                    else:
+                        # If we hit the counter limit, append UUID for guaranteed uniqueness
+                        slug = f"{base_slug}-{str(uuid.uuid4())[:8]}"
+                        logger.warning(f"Hit counter limit for slug generation, using UUID suffix: {slug}")
+
+                return slug
+
+        except IntegrityError as e:
+            # Handle race condition - another process created the same slug
+            if attempt < max_retries - 1:
+                # Add small random delay to reduce contention
+                time.sleep(random.uniform(0.01, 0.05))
+                logger.debug(f"Slug generation attempt {attempt + 1} failed due to race condition, retrying...")
+                continue
+            else:
+                # Last attempt failed, use UUID suffix for guaranteed uniqueness
+                unique_slug = f"{base_slug}-{str(uuid.uuid4())[:8]}"
+                logger.warning(f"Failed to generate unique slug after {max_retries} attempts, using UUID: {unique_slug}")
+                return unique_slug
+
+        except Exception as e:
+            logger.error(f"Unexpected error in slug generation for {instance.__class__.__name__}: {e}")
+            if attempt < max_retries - 1:
+                continue
+            else:
+                # Fallback to UUID-based slug
+                fallback_slug = f"{instance.__class__.__name__.lower()}-{str(uuid.uuid4())[:8]}"
+                logger.error(f"Using fallback UUID slug: {fallback_slug}")
+                return fallback_slug
+
+    # This should not be reached, but added as safety
+    return f"{base_slug}-{str(uuid.uuid4())[:8]}"
 
 
 def create_index_list(*field_names, db_tablespace=None):
@@ -270,13 +323,18 @@ class OrderedMixin(models.Model):
 class SlugMixin(models.Model):
     """
     Abstract mixin for automatic slug generation
-    FIXED: Now uses centralized generate_unique_slug utility to prevent code drift
+    FIXED: Now uses atomic transactions for slug generation to prevent race conditions
     """
     slug = models.SlugField(unique=True, blank=True, max_length=180)
 
     class Meta:
         abstract = True
         indexes = create_index_list(['slug'])
+        # Ensure DB-level unique constraint (SlugField already has unique=True)
+        # but this makes it explicit for documentation
+        constraints = [
+            models.UniqueConstraint(fields=['slug'], name='%(class)s_unique_slug')
+        ]
 
     def get_slug_source(self):
         """Get slug source field name"""
@@ -284,8 +342,8 @@ class SlugMixin(models.Model):
 
     def generate_unique_slug(self):
         """
-        Generate unique slug using centralized utility
-        FIXED: Delegates to centralized utils.generate_unique_slug to prevent code drift
+        Generate unique slug using centralized utility with atomic transaction support
+        FIXED: Now uses atomic transactions to prevent race conditions
         """
         source_field = self.get_slug_source()
         source_text = getattr(self, source_field, '')
@@ -298,10 +356,24 @@ class SlugMixin(models.Model):
         )
 
     def save(self, *args, **kwargs):
-        """Auto-generate slug if not provided"""
+        """
+        Auto-generate slug if not provided
+        FIXED: Wraps slug generation and save in the same atomic transaction
+        """
         if not self.slug:
-            self.slug = self.generate_unique_slug()
-        super().save(*args, **kwargs)
+            # Use atomic transaction to ensure slug generation and save happen atomically
+            try:
+                with transaction.atomic():
+                    self.slug = self.generate_unique_slug()
+                    super().save(*args, **kwargs)
+            except IntegrityError as e:
+                # Handle the rare case where slug generation still conflicts
+                logger.warning(f"Slug integrity error for {self.__class__.__name__}, regenerating with UUID suffix")
+                self.slug = f"{slugify(getattr(self, self.get_slug_source(), ''))}-{str(uuid.uuid4())[:8]}"
+                super().save(*args, **kwargs)
+        else:
+            # Slug already exists, just save normally
+            super().save(*args, **kwargs)
 
 
 class SluggedModelMixin(SlugMixin):

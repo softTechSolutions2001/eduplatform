@@ -1,4 +1,4 @@
-﻿#
+#
 # File Path: backend/courses/utils/model_helpers.py
 # Folder Path: backend/courses/utils/
 # Date Created: 2025-06-27 10:27:34
@@ -23,9 +23,10 @@
 
 import logging
 from decimal import Decimal
-from typing import List, Optional, Any, Union
-from django.db import models
+from typing import Any, List, Optional, Union
+
 from django.core.exceptions import ValidationError
+from django.db import models
 
 logger = logging.getLogger(__name__)
 
@@ -64,33 +65,43 @@ def create_meta_indexes(*base_metas):
                 continue
 
             # Validate meta is a class-like object
-            if not hasattr(meta, '__class__'):
-                error_msg = f"Item at position {i} is not a class-like object: {type(meta)}"
+            if not hasattr(meta, "__class__"):
+                error_msg = (
+                    f"Item at position {i} is not a class-like object: {type(meta)}"
+                )
                 logger.error(error_msg)
                 raise TypeError(error_msg)
 
-            if hasattr(meta, 'indexes'):
+            if hasattr(meta, "indexes"):
                 if meta.indexes is None:
-                    logger.debug(f"Meta class {meta.__class__.__name__} has None indexes attribute")
+                    logger.debug(
+                        f"Meta class {meta.__class__.__name__} has None indexes attribute"
+                    )
                     continue
 
                 if isinstance(meta.indexes, (list, tuple)):
                     # Validate each index object
                     for j, index in enumerate(meta.indexes):
-                        if not isinstance(index, models.Index) and not hasattr(index, 'contains_expressions'):
+                        if not isinstance(index, models.Index) and not hasattr(
+                            index, "contains_expressions"
+                        ):
                             warning_msg = f"Invalid index object at position {j} in {meta.__class__.__name__}.indexes"
                             logger.warning(warning_msg)
                             # Continue processing instead of failing
 
                     # Add validated indexes
                     indexes.extend(meta.indexes)
-                    logger.debug(f"Added {len(meta.indexes)} indexes from {meta.__class__.__name__}")
+                    logger.debug(
+                        f"Added {len(meta.indexes)} indexes from {meta.__class__.__name__}"
+                    )
                 else:
                     error_msg = f"Meta class {meta.__class__.__name__} has non-list indexes attribute: {type(meta.indexes)}"
                     logger.error(error_msg)
                     raise ValueError(error_msg)
             else:
-                logger.debug(f"Meta class {meta.__class__.__name__} has no indexes attribute")
+                logger.debug(
+                    f"Meta class {meta.__class__.__name__} has no indexes attribute"
+                )
 
         return indexes
 
@@ -104,8 +115,17 @@ def create_meta_indexes(*base_metas):
         return indexes
 
 
-def create_char_field(max_length=255, min_len=None, blank=False, null=False,
-                     unique=False, choices=None, default='', help_text='', **kwargs):
+def create_char_field(
+    max_length=255,
+    min_len=None,
+    blank=False,
+    null=False,
+    unique=False,
+    choices=None,
+    default="",
+    help_text="",
+    **kwargs,
+):
     """
     Helper to create CharField with validation and enhanced configuration
 
@@ -140,31 +160,34 @@ def create_char_field(max_length=255, min_len=None, blank=False, null=False,
             raise ValidationError("min_len cannot be greater than max_length")
 
         # Set up validators
-        validators = list(kwargs.pop('validators', []))
+        validators = list(kwargs.pop("validators", []))
 
         if min_len is not None and min_len > 0:
             try:
                 from ..validators import MinStrLenValidator
+
                 validators.append(MinStrLenValidator(min_len))
             except ImportError:
-                logger.warning("MinStrLenValidator not available, skipping min_len validation")
+                logger.warning(
+                    "MinStrLenValidator not available, skipping min_len validation"
+                )
 
         # Prepare field kwargs
         field_kwargs = {
-            'max_length': max_length,
-            'blank': blank,
-            'null': null,
-            'unique': unique,
-            'help_text': help_text,
-            'validators': validators,
+            "max_length": max_length,
+            "blank": blank,
+            "null": null,
+            "unique": unique,
+            "help_text": help_text,
+            "validators": validators,
         }
 
         # Add optional parameters if provided
         if default is not None:
-            field_kwargs['default'] = default
+            field_kwargs["default"] = default
 
         if choices:
-            field_kwargs['choices'] = choices
+            field_kwargs["choices"] = choices
 
         # Add any additional kwargs
         field_kwargs.update(kwargs)
@@ -177,8 +200,9 @@ def create_char_field(max_length=255, min_len=None, blank=False, null=False,
         return models.CharField(max_length=max_length, blank=blank, null=null)
 
 
-def create_text_field(min_len=None, blank=True, null=True, default='',
-                     help_text='', **kwargs):
+def create_text_field(
+    min_len=None, blank=True, null=True, default="", help_text="", **kwargs
+):
     """
     Helper to create TextField with validation and enhanced configuration
 
@@ -204,26 +228,29 @@ def create_text_field(min_len=None, blank=True, null=True, default='',
             raise ValidationError("min_len must be a non-negative integer")
 
         # Set up validators
-        validators = list(kwargs.pop('validators', []))
+        validators = list(kwargs.pop("validators", []))
 
         if min_len is not None and min_len > 0:
             try:
                 from ..validators import MinStrLenValidator
+
                 validators.append(MinStrLenValidator(min_len))
             except ImportError:
-                logger.warning("MinStrLenValidator not available, skipping min_len validation")
+                logger.warning(
+                    "MinStrLenValidator not available, skipping min_len validation"
+                )
 
         # Prepare field kwargs
         field_kwargs = {
-            'blank': blank,
-            'null': null,
-            'help_text': help_text,
-            'validators': validators,
+            "blank": blank,
+            "null": null,
+            "help_text": help_text,
+            "validators": validators,
         }
 
         # Add default if provided
         if default is not None:
-            field_kwargs['default'] = default
+            field_kwargs["default"] = default
 
         # Add any additional kwargs
         field_kwargs.update(kwargs)
@@ -236,8 +263,15 @@ def create_text_field(min_len=None, blank=True, null=True, default='',
         return models.TextField(blank=blank, null=null)
 
 
-def create_json_field(max_items=None, min_str_len=None, blank=True, null=False,
-                     default=list, help_text='', **kwargs):
+def create_json_field(
+    max_items=None,
+    min_str_len=None,
+    blank=True,
+    null=False,
+    default=list,
+    help_text="",
+    **kwargs,
+):
     """
     Helper to create JSONField with validation and proper defaults
 
@@ -263,33 +297,37 @@ def create_json_field(max_items=None, min_str_len=None, blank=True, null=False,
         if max_items is not None and (not isinstance(max_items, int) or max_items <= 0):
             raise ValidationError("max_items must be a positive integer")
 
-        if min_str_len is not None and (not isinstance(min_str_len, int) or min_str_len < 0):
+        if min_str_len is not None and (
+            not isinstance(min_str_len, int) or min_str_len < 0
+        ):
             raise ValidationError("min_str_len must be a non-negative integer")
 
         # Set up validators
-        validators = list(kwargs.pop('validators', []))
+        validators = list(kwargs.pop("validators", []))
 
         if max_items is not None or min_str_len is not None:
             try:
                 from ..validators import JSONListValidator
-                validators.append(JSONListValidator(
-                    max_items=max_items,
-                    min_str_len=min_str_len
-                ))
+
+                validators.append(
+                    JSONListValidator(max_items=max_items, min_str_len=min_str_len)
+                )
             except ImportError:
-                logger.warning("JSONListValidator not available, skipping JSON validation")
+                logger.warning(
+                    "JSONListValidator not available, skipping JSON validation"
+                )
 
         # Prepare field kwargs
         field_kwargs = {
-            'blank': blank,
-            'null': null,
-            'help_text': help_text,
-            'validators': validators,
+            "blank": blank,
+            "null": null,
+            "help_text": help_text,
+            "validators": validators,
         }
 
         # Add default if provided
         if default is not None:
-            field_kwargs['default'] = default
+            field_kwargs["default"] = default
 
         # Add any additional kwargs
         field_kwargs.update(kwargs)
@@ -302,8 +340,9 @@ def create_json_field(max_items=None, min_str_len=None, blank=True, null=False,
         return models.JSONField(blank=blank, null=null, default=default)
 
 
-def create_foreign_key(to, related_name=None, on_delete=models.CASCADE,
-                      help_text='', **kwargs):
+def create_foreign_key(
+    to, related_name=None, on_delete=models.CASCADE, help_text="", **kwargs
+):
     """
     Helper to create ForeignKey with consistent settings and validation
 
@@ -329,13 +368,13 @@ def create_foreign_key(to, related_name=None, on_delete=models.CASCADE,
 
         # Prepare field kwargs
         field_kwargs = {
-            'on_delete': on_delete,
-            'help_text': help_text,
+            "on_delete": on_delete,
+            "help_text": help_text,
         }
 
         # Add related_name if provided
         if related_name:
-            field_kwargs['related_name'] = related_name
+            field_kwargs["related_name"] = related_name
 
         # Add any additional kwargs
         field_kwargs.update(kwargs)
@@ -348,8 +387,9 @@ def create_foreign_key(to, related_name=None, on_delete=models.CASCADE,
         return models.ForeignKey(to, on_delete=on_delete)
 
 
-def create_decimal_field(max_digits, decimal_places, default=None, help_text='',
-                        validators=None, **kwargs):
+def create_decimal_field(
+    max_digits, decimal_places, default=None, help_text="", validators=None, **kwargs
+):
     """
     Helper to create DecimalField for financial/version data with validation
 
@@ -385,24 +425,25 @@ def create_decimal_field(max_digits, decimal_places, default=None, help_text='',
         field_validators = list(validators or [])
 
         # Check for positive_only option
-        if kwargs.pop('positive_only', False):
+        if kwargs.pop("positive_only", False):
             try:
                 from django.core.validators import MinValueValidator
-                field_validators.append(MinValueValidator(Decimal('0')))
+
+                field_validators.append(MinValueValidator(Decimal("0")))
             except ImportError:
                 logger.warning("MinValueValidator not available")
 
         # Prepare field kwargs
         field_kwargs = {
-            'max_digits': max_digits,
-            'decimal_places': decimal_places,
-            'help_text': help_text,
-            'validators': field_validators,
+            "max_digits": max_digits,
+            "decimal_places": decimal_places,
+            "help_text": help_text,
+            "validators": field_validators,
         }
 
         # Add default if provided
         if default is not None:
-            field_kwargs['default'] = default
+            field_kwargs["default"] = default
 
         # Add any additional kwargs
         field_kwargs.update(kwargs)
@@ -442,13 +483,13 @@ def create_check_constraint(condition, name, violation_error_message=None):
 
         # Prepare constraint kwargs
         constraint_kwargs = {
-            'condition': condition,  # Use new API (Django 6.0+)
-            'name': name,
+            "condition": condition,  # Use new API (Django 6.0+)
+            "name": name,
         }
 
         # Add violation error message if provided
         if violation_error_message:
-            constraint_kwargs['violation_error_message'] = violation_error_message
+            constraint_kwargs["violation_error_message"] = violation_error_message
 
         return models.CheckConstraint(**constraint_kwargs)
 
@@ -462,7 +503,9 @@ def create_check_constraint(condition, name, violation_error_message=None):
             raise ValidationError(f"Could not create CheckConstraint: {e}")
 
 
-def create_unique_constraint(fields, name, condition=None, violation_error_message=None):
+def create_unique_constraint(
+    fields, name, condition=None, violation_error_message=None
+):
     """
     Helper to create UniqueConstraint with enhanced configuration
 
@@ -490,16 +533,16 @@ def create_unique_constraint(fields, name, condition=None, violation_error_messa
 
         # Prepare constraint kwargs
         constraint_kwargs = {
-            'fields': fields,
-            'name': name,
+            "fields": fields,
+            "name": name,
         }
 
         # Add optional parameters
         if condition:
-            constraint_kwargs['condition'] = condition
+            constraint_kwargs["condition"] = condition
 
         if violation_error_message:
-            constraint_kwargs['violation_error_message'] = violation_error_message
+            constraint_kwargs["violation_error_message"] = violation_error_message
 
         return models.UniqueConstraint(**constraint_kwargs)
 
@@ -533,18 +576,18 @@ def create_index(fields, name=None, condition=None, db_tablespace=None):
 
         # Prepare index kwargs
         index_kwargs = {
-            'fields': fields,
+            "fields": fields,
         }
 
         # Add optional parameters
         if name:
-            index_kwargs['name'] = name
+            index_kwargs["name"] = name
 
         if condition:
-            index_kwargs['condition'] = condition
+            index_kwargs["condition"] = condition
 
         if db_tablespace:
-            index_kwargs['db_tablespace'] = db_tablespace
+            index_kwargs["db_tablespace"] = db_tablespace
 
         return models.Index(**index_kwargs)
 
@@ -574,20 +617,22 @@ def validate_model_field_params(**field_params):
 
         # Validate common parameters
         for param, value in field_params.items():
-            if param in ['blank', 'null', 'unique', 'editable']:
+            if param in ["blank", "null", "unique", "editable"]:
                 if not isinstance(value, bool):
-                    logger.warning(f"Parameter {param} should be boolean, got {type(value)}")
+                    logger.warning(
+                        f"Parameter {param} should be boolean, got {type(value)}"
+                    )
                     validated_params[param] = bool(value)
                 else:
                     validated_params[param] = value
 
-            elif param in ['max_length', 'min_len', 'max_items']:
+            elif param in ["max_length", "min_len", "max_items"]:
                 if value is not None:
                     if not isinstance(value, int) or value < 0:
                         raise ValidationError(f"{param} must be a non-negative integer")
                     validated_params[param] = value
 
-            elif param in ['help_text', 'verbose_name']:
+            elif param in ["help_text", "verbose_name"]:
                 if value is not None:
                     validated_params[param] = str(value)
 
@@ -605,18 +650,16 @@ def validate_model_field_params(**field_params):
 # Export all helper functions for backward compatibility
 __all__ = [
     # Core field creation helpers
-    'create_meta_indexes',
-    'create_char_field',
-    'create_text_field',
-    'create_json_field',
-    'create_foreign_key',
-    'create_decimal_field',
-
+    "create_meta_indexes",
+    "create_char_field",
+    "create_text_field",
+    "create_json_field",
+    "create_foreign_key",
+    "create_decimal_field",
     # Constraint and index helpers
-    'create_check_constraint',
-    'create_unique_constraint',
-    'create_index',
-
+    "create_check_constraint",
+    "create_unique_constraint",
+    "create_index",
     # Validation helpers
-    'validate_model_field_params',
+    "validate_model_field_params",
 ]

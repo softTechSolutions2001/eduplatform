@@ -1,2 +1,2 @@
-﻿from django.test import TestCase
+from django.test import TestCase
 # Analytics model tests

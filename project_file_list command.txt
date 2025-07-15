@@ -1,5 +1,5 @@
-﻿# Fixed PowerShell command to get clean project file list
-Get-ChildItem -Recurse -File -Force | Where-Object {
+# Enhanced PowerShell command to get project file list with line counts
+$results = Get-ChildItem -Recurse -File -Force | Where-Object {
     # Exclude dependency/build directories
     $_.FullName -notmatch '\\node_modules\\' -and
     $_.FullName -notmatch '\\venv\\' -and
@@ -76,20 +76,103 @@ Get-ChildItem -Recurse -File -Force | Where-Object {
     # Exclude specific project files that might be too verbose
     $_.Name -ne 'project_file_list.txt' -and
     $_.Name -notmatch '.*\.cpython-.*\.pyc$'
-} | Select-Object -ExpandProperty FullName | ForEach-Object {
+} | ForEach-Object {
+    # Function to count lines in a file
+    function Get-LineCount {
+        param($FilePath)
+
+        try {
+            # Handle different file types
+            $extension = [System.IO.Path]::GetExtension($FilePath).ToLower()
+
+            # For binary files, return 0
+            $binaryExtensions = @('.jpg', '.jpeg', '.png', '.gif', '.bmp', '.ico', '.pdf', '.zip', '.rar', '.tar', '.gz', '.exe', '.dll', '.so', '.dylib', '.woff', '.woff2', '.ttf', '.otf', '.mp3', '.mp4', '.avi', '.mov', '.wav')
+            if ($binaryExtensions -contains $extension) {
+                return 0
+            }
+
+            # For text files, count non-empty lines
+            $content = Get-Content -Path $FilePath -ErrorAction SilentlyContinue
+            if ($content) {
+                # Count non-empty lines (excluding pure whitespace)
+                return ($content | Where-Object { $_.Trim() -ne '' }).Count
+            } else {
+                return 0
+            }
+        } catch {
+            return 0
+        }
+    }
+
+    # Get line count for current file
+    $lineCount = Get-LineCount -FilePath $_.FullName
+
     # Remove the full path up to the project root, keeping relative paths
-    $rel = ($_ -replace '.*(?:backend|frontend)[\\\/]', '')
+    $rel = ($_.FullName -replace '.*(?:backend|frontend)[\\\/]', '')
 
     # Determine if it's backend or frontend and prefix accordingly
-    if ($_ -match '\\backend\\') {
-        "backend/$rel"
-    } elseif ($_ -match '\\frontend\\') {
-        "frontend/$rel"
+    $relativePath = ""
+    if ($_.FullName -match '\\backend\\') {
+        $relativePath = "backend/$rel"
+    } elseif ($_.FullName -match '\\frontend\\') {
+        $relativePath = "frontend/$rel"
     } else {
         # For files in the root or other directories
-        $rel = ($_ -replace '.*(?:eduplatform)[\\\/]', '')
-        "$rel"
+        $rel = ($_.FullName -replace '.*(?:eduplatform)[\\\/]', '')
+        $relativePath = "$rel"
     }
-} | Where-Object { $_ -ne '' } | Sort-Object -Unique | Out-File project_file_list.txt -Encoding UTF8
 
-Write-Host "Project file list generated successfully in project_file_list.txt"
+    # Format the output with line count
+    if ($lineCount -gt 0) {
+        if ($_.Extension -eq '.py') {
+            # Special formatting for Python files
+            "$relativePath ($lineCount LOC)"
+        } else {
+            "$relativePath ($lineCount lines)"
+        }
+    } else {
+        "$relativePath"
+    }
+
+    # Return an object for further processing if needed
+    return [PSCustomObject]@{
+        Path = $relativePath
+        LineCount = $lineCount
+        Extension = $_.Extension
+        FullOutput = if ($lineCount -gt 0) {
+            if ($_.Extension -eq '.py') { "$relativePath ($lineCount LOC)" }
+            else { "$relativePath ($lineCount lines)" }
+        } else { "$relativePath" }
+    }
+} | Where-Object { $_.Path -ne '' } | Sort-Object Path -Unique
+
+# Output to file
+$results | Select-Object -ExpandProperty FullOutput | Out-File project_file_list.txt -Encoding UTF8
+
+# Display summary statistics
+Write-Host "Project file list with line counts generated successfully in project_file_list.txt"
+Write-Host ""
+Write-Host "Summary Statistics:"
+Write-Host "=================="
+
+$pythonFiles = $results | Where-Object { $_.Extension -eq '.py' }
+$totalPythonLOC = ($pythonFiles | Measure-Object -Property LineCount -Sum).Sum
+$pythonFileCount = $pythonFiles.Count
+
+$allFiles = $results | Where-Object { $_.LineCount -gt 0 }
+$totalLOC = ($allFiles | Measure-Object -Property LineCount -Sum).Sum
+$totalFileCount = $allFiles.Count
+
+Write-Host "Python files: $pythonFileCount files, $totalPythonLOC total LOC"
+Write-Host "All text files: $totalFileCount files, $totalLOC total lines"
+Write-Host "Binary/empty files: $(($results | Where-Object { $_.LineCount -eq 0 }).Count) files"
+
+# Optional: Display top 10 largest Python files
+if ($pythonFiles.Count -gt 0) {
+    Write-Host ""
+    Write-Host "Top 10 Largest Python Files:"
+    Write-Host "============================="
+    $pythonFiles | Sort-Object LineCount -Descending | Select-Object -First 10 | ForEach-Object {
+        Write-Host "$($_.Path) - $($_.LineCount) LOC"
+    }
+}

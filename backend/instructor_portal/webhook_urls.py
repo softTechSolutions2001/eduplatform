@@ -1,1 +1,1 @@
-﻿# Webhook URLs (unchanged)
+# Webhook URLs (unchanged)

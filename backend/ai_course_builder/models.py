@@ -12,6 +12,9 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 
+# Import CourseLevel Enum instead of duplicating LEVEL_CHOICES
+from courses.constants import CourseLevel
+
 User = get_user_model()
 
 
@@ -42,32 +45,22 @@ class AICourseBuilderDraft(models.Model):
 
     # Status choices
     STATUS_CHOICES = (
-        ('DRAFT', 'Draft'),
-        ('READY', 'Ready for Publishing'),
-        ('PUBLISHED', 'Published')
+        ("DRAFT", "Draft"),
+        ("READY", "Ready for Publishing"),
+        ("PUBLISHED", "Published"),
     )
 
-    # Difficulty level choices - matching Course model
-    LEVEL_CHOICES = (
-        ('beginner', 'Beginner'),
-        ('intermediate', 'Intermediate'),
-        ('advanced', 'Advanced'),
-        ('all_levels', 'All Levels'),
-    )
+    # FIXED: Use CourseLevel.choices() instead of duplicating LEVEL_CHOICES
+    # Difficulty level choices - using CourseLevel enum from constants.py
+    LEVEL_CHOICES = CourseLevel.choices()
 
     # Basic fields
     instructor = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name='ai_course_drafts'
+        User, on_delete=models.CASCADE, related_name="ai_course_drafts"
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    status = models.CharField(
-        max_length=20,
-        choices=STATUS_CHOICES,
-        default='DRAFT'
-    )
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="DRAFT")
 
     # Course information fields
     title = models.CharField(max_length=255, null=True, blank=True)
@@ -77,16 +70,12 @@ class AICourseBuilderDraft(models.Model):
     difficulty_level = models.CharField(
         max_length=20,
         choices=LEVEL_CHOICES,
-        default='all_levels',
+        default="all_levels",
         null=True,
-        blank=True    )
-    duration_minutes = models.PositiveIntegerField(null=True, blank=True)
-    price = models.DecimalField(
-        max_digits=10,
-        decimal_places=2,
-        null=True,
-        blank=True
+        blank=True,
     )
+    duration_minutes = models.PositiveIntegerField(null=True, blank=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
 
     # AI-generated content
     outline = models.JSONField(default=dict, blank=True, null=True)
@@ -117,6 +106,6 @@ class AICourseBuilderDraft(models.Model):
         return f"Draft: {self.title or 'Untitled'} ({self.id})"
 
     class Meta:
-        verbose_name = 'AI Course Builder Draft'
-        verbose_name_plural = 'AI Course Builder Drafts'
-        ordering = ['-updated_at']
+        verbose_name = "AI Course Builder Draft"
+        verbose_name_plural = "AI Course Builder Drafts"
+        ordering = ["-updated_at"]

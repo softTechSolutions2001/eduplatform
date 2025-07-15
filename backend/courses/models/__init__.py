@@ -1,4 +1,4 @@
-﻿#
+#
 # File Path: backend/courses/models/__init__.py
 # Folder Path: backend/courses/models/
 # Date Created: 2025-06-26 15:27:42

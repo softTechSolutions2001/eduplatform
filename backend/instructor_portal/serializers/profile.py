@@ -1,4 +1,4 @@
-﻿#
+#
 # File Path: instructor_portal/serializers/profile.py
 # Folder Path: instructor_portal/serializers/
 # Date Created: 2025-06-26 13:35:44

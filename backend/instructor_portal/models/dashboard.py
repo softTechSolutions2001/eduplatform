@@ -1,4 +1,4 @@
-﻿#
+#
 # File Path: instructor_portal/models/dashboard.py
 # Folder Path: instructor_portal/models/
 # Date Created: 2025-06-26 13:01:07

@@ -1,1 +1,1 @@
-﻿# Legacy serializer compatibility shims
+# Legacy serializer compatibility shims

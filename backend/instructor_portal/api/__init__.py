@@ -1,1 +1,1 @@
-﻿# Thin FastAPI / REST hooks if needed
+# Thin FastAPI / REST hooks if needed

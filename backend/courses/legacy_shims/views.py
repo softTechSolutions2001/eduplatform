@@ -1,1 +1,1 @@
-﻿# Legacy view compatibility shims
+# Legacy view compatibility shims

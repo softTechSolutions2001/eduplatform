@@ -1,4 +1,4 @@
-﻿# File Path: instructor_portal/models/analytics.py
+# File Path: instructor_portal/models/analytics.py
 # Folder Path: instructor_portal/models/
 # Date Created: 2025-06-26 13:01:07
 # Date Revised: 2025-06-27 03:27:18

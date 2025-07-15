@@ -1,463 +1,486 @@
-﻿.gitattributes
-.gitignore
-.lintstagedrc.json
-backend/.env
-backend/5.2.0
-backend/ai_course_builder\__init__.py
-backend/ai_course_builder\apps.py
+﻿.gitattributes (6 lines)
+.gitignore (171 lines)
+.lintstagedrc.json (13 lines)
+backend/.env (13 lines)
+backend/5.2.0 (6 lines)
+backend/ai_course_builder\__init__.py (1 LOC)
+backend/ai_course_builder\apps.py (8 LOC)
 backend/ai_course_builder\migrations\__init__.py
-backend/ai_course_builder\migrations\0001_initial.py
-backend/ai_course_builder\migrations\0002_rename_duration_seconds_aicoursebuilderdraft_duration_minutes.py
-backend/ai_course_builder\models.py
-backend/ai_course_builder\serializers.py
-backend/ai_course_builder\tasks.py
-backend/ai_course_builder\urls.py
-backend/ai_course_builder\views.py
-backend/backend_analyser_header.md
-backend/backend_analysis_report.md
-backend/backend_analyzer.py
-backend/CELERY_SETUP_GUIDE.md
-backend/config\postgresql.conf.sample
+backend/ai_course_builder\migrations\0001_initial.py (41 LOC)
+backend/ai_course_builder\models.py (93 LOC)
+backend/ai_course_builder\serializers.py (27 LOC)
+backend/ai_course_builder\tasks.py (381 LOC)
+backend/ai_course_builder\urls.py (20 LOC)
+backend/ai_course_builder\views.py (535 LOC)
+backend/backend_analyzer.py (3756 LOC)
+backend/check_migrations.py
+backend/common\__init__.py
+backend/common\admin.py (2 LOC)
+backend/common\apps.py (4 LOC)
+backend/common\constants.py (584 LOC)
+backend/common\migrations\__init__.py
+backend/common\models.py (2 LOC)
+backend/common\tests.py (2 LOC)
+backend/common\views.py (2 LOC)
+backend/config\postgresql.conf.sample (47 lines)
+backend/consistency_audit.md (204 lines)
 backend/content\__init__.py
-backend/content\admin.py
-backend/content\apps.py
+backend/content\admin.py (41 LOC)
+backend/content\apps.py (14 LOC)
 backend/content\migrations\__init__.py
-backend/content\migrations\0001_initial.py
-backend/content\migrations\0002_alter_testimonial_options_and_more.py
-backend/content\models.py
-backend/content\serializers.py
-backend/content\signals.py
-backend/content\tests.py
-backend/content\urls.py
-backend/content\views.py
-backend/courses\admin.py
-backend/courses\apps.py
-backend/courses\COMPATIBILITY_AUDIT_FINAL_REPORT.md
-backend/courses\COMPREHENSIVE_COMPATIBILITY_AUDIT.md
-backend/courses\constants.py
-backend/courses\forms.py
-backend/courses\legacy_shims\models.py
-backend/courses\legacy_shims\serializers.py
-backend/courses\legacy_shims\urls.py
-backend/courses\legacy_shims\views.py
-backend/courses\management\commands\add_sample_data.py
-backend/courses\management\commands\add_testing_course.py
-backend/courses\management\commands\delete_all_courses.py
-backend/courses\management\commands\list_endpoints.py
-backend/courses\management\commands\run_local_prod.py
-backend/courses\management\commands\setup_test_data.py
-backend/courses\management\commands\simple_duplicate_inspection.py
-backend/courses\management\commands\SYLLABUS_GENERATION.md
-backend/courses\management\commands\test_lessons_representation.py
-backend/courses\management\commands\testing_course_syllabus.md
+backend/content\migrations\0001_initial.py (75 LOC)
+backend/content\models.py (89 LOC)
+backend/content\serializers.py (45 LOC)
+backend/content\signals.py (77 LOC)
+backend/content\tests.py (2 LOC)
+backend/content\urls.py (25 LOC)
+backend/content\views.py (77 LOC)
+backend/courses\admin.py (983 LOC)
+backend/courses\apps.py (604 LOC)
+backend/courses\constants.py (540 LOC)
+backend/courses\forms.py (143 LOC)
+backend/courses\legacy_shims\models.py (1 LOC)
+backend/courses\legacy_shims\serializers.py (1 LOC)
+backend/courses\legacy_shims\urls.py (1 LOC)
+backend/courses\legacy_shims\views.py (1 LOC)
+backend/courses\management\commands\add_meta_fields.py (55 LOC)
+backend/courses\management\commands\add_sample_data.py (30 LOC)
+backend/courses\management\commands\add_testing_course.py (365 LOC)
+backend/courses\management\commands\check_db.py (658 LOC)
+backend/courses\management\commands\extract_business_logic.py (629 LOC)
+backend/courses\management\commands\generate_db_docs.py (229 LOC)
+backend/courses\management\commands\inspectdbschema.py (605 LOC)
+backend/courses\management\commands\inspectmodels_fullNew.py (597 LOC)
+backend/courses\management\commands\list_endpoints.py (434 LOC)
+backend/courses\management\commands\run_local_prod.py (38 LOC)
+backend/courses\management\commands\SYLLABUS_GENERATION.md (577 lines)
+backend/courses\management\commands\test_lessons_representation.py (65 LOC)
+backend/courses\management\commands\test_models.py (396 LOC)
+backend/courses\management\commands\test_serializers.py (712 LOC)
+backend/courses\management\commands\testing_course_syllabus.md (862 lines)
 backend/courses\migrations\__init__.py
-backend/courses\migrations\0001_initial.py
-backend/courses\migrations\0002_courseprogress_and_more.py
-backend/courses\models\__init__.py
-backend/courses\models\analytics.py
-backend/courses\models\core.py
-backend/courses\models\enrolment.py
-backend/courses\models\misc.py
-backend/courses\models\mixins.py
-backend/courses\models_old.py
-backend/courses\permissions.py
-backend/courses\serializers\__init__.py
-backend/courses\serializers\analytics.py
-backend/courses\serializers\core.py
-backend/courses\serializers\enrolment.py
-backend/courses\serializers\misc.py
-backend/courses\serializers\mixins.py
-backend/courses\serializers_old.py
-backend/courses\signals.py
-backend/courses\storage.py
-backend/courses\tests.py
-backend/courses\urls.py
-backend/courses\utils.py
-backend/courses\utils\__init__.py
-backend/courses\utils\core.py
-backend/courses\utils\model_helpers.py
-backend/courses\validation.py
-backend/courses\validators.py
-backend/courses\views\__init__.py
-backend/courses\views\debug.py
-backend/courses\views\draft_content.py
-backend/courses\views\instructor.py
-backend/courses\views\mixins.py
-backend/courses\views\public.py
-backend/courses\views\user.py
-backend/courses\VIEWS_COMPATIBILITY_ISSUES.md
-backend/courses\views_old.py
-backend/database_requirements.txt
-backend/deploy_duplicate_fix.ps1
-backend/django_analyzer.py
-backend/educore\__init__.py
-backend/educore\asgi.py
-backend/educore\celery.py
-backend/educore\db_settings.py
-backend/educore\settings.py
-backend/educore\urls.py
-backend/educore\utils\endpoint_extractor.py
-backend/educore\views.py
-backend/educore\wsgi.py
-backend/instructor_portal\__init__.py
-backend/instructor_portal\admin.py
-backend/instructor_portal\api\__init__.py
-backend/instructor_portal\apps.py
-backend/instructor_portal\debug_urls.py
-backend/instructor_portal\external_api_urls.py
-backend/instructor_portal\lti_urls.py
+backend/courses\migrations\0001_initial.py (1065 LOC)
+backend/courses\migrations\0002_convert_enums_to_textchoices.py (55 LOC)
+backend/courses\migrations\0003_alter_course_completion_status_alter_course_level_and_more.py (23 LOC)
+backend/courses\models\__init__.py (119 LOC)
+backend/courses\models\analytics.py (1077 LOC)
+backend/courses\models\choices.py (28 LOC)
+backend/courses\models\core.py (1085 LOC)
+backend/courses\models\enrolment.py (840 LOC)
+backend/courses\models\misc.py (393 LOC)
+backend/courses\models\mixins.py (444 LOC)
+backend/courses\models\models_documentation.md (500 lines)
+backend/courses\permissions.py (614 LOC)
+backend/courses\serializers\__init__.py (60 LOC)
+backend/courses\serializers\analytics.py (397 LOC)
+backend/courses\serializers\core.py (1121 LOC)
+backend/courses\serializers\enrolment.py (288 LOC)
+backend/courses\serializers\misc.py (368 LOC)
+backend/courses\serializers\mixins.py (341 LOC)
+backend/courses\serializers\utils.py (50 LOC)
+backend/courses\signals.py (739 LOC)
+backend/courses\storage.py (912 LOC)
+backend/courses\tests.py (2 LOC)
+backend/courses\urls.py (321 LOC)
+backend/courses\utils\__init__.py (123 LOC)
+backend/courses\utils\core.py (890 LOC)
+backend/courses\utils\model_helpers.py (525 LOC)
+backend/courses\validation.py (602 LOC)
+backend/courses\validators.py (849 LOC)
+backend/courses\views\__init__.py (162 LOC)
+backend/courses\views\debug.py (153 LOC)
+backend/courses\views\draft_content.py (771 LOC)
+backend/courses\views\instructor.py (527 LOC)
+backend/courses\views\mixins.py (630 LOC)
+backend/courses\views\public.py (879 LOC)
+backend/courses\views\user.py (546 LOC)
+backend/database_requirements.txt (4 lines)
+backend/db_check.txt (48 lines)
+backend/db_status.py (59 LOC)
+backend/django_endpoints.json (3374 lines)
+backend/django_endpoints.md (357 lines)
+backend/docs\CELERY_SETUP_GUIDE.md (76 lines)
+backend/docs\DATABASE_SCHEMA.md (2026 lines)
+backend/docs\django_test_procedure.md (301 lines)
+backend/docs\modelsDesign.md (1243 lines)
+backend/docs\my_endpoints.json (9955 lines)
+backend/docs\my_endpoints.md (769 lines)
+backend/docs\test_columns.py (46 LOC)
+backend/docs\test_compatibility.py
+backend/docs\test_db.py (23 LOC)
+backend/educore\__init__.py (4 LOC)
+backend/educore\asgi.py (10 LOC)
+backend/educore\celery.py (22 LOC)
+backend/educore\db_settings.py (42 LOC)
+backend/educore\pytest.ini (4 lines)
+backend/educore\settings.py (469 LOC)
+backend/educore\urls.py (73 LOC)
+backend/educore\utils\endpoint_extractor.py (589 LOC)
+backend/educore\views.py (67 LOC)
+backend/educore\wsgi.py (10 LOC)
+backend/endpoint_test_results.json (5497 lines)
+backend/instructor_portal\__init__.py (1 LOC)
+backend/instructor_portal\admin.py (352 LOC)
+backend/instructor_portal\api\__init__.py (1 LOC)
+backend/instructor_portal\apps.py (70 LOC)
+backend/instructor_portal\debug_urls.py (9 LOC)
+backend/instructor_portal\external_api_urls.py (2 LOC)
+backend/instructor_portal\lti_urls.py (1 LOC)
 backend/instructor_portal\migrations\__init__.py
-backend/instructor_portal\migrations\0001_initial.py
-backend/instructor_portal\models\__init__.py
-backend/instructor_portal\models\analytics.py
-backend/instructor_portal\models\course_link.py
-backend/instructor_portal\models\creation.py
-backend/instructor_portal\models\dashboard.py
-backend/instructor_portal\models\drafts.py
-backend/instructor_portal\models\maintenance.py
-backend/instructor_portal\models\notifications.py
-backend/instructor_portal\models\profile.py
-backend/instructor_portal\models\security.py
-backend/instructor_portal\models\utils.py
-backend/instructor_portal\models_old.py
-backend/instructor_portal\routers.py
-backend/instructor_portal\serializers\__init__.py
-backend/instructor_portal\serializers\analytics.py
-backend/instructor_portal\serializers\course_management.py
-backend/instructor_portal\serializers\creation.py
-backend/instructor_portal\serializers\dashboard.py
-backend/instructor_portal\serializers\mixins.py
-backend/instructor_portal\serializers\profile.py
-backend/instructor_portal\serializers\settings.py
-backend/instructor_portal\serializers\utils.py
-backend/instructor_portal\serializers_old.py
-backend/instructor_portal\signals.py
-backend/instructor_portal\tasks.py
-backend/instructor_portal\tests.py
-backend/instructor_portal\tests\__init__.py
-backend/instructor_portal\tests\test_analytics.py
-backend/instructor_portal\tests\test_course_link.py
-backend/instructor_portal\tests\test_creation.py
-backend/instructor_portal\tests\test_dashboard.py
-backend/instructor_portal\tests\test_drafts.py
-backend/instructor_portal\tests\test_profile.py
-backend/instructor_portal\urls.py
-backend/instructor_portal\urls_basic.py
-backend/instructor_portal\urls_original.py
-backend/instructor_portal\urls_simple.py
-backend/instructor_portal\views\__init__.py
-backend/instructor_portal\views\auth.py
-backend/instructor_portal\views\collaboration_views.py
-backend/instructor_portal\views\course_views.py
-backend/instructor_portal\views\creation_views.py
-backend/instructor_portal\views\dashboard_views.py
-backend/instructor_portal\views\mixins.py
-backend/instructor_portal\views\profile_views.py
-backend/instructor_portal\views_old.py
-backend/instructor_portal\webhook_urls.py
-backend/manage.py
-backend/my_endpoints.json
-backend/my_endpoints.md
-backend/requirements.txt
-backend/requirements-celery.txt
-backend/SERIALIZERS_SURGICAL_REFACTORING_COMPATIBILITY_AUDIT.md
-backend/setup.cfg
-backend/setup_redis_wsl.bat
-backend/start_celery.bat
-backend/SURGICAL_REFACTORING_AUDIT_DISCOVERY_REPORT.md
-backend/SURGICAL_REFACTORING_COMPATIBILITY_AUDIT.md
-backend/templates\base.html
-backend/templates\instructor\debug_courses.html
-backend/templates\instructor\simple_courses.html
-backend/templates\users\email_verification.html
-backend/templates\users\password_reset_email.html
-backend/test_compatibility.py
-backend/users\__init__.py
-backend/users\admin.py
-backend/users\apps.py
-backend/users\authentication.py
-backend/users\managers.py
+backend/instructor_portal\migrations\0001_initial.py (420 LOC)
+backend/instructor_portal\models\__init__.py (153 LOC)
+backend/instructor_portal\models\analytics.py (357 LOC)
+backend/instructor_portal\models\course_link.py (128 LOC)
+backend/instructor_portal\models\creation.py (434 LOC)
+backend/instructor_portal\models\dashboard.py (146 LOC)
+backend/instructor_portal\models\drafts.py (488 LOC)
+backend/instructor_portal\models\maintenance.py (359 LOC)
+backend/instructor_portal\models\notifications.py (307 LOC)
+backend/instructor_portal\models\profile.py (297 LOC)
+backend/instructor_portal\models\security.py (219 LOC)
+backend/instructor_portal\models\utils.py (159 LOC)
+backend/instructor_portal\models_old.py (2695 LOC)
+backend/instructor_portal\routers.py (10 LOC)
+backend/instructor_portal\serializers\__init__.py (139 LOC)
+backend/instructor_portal\serializers\analytics.py (113 LOC)
+backend/instructor_portal\serializers\course_management.py (943 LOC)
+backend/instructor_portal\serializers\creation.py (516 LOC)
+backend/instructor_portal\serializers\dashboard.py (88 LOC)
+backend/instructor_portal\serializers\mixins.py (94 LOC)
+backend/instructor_portal\serializers\profile.py (226 LOC)
+backend/instructor_portal\serializers\settings.py (218 LOC)
+backend/instructor_portal\serializers\utils.py (101 LOC)
+backend/instructor_portal\serializers_old.py (1705 LOC)
+backend/instructor_portal\signals.py (384 LOC)
+backend/instructor_portal\tasks.py (361 LOC)
+backend/instructor_portal\tests.py (2 LOC)
+backend/instructor_portal\tests\__init__.py (1 LOC)
+backend/instructor_portal\tests\test_analytics.py (2 LOC)
+backend/instructor_portal\tests\test_course_link.py (2 LOC)
+backend/instructor_portal\tests\test_creation.py (2 LOC)
+backend/instructor_portal\tests\test_dashboard.py (2 LOC)
+backend/instructor_portal\tests\test_drafts.py (2 LOC)
+backend/instructor_portal\tests\test_profile.py (2 LOC)
+backend/instructor_portal\urls.py (13 LOC)
+backend/instructor_portal\urls_basic.py (13 LOC)
+backend/instructor_portal\urls_original.py (320 LOC)
+backend/instructor_portal\urls_simple.py (50 LOC)
+backend/instructor_portal\views\__init__.py (352 LOC)
+backend/instructor_portal\views\auth.py (694 LOC)
+backend/instructor_portal\views\collaboration_views.py (323 LOC)
+backend/instructor_portal\views\course_views.py (740 LOC)
+backend/instructor_portal\views\creation_views.py (571 LOC)
+backend/instructor_portal\views\dashboard_views.py (733 LOC)
+backend/instructor_portal\views\mixins.py (703 LOC)
+backend/instructor_portal\views\profile_views.py (983 LOC)
+backend/instructor_portal\views_old.py (2193 LOC)
+backend/instructor_portal\webhook_urls.py (1 LOC)
+backend/manage.py (18 LOC)
+backend/report.md (980 lines)
+backend/reports\model_test_report_2025-07-11_164022.md (190 lines)
+backend/requirements.txt (63 lines)
+backend/requirements-celery.txt (8 lines)
+backend/schema.yml (5454 lines)
+backend/setup.cfg (38 lines)
+backend/setup_redis_wsl.bat (43 lines)
+backend/start_celery.bat (11 lines)
+backend/templates\base.html (39 lines)
+backend/templates\instructor\debug_courses.html (226 lines)
+backend/templates\instructor\simple_courses.html (71 lines)
+backend/templates\users\email_verification.html (77 lines)
+backend/templates\users\password_reset_email.html (72 lines)
+backend/test\django_analyzer.py (1501 LOC)
+backend/test\test_endpoint.py (32 LOC)
+backend/test_columns.py
+backend/test_db.py
+backend/test_endpoint.py
+backend/users\__init__.py (1 LOC)
+backend/users\admin.py (407 LOC)
+backend/users\apps.py (182 LOC)
+backend/users\authentication.py (518 LOC)
+backend/users\health_views.py (319 LOC)
+backend/users\managers.py (96 LOC)
 backend/users\migrations\__init__.py
-backend/users\migrations\0001_initial.py
-backend/users\migrations\0002_alter_customuser_managers_and_more.py
-backend/users\migrations\0003_usersession_login_method.py
-backend/users\migrations\0004_alter_subscription_tier.py
-backend/users\migrations\0005_emailverification_users_email_token_c80ef6_idx_and_more.py
-backend/users\models.py
-backend/users\permissions.py
-backend/users\pipeline.py
-backend/users\serializers.py
-backend/users\tests.py
-backend/users\urls.py
-backend/users\utils.py
-backend/users\views.py
-backend/VIEWS_SURGICAL_REFACTORING_COMPATIBILITY_AUDIT.md
-COMPATIBILITY_AUDIT_FINAL_REPORT.md
-copilot.json
-frontend/.env
-frontend/.env.template
-frontend/.eslintrc.json
-frontend/.gitignore
-frontend/.prettierrc
-frontend/AI_COURSE_BUILDER_SETUP.md
-frontend/cypress.config.ts
-frontend/cypress.env.json
-frontend/eslint.config.js
+backend/users\migrations\0001_initial.py (152 LOC)
+backend/users\models.py (563 LOC)
+backend/users\permissions.py (309 LOC)
+backend/users\pipeline.py (24 LOC)
+backend/users\serializers.py (626 LOC)
+backend/users\services.py (341 LOC)
+backend/users\signals.py (208 LOC)
+backend/users\tests.py (2 LOC)
+backend/users\urls.py (133 LOC)
+backend/users\utils.py (255 LOC)
+backend/users\views.py (1020 LOC)
+CODING_GUIDELINES.md (269 lines)
+copilot.json (51 lines)
+docs\flipkart.html
+docs\MIGRATION_FIX_COMPLETE.md (181 lines)
+docs\MIGRATION_FIX_SOLUTION.md (100 lines)
+frontend/.env (10 lines)
+frontend/.env.template (36 lines)
+frontend/.eslintrc.json (51 lines)
+frontend/.gitignore (27 lines)
+frontend/.prettierrc (28 lines)
+frontend/AI_COURSE_BUILDER_SETUP.md (46 lines)
+frontend/CODING_GUIDELINES.md (269 lines)
+frontend/cypress.config.ts (15 lines)
+frontend/cypress.env.json (4 lines)
+frontend/eslint.config.js (32 lines)
 frontend/FRONTEND_IMPORT_FIXES.md
-frontend/index.html
-frontend/package.json
-frontend/package-lock.json
-frontend/postcss.config.js
+frontend/index.html (31 lines)
+frontend/package.json (126 lines)
+frontend/package-lock.json (14000 lines)
+frontend/postcss.config.js (6 lines)
 frontend/public\favicon.ico
-frontend/public\vite.svg
-frontend/README.md
-frontend/scripts\setup-ai-builder-test.js
-frontend/scripts\start-mock-ai-builder.bat
-frontend/scripts\test-ai-builder.js
-frontend/src\aiCourseBuilder\api\aiCourseBuilderAPI.js
-frontend/src\aiCourseBuilder\api\aiCourseBuilderAPI.jsx
+frontend/public\vite.svg (1 lines)
+frontend/README.md (7 lines)
+frontend/scripts\setup-ai-builder-test.js (48 lines)
+frontend/scripts\start-mock-ai-builder.bat (10 lines)
+frontend/scripts\test-ai-builder.js (117 lines)
+frontend/src\aiCourseBuilder\api\aiCourseBuilderAPI.js (447 lines)
+frontend/src\aiCourseBuilder\api\aiCourseBuilderAPI.jsx (447 lines)
 frontend/src\aiCourseBuilder\api\aiCourseBuilderAPI_backup.jsx
-frontend/src\aiCourseBuilder\api\mockResponses.js
-frontend/src\aiCourseBuilder\api\promptTemplates.js
-frontend/src\aiCourseBuilder\components\AICourseBuilder.jsx
-frontend/src\aiCourseBuilder\components\content\ContentEditor.jsx
-frontend/src\aiCourseBuilder\components\content\EnhancementSuggestions.jsx
-frontend/src\aiCourseBuilder\components\CourseGenerationWizard.jsx
-frontend/src\aiCourseBuilder\components\generation\ContentPreview.jsx
-frontend/src\aiCourseBuilder\components\generation\PhaseProgress.jsx
-frontend/src\aiCourseBuilder\components\input\BasicInfoForm.jsx
-frontend/src\aiCourseBuilder\components\input\ObjectivesInput.jsx
-frontend/src\aiCourseBuilder\components\preview\CourseOutlinePreview.jsx
-frontend/src\aiCourseBuilder\components\preview\ModulePreview.jsx
-frontend/src\aiCourseBuilder\components\ui\AIBuilderErrorBoundary.jsx
-frontend/src\aiCourseBuilder\components\ui\NotificationSystem.jsx
-frontend/src\aiCourseBuilder\components\ui\PhaseIndicator.jsx
-frontend/src\aiCourseBuilder\components\ui\ProgressBar.jsx
-frontend/src\aiCourseBuilder\config\aiBuilderConfig.js
+frontend/src\aiCourseBuilder\api\mockResponses.js (266 lines)
+frontend/src\aiCourseBuilder\api\promptTemplates.js (409 lines)
+frontend/src\aiCourseBuilder\components\AICourseBuilder.jsx (244 lines)
+frontend/src\aiCourseBuilder\components\content\ContentEditor.jsx (429 lines)
+frontend/src\aiCourseBuilder\components\content\EnhancementSuggestions.jsx (363 lines)
+frontend/src\aiCourseBuilder\components\CourseGenerationWizard.jsx (347 lines)
+frontend/src\aiCourseBuilder\components\generation\ContentPreview.jsx (107 lines)
+frontend/src\aiCourseBuilder\components\generation\PhaseProgress.jsx (212 lines)
+frontend/src\aiCourseBuilder\components\input\BasicInfoForm.jsx (318 lines)
+frontend/src\aiCourseBuilder\components\input\ObjectivesInput.jsx (377 lines)
+frontend/src\aiCourseBuilder\components\preview\CourseOutlinePreview.jsx (294 lines)
+frontend/src\aiCourseBuilder\components\preview\ModulePreview.jsx (397 lines)
+frontend/src\aiCourseBuilder\components\ui\AIBuilderErrorBoundary.jsx (88 lines)
+frontend/src\aiCourseBuilder\components\ui\NotificationSystem.jsx (242 lines)
+frontend/src\aiCourseBuilder\components\ui\PhaseIndicator.jsx (223 lines)
+frontend/src\aiCourseBuilder\components\ui\ProgressBar.jsx (86 lines)
+frontend/src\aiCourseBuilder\config\aiBuilderConfig.js (267 lines)
 frontend/src\aiCourseBuilder\config\aiBuilderConfig.temp.js
-frontend/src\aiCourseBuilder\hooks\useAIGeneration.js
-frontend/src\aiCourseBuilder\index.js
-frontend/src\aiCourseBuilder\README.md
-frontend/src\aiCourseBuilder\store\aiBuilderStore.js
-frontend/src\aiCourseBuilder\tests\AICourseBuilder.test.jsx
-frontend/src\aiCourseBuilder\utils\aiWorkflowUtils.js
-frontend/src\aiCourseBuilder\utils\apiUtils.js
-frontend/src\aiCourseBuilder\utils\contentTemplates.js
-frontend/src\aiCourseBuilder\utils\validationHelpers.js
-frontend/src\aiCourseBuilder\utils\validationHelpers.js.new
-frontend/src\aiCourseBuilder\utils\workflowValidation.js
-frontend/src\App.jsx
-frontend/src\assets\react.svg
-frontend/src\assets\testing.md
-frontend/src\components\ApiTest.jsx
-frontend/src\components\blog\BlogPostList.jsx
-frontend/src\components\common\Accordion.jsx
-frontend/src\components\common\Alert.jsx
-frontend/src\components\common\AnimatedElement.jsx
-frontend/src\components\common\AssessmentErrorBoundary.jsx
-frontend/src\components\common\Avatar.jsx
-frontend/src\components\common\Badge.jsx
-frontend/src\components\common\BookmarksList.jsx
-frontend/src\components\common\Button.jsx
-frontend/src\components\common\Card.jsx
-frontend/src\components\common\Certificate.jsx
-frontend/src\components\common\COMPONENT_EXPORTS.md
-frontend/src\components\common\Container.jsx
-frontend/src\components\common\ContentAccessController.jsx
-frontend/src\components\common\ContentCreationErrorBoundary.jsx
-frontend/src\components\common\CourseContentErrorBoundary.jsx
-frontend/src\components\common\Dropdown.jsx
-frontend/src\components\common\DurationInput.jsx
-frontend/src\components\common\errorBoundaries.js
-frontend/src\components\common\ErrorBoundary.jsx
-frontend/src\components\common\FormInput.jsx
-frontend/src\components\common\index.js
-frontend/src\components\common\InstructorErrorBoundary.jsx
-frontend/src\components\common\LoadingScreen.jsx
-frontend/src\components\common\Modal.jsx
-frontend/src\components\common\Pagination.jsx
-frontend/src\components\common\ProfileBadge.jsx
-frontend/src\components\common\ProgressBar.jsx
-frontend/src\components\common\Rating.jsx
-frontend/src\components\common\ResourceCard.jsx
-frontend/src\components\common\ResumeButton.jsx
-frontend/src\components\common\SearchBar.jsx
-frontend/src\components\common\Seo.jsx
-frontend/src\components\common\Sidebar.jsx
-frontend/src\components\common\Skeleton.jsx
-frontend/src\components\common\Spinner.jsx
-frontend/src\components\common\StepIndicator.jsx
-frontend/src\components\common\Tabs.jsx
-frontend/src\components\common\TagInput.jsx
-frontend/src\components\common\Tooltip.jsx
-frontend/src\components\courses\CourseList.jsx
-frontend/src\components\instructor\UploadResourceModal.jsx
-frontend/src\components\layouts\Footer.jsx
-frontend/src\components\layouts\Header.jsx
-frontend/src\components\layouts\index.js
-frontend/src\components\layouts\MainLayout.jsx
-frontend/src\components\routes\CourseContentRouteChecker.jsx
-frontend/src\components\routes\ProtectedRoute.jsx
-frontend/src\components\subscription\SubscriptionPlans.jsx
-frontend/src\components\testimonials\TestimonialList.jsx
-frontend/src\contexts\AuthContext.jsx
-frontend/src\contexts\DirectionContext.jsx
-frontend/src\courseBuilder\api\courseBuilderAPI.ts
-frontend/src\courseBuilder\api\dndSession.ts
-frontend/src\courseBuilder\components\CourseTitleInput.tsx
-frontend/src\courseBuilder\components\LessonCard.tsx
-frontend/src\courseBuilder\components\ModuleCard.tsx
-frontend/src\courseBuilder\components\NetworkDebugger.tsx
-frontend/src\courseBuilder\components\NewCourseDialog.tsx
-frontend/src\courseBuilder\components\ResourceChip.tsx
-frontend/src\courseBuilder\components\SwitchEditorBanner.tsx
-frontend/src\courseBuilder\components\Toolbar.tsx
-frontend/src\courseBuilder\CourseBuilder.tsx
-frontend/src\courseBuilder\dnd\DnDContext.tsx
-frontend/src\courseBuilder\dnd\Sortable.tsx
-frontend/src\courseBuilder\dnd\useDragTypes.ts
-frontend/src\courseBuilder\hooks\useAutoSave.ts
-frontend/src\courseBuilder\hooks\useDirtyPrompt.ts
-frontend/src\courseBuilder\pages\BuilderBoard.tsx
-frontend/src\courseBuilder\pages\Instructions.tsx
-frontend/src\courseBuilder\pages\ReviewPublish.tsx
-frontend/src\courseBuilder\store\courseSlice.ts
-frontend/src\courseBuilder\store\schema.ts
-frontend/src\courseBuilder\styles\courseBuilder.css
-frontend/src\courseBuilder\utils\accessibility.tsx
-frontend/src\courseBuilder\utils\caseConvert.ts
-frontend/src\courseBuilder\utils\debounce.ts
-frontend/src\courseBuilder\utils\errorMonitoring.tsx
-frontend/src\courseBuilder\utils\object.ts
-frontend/src\courseBuilder\utils\virtualization.ts
-frontend/src\debug-login.html
-frontend/src\declarations.d.ts
-frontend/src\docs\COURSE_EDITOR_INTEGRATION.md
-frontend/src\frontend-analyzer.cjs
-frontend/src\hooks\useDebounce.js
-frontend/src\hooks\useDocumentTitle.js
-frontend/src\hooks\useStyles.jsx
-frontend/src\index.css
-frontend/src\main.jsx
-frontend/src\pages\AboutPage.jsx
-frontend/src\pages\AssessmentPage.jsx
-frontend/src\pages\auth\ForgotPasswordPage.jsx
-frontend/src\pages\auth\LoginPage.jsx
-frontend/src\pages\auth\RegisterPage.jsx
-frontend/src\pages\auth\ResetPasswordPage.jsx
-frontend/src\pages\auth\SocialAuthCallback.jsx
-frontend/src\pages\auth\VerifyEmailPage.jsx
-frontend/src\pages\certificates\CertificatePage.jsx
-frontend/src\pages\courses\AssessmentPage.jsx
-frontend/src\pages\courses\CourseContentPage.jsx
-frontend/src\pages\courses\CourseLandingPage.jsx
-frontend/src\pages\courses\CoursesListPage.jsx
-frontend/src\pages\courses\debug_course_content.js
-frontend/src\pages\courses\InstructorCourseDetailPage.jsx
-frontend/src\pages\courses\LearningHeaderWidgets.jsx
-frontend/src\pages\dashboard\AdminDashboard.jsx
-frontend/src\pages\dashboard\components\BookmarksWidget.jsx
-frontend/src\pages\dashboard\DashboardPage.jsx
-frontend/src\pages\dashboard\InstructorDashboard.jsx
-frontend/src\pages\dashboard\StudentDashboard.jsx
-frontend/src\pages\ForumPage.jsx
-frontend/src\pages\HomePage.jsx
-frontend/src\pages\instructor\components\SwitchEditorBanner.jsx
-frontend/src\pages\instructor\CourseCreationOptions.jsx
-frontend/src\pages\instructor\CoursesCleanup.jsx
-frontend/src\pages\instructor\CourseWizard.jsx
-frontend/src\pages\instructor\CourseWizardContext.jsx
-frontend/src\pages\instructor\CourseWizardWrapper.jsx
-frontend/src\pages\instructor\CreateCoursePage.jsx
-frontend/src\pages\instructor\CreateLessonPage.jsx
-frontend/src\pages\instructor\CreateModulePage.jsx
-frontend/src\pages\instructor\CurriculumPage.jsx
-frontend/src\pages\instructor\EditCoursePage.jsx
-frontend/src\pages\instructor\wizardSteps\ContentCreationStep.jsx
-frontend/src\pages\instructor\wizardSteps\CourseBasicsStep.jsx
-frontend/src\pages\instructor\wizardSteps\CourseDetailsStep.jsx
-frontend/src\pages\instructor\wizardSteps\index.js
-frontend/src\pages\instructor\wizardSteps\ModuleStructureStep.jsx
-frontend/src\pages\instructor\wizardSteps\ReviewPublishStep.jsx
-frontend/src\pages\NotFoundPage.jsx
-frontend/src\pages\subscription\CheckoutPage.jsx
-frontend/src\pages\subscription\PricingPage.jsx
-frontend/src\pages\subscription\SubscriptionSuccessPage.jsx
-frontend/src\pages\TrendsPage.jsx
-frontend/src\pages\user\ProfilePage.jsx
-frontend/src\pages\UserCoursesPage.jsx
-frontend/src\pages\VirtualLabPage.jsx
-frontend/src\scripts\cleanupCourses.js
-frontend/src\scripts\dropdown.js
-frontend/src\services\api.js
-frontend/src\services\domains\assessment.service.ts
-frontend/src\services\domains\auth.service.ts
-frontend/src\services\domains\blog.service.ts
-frontend/src\services\domains\category.service.ts
-frontend/src\services\domains\certificate.service.ts
-frontend/src\services\domains\course.service.ts
-frontend/src\services\domains\forum.service.ts
-frontend/src\services\domains\note.service.ts
-frontend/src\services\domains\progress.service.ts
-frontend/src\services\domains\statistics.service.ts
-frontend/src\services\domains\subscription.service.ts
-frontend/src\services\domains\system.service.ts
-frontend/src\services\domains\testimonial.service.ts
-frontend/src\services\domains\virtualLab.service.ts
-frontend/src\services\http\apiClient.ts
-frontend/src\services\http\constants.ts
-frontend/src\services\http\endpoints.ts
-frontend/src\services\instructor\assessmentAuthor.service.ts
-frontend/src\services\instructor\courseAuthoring.service.ts
-frontend/src\services\instructor\dashboard.service.ts
-frontend/src\services\instructor\helpers.ts
-frontend/src\services\instructor\index.ts
-frontend/src\services\instructor\lesson.service.ts
-frontend/src\services\instructor\module.service.ts
-frontend/src\services\instructor\resource.service.ts
-frontend/src\services\instructor\types.ts
-frontend/src\services\instructorService.js
-frontend/src\services\utils\apiUtils.ts
-frontend/src\services\utils\handleRequest.ts
-frontend/src\styles\dashboard-dropdown.css
-frontend/src\styles\global.css
-frontend/src\styles\styles.js
-frontend/src\styles\theme.js
-frontend/src\test\setup.ts
-frontend/src\types\aiBuilder.ts
-frontend/src\types\batchOperations.ts
-frontend/src\types\index.ts
-frontend/src\types\payments.ts
-frontend/src\utils\apiHelper.js
-frontend/src\utils\authPersist.js
-frontend/src\utils\buildCourseFormData.ts
-frontend/src\utils\courseDataSync.js
-frontend/src\utils\formatDuration.js
-frontend/src\utils\generateTempId.ts
-frontend/src\utils\helpers.js
-frontend/src\utils\logger.js
-frontend/src\utils\navigationHelper.js
-frontend/src\utils\sanitizer.js
-frontend/src\utils\secureTokenStorage.d.ts
-frontend/src\utils\secureTokenStorage.js
-frontend/src\utils\transformData.js
-frontend/src\utils\unsavedChangesTracker.js
-frontend/src\utils\validation.js
-frontend/start-mock-ai.bat
-frontend/tailwind.config.js
-frontend/test\aiCourseBuilder.integration.test.js
-frontend/test\courseBuilder\CoreFunctionality.test.ts
-frontend/test\courseBuilder\Instructions.test.tsx
-frontend/test\courseBuilder\ModuleCard.test.tsx
-frontend/test\mocks\server.ts
-frontend/test\setup.ts
-frontend/test_import.js
-frontend/tsconfig.json
-frontend/tsconfig.node.json
-frontend/vite.config.js
-frontend/vitest.config.ts
-index.html
-project_file_list command.txt
-SERIALIZERS_COMPATIBILITY_AUDIT_FINAL.md
-shortpaths.txt
-UPGRADING PLAN.md
+frontend/src\aiCourseBuilder\hooks\useAIGeneration.js (619 lines)
+frontend/src\aiCourseBuilder\index.js (70 lines)
+frontend/src\aiCourseBuilder\README.md (255 lines)
+frontend/src\aiCourseBuilder\store\aiBuilderStore.js (561 lines)
+frontend/src\aiCourseBuilder\tests\AICourseBuilder.test.jsx (179 lines)
+frontend/src\aiCourseBuilder\utils\aiWorkflowUtils.js (375 lines)
+frontend/src\aiCourseBuilder\utils\apiUtils.js (30 lines)
+frontend/src\aiCourseBuilder\utils\contentTemplates.js (496 lines)
+frontend/src\aiCourseBuilder\utils\validationHelpers.js (51 lines)
+frontend/src\aiCourseBuilder\utils\validationHelpers.js.new (51 lines)
+frontend/src\aiCourseBuilder\utils\workflowValidation.js (473 lines)
+frontend/src\App.jsx (494 lines)
+frontend/src\assets\react.svg (1 lines)
+frontend/src\assets\testing.md (46 lines)
+frontend/src\components\ApiTest.jsx (47 lines)
+frontend/src\components\blog\BlogPostList.jsx (136 lines)
+frontend/src\components\common\Accordion.jsx (91 lines)
+frontend/src\components\common\Alert.jsx (168 lines)
+frontend/src\components\common\AnimatedElement.jsx (91 lines)
+frontend/src\components\common\AssessmentErrorBoundary.jsx (115 lines)
+frontend/src\components\common\Avatar.jsx (67 lines)
+frontend/src\components\common\Badge.jsx (65 lines)
+frontend/src\components\common\BookmarksList.jsx (236 lines)
+frontend/src\components\common\Button.jsx (149 lines)
+frontend/src\components\common\Card.jsx (56 lines)
+frontend/src\components\common\Certificate.jsx (121 lines)
+frontend/src\components\common\COMPONENT_EXPORTS.md (59 lines)
+frontend/src\components\common\Container.jsx (12 lines)
+frontend/src\components\common\ContentAccessController.jsx (153 lines)
+frontend/src\components\common\ContentCreationErrorBoundary.jsx (151 lines)
+frontend/src\components\common\CourseContentErrorBoundary.jsx (167 lines)
+frontend/src\components\common\Dropdown.jsx (82 lines)
+frontend/src\components\common\DurationInput.jsx (195 lines)
+frontend/src\components\common\errorBoundaries.js (11 lines)
+frontend/src\components\common\ErrorBoundary.jsx (97 lines)
+frontend/src\components\common\FormInput.jsx (193 lines)
+frontend/src\components\common\index.js (294 lines)
+frontend/src\components\common\InstructorErrorBoundary.jsx (128 lines)
+frontend/src\components\common\LoadingScreen.jsx (46 lines)
+frontend/src\components\common\Modal.jsx (112 lines)
+frontend/src\components\common\Pagination.jsx (131 lines)
+frontend/src\components\common\ProfileBadge.jsx (73 lines)
+frontend/src\components\common\ProgressBar.jsx (73 lines)
+frontend/src\components\common\Rating.jsx (62 lines)
+frontend/src\components\common\ResourceCard.jsx (203 lines)
+frontend/src\components\common\ResumeButton.jsx (120 lines)
+frontend/src\components\common\SearchBar.jsx (66 lines)
+frontend/src\components\common\Seo.jsx (88 lines)
+frontend/src\components\common\Sidebar.jsx (73 lines)
+frontend/src\components\common\Skeleton.jsx (108 lines)
+frontend/src\components\common\Spinner.jsx (84 lines)
+frontend/src\components\common\StepIndicator.jsx (159 lines)
+frontend/src\components\common\Tabs.jsx (71 lines)
+frontend/src\components\common\TagInput.jsx (152 lines)
+frontend/src\components\common\Tooltip.jsx (140 lines)
+frontend/src\components\courses\CourseList.jsx (236 lines)
+frontend/src\components\instructor\UploadResourceModal.jsx (354 lines)
+frontend/src\components\layouts\Footer.jsx (213 lines)
+frontend/src\components\layouts\Header.jsx (331 lines)
+frontend/src\components\layouts\index.js (42 lines)
+frontend/src\components\layouts\MainLayout.jsx (111 lines)
+frontend/src\components\routes\CourseContentRouteChecker.jsx (137 lines)
+frontend/src\components\routes\ProtectedRoute.jsx (341 lines)
+frontend/src\components\subscription\SubscriptionPlans.jsx (198 lines)
+frontend/src\components\testimonials\TestimonialList.jsx (136 lines)
+frontend/src\contexts\AuthContext.jsx (818 lines)
+frontend/src\contexts\DirectionContext.jsx (36 lines)
+frontend/src\courseBuilder\api\courseBuilderAPI.ts (898 lines)
+frontend/src\courseBuilder\api\dndSession.ts (167 lines)
+frontend/src\courseBuilder\components\CourseTitleInput.tsx (582 lines)
+frontend/src\courseBuilder\components\LessonCard.tsx (500 lines)
+frontend/src\courseBuilder\components\ModuleCard.tsx (566 lines)
+frontend/src\courseBuilder\components\NetworkDebugger.tsx (152 lines)
+frontend/src\courseBuilder\components\NewCourseDialog.tsx (161 lines)
+frontend/src\courseBuilder\components\ResourceChip.tsx (677 lines)
+frontend/src\courseBuilder\components\SwitchEditorBanner.tsx (422 lines)
+frontend/src\courseBuilder\components\Toolbar.tsx (718 lines)
+frontend/src\courseBuilder\CourseBuilder.tsx (735 lines)
+frontend/src\courseBuilder\dnd\DnDContext.tsx (666 lines)
+frontend/src\courseBuilder\dnd\Sortable.tsx (369 lines)
+frontend/src\courseBuilder\dnd\useDragTypes.ts (355 lines)
+frontend/src\courseBuilder\hooks\useAutoSave.ts (274 lines)
+frontend/src\courseBuilder\hooks\useDirtyPrompt.ts (145 lines)
+frontend/src\courseBuilder\pages\BuilderBoard.tsx (724 lines)
+frontend/src\courseBuilder\pages\Instructions.tsx (173 lines)
+frontend/src\courseBuilder\pages\ReviewPublish.tsx (311 lines)
+frontend/src\courseBuilder\store\courseSlice.ts (2016 lines)
+frontend/src\courseBuilder\store\schema.ts (213 lines)
+frontend/src\courseBuilder\styles\courseBuilder.css (417 lines)
+frontend/src\courseBuilder\utils\accessibility.tsx (140 lines)
+frontend/src\courseBuilder\utils\caseConvert.ts (98 lines)
+frontend/src\courseBuilder\utils\debounce.ts (440 lines)
+frontend/src\courseBuilder\utils\errorMonitoring.tsx (365 lines)
+frontend/src\courseBuilder\utils\object.ts (476 lines)
+frontend/src\courseBuilder\utils\virtualization.ts (44 lines)
+frontend/src\debug-login.html (162 lines)
+frontend/src\declarations.d.ts (11 lines)
+frontend/src\docs\COURSE_EDITOR_INTEGRATION.md (42 lines)
+frontend/src\frontend-analyzer.cjs (495 lines)
+frontend/src\hooks\useDebounce.js (24 lines)
+frontend/src\hooks\useDocumentTitle.js (28 lines)
+frontend/src\hooks\useStyles.jsx (103 lines)
+frontend/src\index.css (288 lines)
+frontend/src\main.jsx (9 lines)
+frontend/src\pages\AboutPage.jsx (519 lines)
+frontend/src\pages\AssessmentPage.jsx (889 lines)
+frontend/src\pages\auth\ForgotPasswordPage.jsx (186 lines)
+frontend/src\pages\auth\LoginPage.jsx (500 lines)
+frontend/src\pages\auth\RegisterPage.jsx (326 lines)
+frontend/src\pages\auth\ResetPasswordPage.jsx (248 lines)
+frontend/src\pages\auth\SocialAuthCallback.jsx (203 lines)
+frontend/src\pages\auth\VerifyEmailPage.jsx (366 lines)
+frontend/src\pages\certificates\CertificatePage.jsx (179 lines)
+frontend/src\pages\courses\AssessmentPage.jsx (806 lines)
+frontend/src\pages\courses\CourseContentPage.jsx (1571 lines)
+frontend/src\pages\courses\CourseLandingPage.jsx (931 lines)
+frontend/src\pages\courses\CoursesListPage.jsx (701 lines)
+frontend/src\pages\courses\debug_course_content.js (31 lines)
+frontend/src\pages\courses\InstructorCourseDetailPage.jsx (697 lines)
+frontend/src\pages\courses\LearningHeaderWidgets.jsx (596 lines)
+frontend/src\pages\dashboard\AdminDashboard.jsx (1240 lines)
+frontend/src\pages\dashboard\components\BookmarksWidget.jsx (44 lines)
+frontend/src\pages\dashboard\DashboardPage.jsx (61 lines)
+frontend/src\pages\dashboard\InstructorDashboard.jsx (914 lines)
+frontend/src\pages\dashboard\StudentDashboard.jsx (470 lines)
+frontend/src\pages\ForumPage.jsx (1407 lines)
+frontend/src\pages\HomePage.jsx (564 lines)
+frontend/src\pages\instructor\components\SwitchEditorBanner.jsx (63 lines)
+frontend/src\pages\instructor\CourseCreationOptions.jsx (184 lines)
+frontend/src\pages\instructor\CoursesCleanup.jsx (312 lines)
+frontend/src\pages\instructor\CourseWizard.jsx (1002 lines)
+frontend/src\pages\instructor\CourseWizardContext.jsx (837 lines)
+frontend/src\pages\instructor\CourseWizardWrapper.jsx (254 lines)
+frontend/src\pages\instructor\CreateCoursePage.jsx (508 lines)
+frontend/src\pages\instructor\CreateLessonPage.jsx (991 lines)
+frontend/src\pages\instructor\CreateModulePage.jsx (570 lines)
+frontend/src\pages\instructor\CurriculumPage.jsx (573 lines)
+frontend/src\pages\instructor\EditCoursePage.jsx (420 lines)
+frontend/src\pages\instructor\wizardSteps\ContentCreationStep.jsx (611 lines)
+frontend/src\pages\instructor\wizardSteps\CourseBasicsStep.jsx (474 lines)
+frontend/src\pages\instructor\wizardSteps\CourseDetailsStep.jsx (400 lines)
+frontend/src\pages\instructor\wizardSteps\index.js (14 lines)
+frontend/src\pages\instructor\wizardSteps\ModuleStructureStep.jsx (517 lines)
+frontend/src\pages\instructor\wizardSteps\ReviewPublishStep.jsx (586 lines)
+frontend/src\pages\NotFoundPage.jsx (50 lines)
+frontend/src\pages\subscription\CheckoutPage.jsx (301 lines)
+frontend/src\pages\subscription\PricingPage.jsx (325 lines)
+frontend/src\pages\subscription\SubscriptionSuccessPage.jsx (212 lines)
+frontend/src\pages\TrendsPage.jsx (980 lines)
+frontend/src\pages\user\ProfilePage.jsx (1407 lines)
+frontend/src\pages\UserCoursesPage.jsx (732 lines)
+frontend/src\pages\VirtualLabPage.jsx (842 lines)
+frontend/src\scripts\cleanupCourses.js (134 lines)
+frontend/src\scripts\dropdown.js (58 lines)
+frontend/src\services\api.js (76 lines)
+frontend/src\services\domains\assessment.service.ts (19 lines)
+frontend/src\services\domains\auth.service.ts (497 lines)
+frontend/src\services\domains\blog.service.ts (26 lines)
+frontend/src\services\domains\category.service.ts (26 lines)
+frontend/src\services\domains\certificate.service.ts (33 lines)
+frontend/src\services\domains\course.service.ts (482 lines)
+frontend/src\services\domains\forum.service.ts (49 lines)
+frontend/src\services\domains\note.service.ts (47 lines)
+frontend/src\services\domains\progress.service.ts (53 lines)
+frontend/src\services\domains\statistics.service.ts (85 lines)
+frontend/src\services\domains\subscription.service.ts (101 lines)
+frontend/src\services\domains\system.service.ts (25 lines)
+frontend/src\services\domains\testimonial.service.ts (120 lines)
+frontend/src\services\domains\virtualLab.service.ts (32 lines)
+frontend/src\services\http\apiClient.ts (328 lines)
+frontend/src\services\http\constants.ts (23 lines)
+frontend/src\services\http\endpoints.ts (265 lines)
+frontend/src\services\instructor\assessmentAuthor.service.ts (150 lines)
+frontend/src\services\instructor\courseAuthoring.service.ts (415 lines)
+frontend/src\services\instructor\dashboard.service.ts (55 lines)
+frontend/src\services\instructor\helpers.ts (461 lines)
+frontend/src\services\instructor\index.ts (153 lines)
+frontend/src\services\instructor\lesson.service.ts (203 lines)
+frontend/src\services\instructor\module.service.ts (151 lines)
+frontend/src\services\instructor\resource.service.ts (197 lines)
+frontend/src\services\instructor\types.ts (220 lines)
+frontend/src\services\instructorService.js (22 lines)
+frontend/src\services\utils\apiUtils.ts (134 lines)
+frontend/src\services\utils\handleRequest.ts (456 lines)
+frontend/src\styles\dashboard-dropdown.css (26 lines)
+frontend/src\styles\global.css (27 lines)
+frontend/src\styles\styles.js (158 lines)
+frontend/src\styles\theme.js (314 lines)
+frontend/src\test\setup.ts (45 lines)
+frontend/src\types\aiBuilder.ts (50 lines)
+frontend/src\types\batchOperations.ts (64 lines)
+frontend/src\types\index.ts (63 lines)
+frontend/src\types\payments.ts (85 lines)
+frontend/src\utils\apiHelper.js (128 lines)
+frontend/src\utils\authPersist.js (266 lines)
+frontend/src\utils\buildCourseFormData.ts (557 lines)
+frontend/src\utils\courseDataSync.js (651 lines)
+frontend/src\utils\formatDuration.js (102 lines)
+frontend/src\utils\generateTempId.ts (527 lines)
+frontend/src\utils\helpers.js (73 lines)
+frontend/src\utils\logger.js (49 lines)
+frontend/src\utils\navigationHelper.js (82 lines)
+frontend/src\utils\sanitizer.js (49 lines)
+frontend/src\utils\secureTokenStorage.d.ts (135 lines)
+frontend/src\utils\secureTokenStorage.js (556 lines)
+frontend/src\utils\transformData.js (290 lines)
+frontend/src\utils\unsavedChangesTracker.js (47 lines)
+frontend/src\utils\validation.js (263 lines)
+frontend/start-mock-ai.bat (9 lines)
+frontend/tailwind.config.js (87 lines)
+frontend/test\aiCourseBuilder.integration.test.js (159 lines)
+frontend/test\courseBuilder\CoreFunctionality.test.ts (70 lines)
+frontend/test\courseBuilder\Instructions.test.tsx (29 lines)
+frontend/test\courseBuilder\ModuleCard.test.tsx (68 lines)
+frontend/test\mocks\server.ts (77 lines)
+frontend/test\setup.ts (40 lines)
+frontend/test_import.js (44 lines)
+frontend/tsconfig.json (51 lines)
+frontend/tsconfig.node.json (10 lines)
+frontend/vite.config.js (80 lines)
+frontend/vitest.config.ts (102 lines)
+portfolio.html (1272 lines)
+project_file_list command.txt (85 lines)
+remove_bom.py (302 LOC)
+shortpaths.txt (475 lines)

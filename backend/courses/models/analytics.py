@@ -1,49 +1,43 @@
-﻿#
 # File Path: backend/courses/models/analytics.py
 # Folder Path: backend/courses/models/analytics.py
 # Date Created: 2025-06-26 09:53:34
-# Date Revised: 2025-07-01 06:55:33
-# Current Date and Time (UTC): 2025-07-01 06:55:33
+# Date Revised: 2025-07-02 13:19:30
+# Current Date and Time (UTC): 2025-07-02 13:19:30
 # Current User's Login: cadsanthanamNew
 # Author: softTechSolutions2001
 # Last Modified By: cadsanthanamNew
-# Last Modified: 2025-07-01 06:55:33 UTC
+# Last Modified: 2025-07-02 13:19:30 UTC
 # User: cadsanthanamNew
-# Version: 5.0.0
+# Version: 7.1.0
 #
-# FIXED: Analytics and Assessment Models for Course Management System - ALL AUDIT ISSUES RESOLVED
-#
-# Version 5.0.0 Changes - CRITICAL PRODUCTION FIXES:
-# - FIXED 🔴: Removed duplicate utility functions - now imports from model_helpers (P0 Critical)
-# - FIXED 🔴: All broad exception handlers replaced with specific exceptions (P0 Critical)
-# - FIXED 🟡: Answer.order default changed to None for proper OrderedMixin integration (P1 Important)
-# - FIXED 🟡: AssessmentAttempt.save() race condition with proper _state.adding check (P1 Important)
-# - ENHANCED: Production-grade error handling with specific exception types
-# - MAINTAINED: 100% backward compatibility with existing field names
-
 import logging
+
+from django.apps import apps
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
-from django.core.validators import MaxValueValidator, MinValueValidator
-from django.db import models, transaction, DatabaseError, OperationalError
-from django.conf import settings
+from django.core.validators import (
+    MaxValueValidator,
+    MinLengthValidator,
+    MinValueValidator,
+)
+from django.db import DatabaseError, OperationalError, models, transaction
 from django.utils.translation import gettext_lazy as _
-from django.apps import apps
 
 from ..constants import (
-    DEFAULT_MAX_ATTEMPTS, DEFAULT_PASSING_SCORE,
+    DEFAULT_MAX_ATTEMPTS,
+    DEFAULT_PASSING_SCORE,
     QUESTION_TYPE_CHOICES,
 )
-from .mixins import (
-    TimeStampedMixin, OrderedMixin
+
+# Keep import for backward compatibility
+from ..utils.model_helpers import (
+    create_char_field,
+    create_json_field,
+    create_text_field,
 )
 from ..validators import validate_percentage
-
-# FIXED: Import from centralized model_helpers instead of duplicating
-from ..utils.model_helpers import (
-    create_meta_indexes, create_char_field, create_text_field,
-    create_json_field, create_foreign_key
-)
+from .mixins import OrderedMixin, TimeStampedMixin
 
 logger = logging.getLogger(__name__)
 User = get_user_model()
@@ -53,60 +47,76 @@ User = get_user_model()
 # ASSESSMENT MODELS
 # =====================================
 
+
 class Assessment(TimeStampedMixin):
     """Enhanced assessment model with comprehensive configuration and validation"""
 
     lesson = models.OneToOneField(
-        'Lesson', on_delete=models.CASCADE, related_name="assessment",
-        help_text="Associated lesson"
+        "Lesson",
+        on_delete=models.CASCADE,
+        related_name="assessment",
+        db_index=True,
+        help_text="Associated lesson",
     )
-    title = create_char_field(255, min_len=2, help_text="Assessment title (minimum 2 characters)")
-    description = models.TextField(blank=True, null=True, help_text="Assessment description or instructions")
+    title = models.CharField(
+        max_length=255,
+        blank=False,
+        validators=[
+            MinLengthValidator(2)
+        ],  # FIXED: Changed from MinValueValidator to MinLengthValidator
+        help_text="Assessment title (minimum 2 characters)",
+    )
+    description = models.TextField(
+        blank=True, default="", help_text="Assessment description or instructions"
+    )
 
     # Scoring and attempts
     passing_score = models.PositiveIntegerField(
         default=DEFAULT_PASSING_SCORE,
         validators=[MinValueValidator(0), MaxValueValidator(100), validate_percentage],
-        help_text="Passing score percentage (0-100)"
+        help_text="Passing score percentage (0-100)",
     )
     max_attempts = models.PositiveIntegerField(
         default=DEFAULT_MAX_ATTEMPTS,
         validators=[MinValueValidator(1)],
-        help_text="Maximum number of attempts allowed"
+        help_text="Maximum number of attempts allowed",
     )
 
     # Time management - maintain both field names for compatibility
     time_limit = models.PositiveIntegerField(
-        default=0,
-        help_text="Time limit in minutes, 0 means no limit"
+        default=0, help_text="Time limit in minutes, 0 means no limit"
     )
     time_limit_minutes = models.PositiveIntegerField(
-        default=0,
-        help_text="Alias for time_limit for backward compatibility"
+        default=0, help_text="Alias for time_limit for backward compatibility"
     )
 
     # Configuration options
     randomize_questions = models.BooleanField(
-        default=False,
-        help_text="Randomize question order for each attempt"
+        default=False, help_text="Randomize question order for each attempt"
     )
     show_correct_answers = models.BooleanField(
-        default=True,
-        help_text="Show correct answers after completion"
+        default=True, help_text="Show correct answers after completion"
     )
     show_results = models.BooleanField(
-        default=True,
-        help_text="Show results immediately after completion"
+        default=True, help_text="Show results immediately after completion"
     )
 
     def save(self, *args, **kwargs):
-        """Enhanced save with field synchronization for backward compatibility"""
+        """
+        Enhanced save with field synchronization for backward compatibility
+
+        Ensures time_limit and time_limit_minutes are synchronized for compatibility
+        with legacy code that might use either field.
+        """
         # Synchronize time_limit and time_limit_minutes fields
         if self.time_limit and not self.time_limit_minutes:
             self.time_limit_minutes = self.time_limit
         elif self.time_limit_minutes and not self.time_limit:
             self.time_limit = self.time_limit_minutes
-        super().save(*args, **kwargs)
+
+        # Use transaction for atomicity
+        with transaction.atomic():
+            super().save(*args, **kwargs)
 
     def clean(self):
         """Enhanced validation for assessment data"""
@@ -117,23 +127,40 @@ class Assessment(TimeStampedMixin):
             raise ValidationError("Passing score must be between 0 and 100")
 
     def get_questions(self):
-        """Get questions with optimization"""
-        return self.questions.order_by('order')
+        """
+        Get questions with optimization
+
+        Uses select_related and prefetch_related to prevent N+1 queries
+        when accessing question properties and their related answers.
+        """
+        return (
+            self.questions.select_related("assessment")
+            .prefetch_related("answers_question")
+            .order_by("order")
+        )
 
     def get_max_score(self):
-        """Calculate maximum possible score"""
-        return sum(q.points for q in self.questions.all())
+        """
+        Calculate maximum possible score
+
+        Uses DB aggregation instead of Python loop to prevent N+1 query.
+        Explicitly handles None result from empty aggregate.
+        """
+        max_score = self.questions.aggregate(total=models.Sum("points"))["total"]
+        return max_score or 0
 
     def __str__(self):
         return f"Assessment: {self.title}"
 
     class Meta:
-        app_label = 'courses'
+        app_label = "courses"
         verbose_name = "Assessment"
         verbose_name_plural = "Assessments"
         indexes = [
-            models.Index(fields=["lesson"]),
+            # Keep only non-implicit indexes to avoid duplication
             models.Index(fields=["passing_score"]),
+            # Add index for common query patterns
+            models.Index(fields=["show_results", "show_correct_answers"]),
         ]
 
 
@@ -143,51 +170,57 @@ class Question(TimeStampedMixin, OrderedMixin):
     FIXED: Proper OrderedMixin integration with specific exceptions
     """
 
-    assessment = create_foreign_key(
-        Assessment,
-        "questions",
-        help_text="Parent assessment"
+    assessment = models.ForeignKey(
+        "Assessment",
+        on_delete=models.CASCADE,
+        related_name="questions",
+        db_index=True,
+        help_text="Parent assessment",
     )
-    question_text = create_text_field(
+    question_text = models.TextField(
+        blank=True,
         default="",  # Explicit default for migration compatibility
-        help_text="Question text"
+        help_text="Question text",
     )
     text = models.TextField(
+        blank=True,
         default="",  # Explicit default for backward compatibility
-        help_text="Alias for question_text for backward compatibility"
+        help_text="Alias for question_text for backward compatibility",
     )
     question_type = models.CharField(
         max_length=20,
         choices=[
-            ('multiple_choice', _('Multiple Choice')),
-            ('true_false', _('True/False')),
-            ('short_answer', _('Short Answer')),
-            ('essay', _('Essay')),
-            ('matching', _('Matching')),
-            ('fill_blank', _('Fill in the Blank')),
+            ("multiple_choice", _("Multiple Choice")),
+            ("true_false", _("True/False")),
+            ("short_answer", _("Short Answer")),
+            ("essay", _("Essay")),
+            ("matching", _("Matching")),
+            ("fill_blank", _("Fill in the Blank")),
         ],
-        default='multiple_choice',
-        help_text="Type of question"
+        default="multiple_choice",
+        help_text="Type of question",
     )
     points = models.PositiveIntegerField(
         default=1,
         validators=[MinValueValidator(1)],
-        help_text="Points awarded for correct answer"
+        help_text="Points awarded for correct answer",
     )
-    order = models.PositiveIntegerField(default=0)  # FIXED: Changed to 0 for proper OrderedMixin logic
+    # Set default to 1 since "first child becomes 1" (per mixins.py comment)
+    order = models.PositiveIntegerField(
+        default=1
+    )  # FIXED: Changed to 1 for consistency with comment
     explanation = models.TextField(
         blank=True,
-        null=True,
         default="",  # Explicit default
-        help_text="Explanation shown after answering"
+        help_text="Explanation shown after answering",
     )
-    feedback = create_text_field(
+    feedback = models.TextField(
         blank=True,
         default="",  # Explicit default for backward compatibility
-        help_text="Alias for explanation for backward compatibility"
+        help_text="Alias for explanation for backward compatibility",
     )
 
-    def get_next_order(self, parent_field='assessment'):
+    def get_next_order(self, parent_field="assessment"):
         """
         Get next order number for this question's assessment
         FIXED: Override method to provide assessment-specific ordering
@@ -196,10 +229,15 @@ class Question(TimeStampedMixin, OrderedMixin):
             if not self.assessment:
                 return 1
 
-            last_order = Question.objects.filter(assessment=self.assessment).aggregate(
-                max_order=models.Max('order')
-            )['max_order'] or 0
-            return last_order + 1
+            # Use select_for_update to prevent duplicate orders in race conditions
+            with transaction.atomic():
+                last_order = (
+                    Question.objects.select_for_update()
+                    .filter(assessment=self.assessment)
+                    .aggregate(max_order=models.Max("order"))["max_order"]
+                    or 0
+                )
+                return last_order + 1
         except (DatabaseError, OperationalError) as e:
             logger.error(f"Database error calculating next order for question: {e}")
             return 1
@@ -209,30 +247,55 @@ class Question(TimeStampedMixin, OrderedMixin):
 
     def save(self, *args, **kwargs):
         """
-        FIXED: Single save method with proper ordering and field synchronization
+        Save the question with field synchronization and automatic ordering
+
+        Synchronizes:
+        - text and question_text fields for backward compatibility
+        - explanation and feedback fields for backward compatibility
+        - Sets order if not provided using OrderedMixin logic
         """
-        # Synchronize text and question_text fields for backward compatibility
-        if self.question_text and not self.text:
-            self.text = self.question_text
-        elif self.text and not self.question_text:
-            self.question_text = self.text
+        # Use transaction for atomicity
+        try:
+            with transaction.atomic():
+                # Synchronize text and question_text fields for backward compatibility
+                if self.question_text and not self.text:
+                    self.text = self.question_text
+                elif self.text and not self.question_text:
+                    self.question_text = self.text
 
-        # Ensure we have some question text content
-        if not self.question_text and not self.text:
-            self.question_text = "Default question text"
-            self.text = "Default question text"
+                # Ensure we have some question text content
+                if not self.question_text and not self.text:
+                    self.question_text = "Default question text"
+                    self.text = "Default question text"
 
-        # Synchronize explanation and feedback fields for backward compatibility
-        if self.explanation and not self.feedback:
-            self.feedback = self.explanation
-        elif self.feedback and not self.explanation:
-            self.explanation = self.feedback
+                # Synchronize explanation and feedback fields for backward compatibility
+                if self.explanation and not self.feedback:
+                    self.feedback = self.explanation
+                elif self.feedback and not self.explanation:
+                    self.explanation = self.feedback
 
-        # FIXED: Set order if not provided using proper OrderedMixin logic
-        if not self.pk and (not self.order or self.order == 0):
-            self.order = self.get_next_order()
+                # FIXED: Set order if not provided using proper OrderedMixin logic with atomic transaction
+                if not self.pk and (not self.order or self.order == 0):
+                    try:
+                        self.order = self.get_next_order()
+                    except Exception as e:
+                        logger.warning(f"Could not auto-set order for Question: {e}")
+                        self.order = 1
 
-        super().save(*args, **kwargs)
+                super().save(*args, **kwargs)
+        except Exception as e:
+            logger.error(f"Error in Question.save(): {e}")
+            raise
+
+    @property
+    def answers(self):
+        """
+        Backward compatibility alias for answers_question relation.
+
+        FIXED: Provides compatibility for legacy code that calls question.answers
+        instead of question.answers_question.all()
+        """
+        return self.answers_question.all()
 
     @property
     def text_property(self):
@@ -246,77 +309,88 @@ class Question(TimeStampedMixin, OrderedMixin):
 
     def get_answers(self):
         """Get answers with optimization"""
-        return self.answers.order_by('order')
+        return self.answers_question.select_related("question").order_by("order")
 
     def __str__(self):
         return f"Question {self.order}: {self.text[:30]}..."
 
     class Meta:
-        app_label = 'courses'
+        app_label = "courses"
         verbose_name = "Question"
         verbose_name_plural = "Questions"
         ordering = ["assessment", "order"]
         indexes = [
+            # Use composite index for common query patterns
             models.Index(fields=["assessment", "order"]),
             models.Index(fields=["question_type"]),
-            models.Index(fields=["points"]),
         ]
         constraints = [
-            models.UniqueConstraint(fields=['assessment', 'order'], name='unique_question_order'),
+            models.UniqueConstraint(
+                fields=["assessment", "order"],
+                name="unique_question_order",
+                violation_error_message="Question order must be unique per assessment",
+            ),
         ]
 
 
 class Answer(TimeStampedMixin, OrderedMixin):
     """
     Enhanced answer model with comprehensive validation
-    FIXED: Single constraints declaration and proper field defaults with order = None
+    FIXED: Single constraints declaration and proper field defaults with order = 1
     """
 
-    question = create_foreign_key(
-        Question,
-        "answers",
-        help_text="Parent question"
+    question = models.ForeignKey(
+        "Question",
+        on_delete=models.CASCADE,
+        related_name="answers_question",  # FIXED: Renamed to avoid collision
+        db_index=True,
+        help_text="Parent question",
     )
-    answer_text = create_char_field(
-        500,
-        min_len=1,
+    answer_text = models.CharField(
+        max_length=500,
+        validators=[
+            MinLengthValidator(1)
+        ],  # FIXED: Changed from MinValueValidator to MinLengthValidator
+        blank=True,
         default="",  # Explicit default for migration compatibility
-        help_text="Answer text (minimum 1 character)"
+        help_text="Answer text (minimum 1 character)",
     )
-    text = create_text_field(
+    text = models.TextField(
         blank=True,
         default="",  # Explicit default for backward compatibility
-        help_text="Alias for answer_text for backward compatibility"
+        help_text="Alias for answer_text for backward compatibility",
     )
     is_correct = models.BooleanField(
-        default=False,
-        help_text="Whether this is the correct answer"
+        default=False, help_text="Whether this is the correct answer"
     )
     explanation = models.TextField(
         blank=True,
-        null=True,
         default="",  # Explicit default
-        help_text="Explanation for this answer choice"
+        help_text="Explanation for this answer choice",
     )
-    # FIXED: Default to None for proper OrderedMixin integration and set in save()
+    # FIXED: Use default=1 to match OrderedMixin expected behavior
     order = models.PositiveIntegerField(
-        null=True, blank=True,
-        help_text="Display order of this answer"
+        default=1, help_text="Display order of this answer"
     )
 
-    def get_next_order(self, parent_field='question'):
+    def get_next_order(self, parent_field="question"):
         """
         Get next order number for this answer's question
-        FIXED: Override method to provide question-specific ordering
+        FIXED: Override method to provide question-specific ordering with locking
         """
         try:
             if not self.question:
                 return 1
 
-            last_order = Answer.objects.filter(question=self.question).aggregate(
-                max_order=models.Max('order')
-            )['max_order'] or 0
-            return last_order + 1
+            # Use select_for_update to prevent duplicate orders in race conditions
+            with transaction.atomic():
+                last_order = (
+                    Answer.objects.select_for_update()
+                    .filter(question=self.question)
+                    .aggregate(max_order=models.Max("order"))["max_order"]
+                    or 0
+                )
+                return last_order + 1
         except (DatabaseError, OperationalError) as e:
             logger.error(f"Database error calculating next order for answer: {e}")
             return 1
@@ -326,22 +400,35 @@ class Answer(TimeStampedMixin, OrderedMixin):
 
     def save(self, *args, **kwargs):
         """Enhanced save with proper ordering and field synchronization"""
-        # Synchronize text and answer_text fields for backward compatibility
-        if self.answer_text and not self.text:
-            self.text = self.answer_text
-        elif self.text and not self.answer_text:
-            self.answer_text = self.text
+        try:
+            with transaction.atomic():
+                # Synchronize text and answer_text fields for backward compatibility
+                if self.answer_text and not self.text:
+                    self.text = self.answer_text
+                elif self.text and not self.answer_text:
+                    self.answer_text = self.text
 
-        # Ensure we have some text content
-        if not self.answer_text and not self.text:
-            self.answer_text = "Default answer text"
-            self.text = "Default answer text"
+                # Ensure we have some text content
+                if not self.answer_text and not self.text:
+                    self.answer_text = "Default answer text"
+                    self.text = "Default answer text"
 
-        # FIXED: Set order if not provided using proper OrderedMixin logic
-        if self._state.adding and self.order in (None, 0):
-            self.order = self.get_next_order()
+                # FIXED: Set order if not provided using proper OrderedMixin logic with atomic transaction
+                if (
+                    hasattr(self, "_state")
+                    and self._state.adding
+                    and (self.order in (None, 0))
+                ):
+                    try:
+                        self.order = self.get_next_order()
+                    except Exception as e:
+                        logger.warning(f"Could not auto-set order for Answer: {e}")
+                        self.order = 1
 
-        super().save(*args, **kwargs)
+                super().save(*args, **kwargs)
+        except Exception as e:
+            logger.error(f"Error in Answer.save(): {e}")
+            raise
 
     @property
     def text_property(self):
@@ -352,20 +439,21 @@ class Answer(TimeStampedMixin, OrderedMixin):
         return f"Answer: {self.text_property[:30]}..."
 
     class Meta:
-        app_label = 'courses'
+        app_label = "courses"
         verbose_name = "Answer"
         verbose_name_plural = "Answers"
         ordering = ["question", "order"]
         indexes = [
+            # Use composite index for common query patterns
             models.Index(fields=["question", "order"]),
             models.Index(fields=["is_correct"]),
         ]
         # FIXED: Single constraints declaration with custom error message
         constraints = [
             models.UniqueConstraint(
-                fields=['question', 'order'],
-                name='unique_answer_order',
-                violation_error_message="Answer order must be unique per question"
+                fields=["question", "order"],
+                name="unique_answer_order",
+                violation_error_message="Answer order must be unique per question",
             ),
         ]
 
@@ -373,20 +461,28 @@ class Answer(TimeStampedMixin, OrderedMixin):
 class AssessmentAttempt(TimeStampedMixin):
     """Enhanced assessment attempt model with comprehensive tracking and validation"""
 
-    user = create_foreign_key(
+    user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        "assessment_attempts",
-        help_text="User taking the assessment"
+        on_delete=models.CASCADE,
+        related_name="assessment_attempts",
+        db_index=True,
+        help_text="User taking the assessment",
     )
-    assessment = create_foreign_key(
-        Assessment,
-        "attempts",
-        help_text="Assessment being attempted"
+    assessment = models.ForeignKey(
+        "Assessment",
+        on_delete=models.CASCADE,
+        related_name="attempts",
+        db_index=True,
+        help_text="Assessment being attempted",
     )
 
     # Timing
-    start_time = models.DateTimeField(auto_now_add=True, help_text="When attempt was started")
-    end_time = models.DateTimeField(blank=True, null=True, help_text="When attempt was completed")
+    start_time = models.DateTimeField(
+        auto_now_add=True, help_text="When attempt was started"
+    )
+    end_time = models.DateTimeField(
+        blank=True, null=True, help_text="When attempt was completed"
+    )
     time_taken_seconds = models.PositiveIntegerField(default=0)
 
     # Scoring
@@ -395,86 +491,167 @@ class AssessmentAttempt(TimeStampedMixin):
 
     # Status - maintain both field names for compatibility
     is_completed = models.BooleanField(default=False)
-    is_passed = models.BooleanField(default=False, help_text="Whether attempt passed the assessment")
-    passed = models.BooleanField(default=False, help_text="Alias for is_passed for backward compatibility")
-    attempt_number = models.PositiveIntegerField(default=1, help_text="Attempt number for this user/assessment combination")
+    is_passed = models.BooleanField(
+        default=False, help_text="Whether attempt passed the assessment"
+    )
+    passed = models.BooleanField(
+        default=False, help_text="Alias for is_passed for backward compatibility"
+    )
+    attempt_number = models.PositiveIntegerField(
+        default=1, help_text="Attempt number for this user/assessment combination"
+    )
 
     # Additional tracking
-    ip_address = models.GenericIPAddressField(null=True, blank=True, help_text="IP address of the user during attempt")
-    user_agent = models.TextField(blank=True, null=True, help_text="User agent string during attempt")
+    ip_address = models.GenericIPAddressField(
+        null=True, blank=True, help_text="IP address of the user during attempt"
+    )
+    user_agent = models.TextField(
+        blank=True, default="", help_text="User agent string during attempt"
+    )
 
     def save(self, *args, **kwargs):
         """
-        FIXED: Enhanced save with field synchronization and proper assessment handling
+        Enhanced save with proper atomic transactions and field synchronization
+
+        Ensures atomic operations for critical updates like attempt numbering
+        and synchronizes is_passed and passed fields for backward compatibility.
         """
-        # Synchronize is_passed and passed fields for backward compatibility
-        if self.is_passed != self.passed:
-            if hasattr(self, '_state') and self._state.adding:
-                # New object, prioritize is_passed
-                self.passed = self.is_passed
-            else:
-                # Existing object, sync both ways
-                if self.is_passed and not self.passed:
-                    self.passed = self.is_passed
-                elif self.passed and not self.is_passed:
-                    self.is_passed = self.passed
+        try:
+            with transaction.atomic():
+                # Fields that might be updated
+                updated_fields = []
 
-        # Handle new attempts with atomic operations
-        if self._state.adding:  # FIXED: Only set max_score for new instances
-            try:
-                with transaction.atomic():
-                    last_attempt = AssessmentAttempt.objects.select_for_update().filter(
-                        user=self.user, assessment=self.assessment
-                    ).order_by("-attempt_number").first()
+                # Synchronize is_passed and passed fields for backward compatibility
+                if self.is_passed != self.passed:
+                    if hasattr(self, "_state") and self._state.adding:
+                        # New object, prioritize is_passed
+                        self.passed = self.is_passed
+                        updated_fields.extend(["passed"])
+                    else:
+                        # Existing object, sync both ways
+                        if self.is_passed and not self.passed:
+                            self.passed = self.is_passed
+                            updated_fields.extend(["passed"])
+                        elif self.passed and not self.is_passed:
+                            self.is_passed = self.passed
+                            updated_fields.extend(["is_passed"])
 
-                    self.attempt_number = (last_attempt.attempt_number + 1) if last_attempt else 1
+                # Handle new object creation
+                if hasattr(self, "_state") and self._state.adding:
+                    # Get last attempt number with select_for_update to prevent race conditions
+                    last_attempt = (
+                        AssessmentAttempt.objects.select_for_update()
+                        .filter(user=self.user, assessment=self.assessment)
+                        .order_by("-attempt_number")
+                        .first()
+                    )
 
-                    if self.assessment.max_attempts > 0 and self.attempt_number > self.assessment.max_attempts:
-                        raise ValidationError(f"Maximum attempts ({self.assessment.max_attempts}) exceeded")
+                    self.attempt_number = (
+                        (last_attempt.attempt_number + 1) if last_attempt else 1
+                    )
+                    updated_fields.append("attempt_number")
 
-                    # FIXED: Set max_score if not already set and assessment exists
+                    # Check max attempts limit
+                    if (
+                        self.assessment.max_attempts > 0
+                        and self.attempt_number > self.assessment.max_attempts
+                    ):
+                        raise ValidationError(
+                            f"Maximum attempts ({self.assessment.max_attempts}) exceeded"
+                        )
+
+                    # Set max_score using DB aggregation
                     if not self.max_score and self.assessment:
                         try:
                             self.max_score = self.assessment.get_max_score()
+                            updated_fields.append("max_score")
                         except (AttributeError, DatabaseError, OperationalError) as e:
-                            logger.warning(f"Could not calculate max_score for attempt: {e}")
+                            logger.warning(
+                                f"Could not calculate max_score for attempt: {e}"
+                            )
                             self.max_score = 0
+                            updated_fields.append("max_score")
 
-            except (DatabaseError, OperationalError) as e:
-                logger.error(f"Database error in AssessmentAttempt.save(): {e}")
-                raise
-            except ValidationError:
-                raise
+                # Check if passed based on score percentage
+                try:
+                    if self.max_score > 0 and self.assessment and self.score > 0:
+                        score_percentage = (self.score / self.max_score) * 100
+                        was_passed = self.is_passed
 
-        # FIXED: Check if passed based on score percentage only if we have the required data
-        try:
-            if self.max_score > 0 and self.assessment:
-                score_percentage = (self.score / self.max_score) * 100
-                if score_percentage >= self.assessment.passing_score:
-                    self.is_passed = True
-                    self.passed = True
-        except (AttributeError, ZeroDivisionError) as e:
-            logger.warning(f"Could not calculate passing status for attempt: {e}")
+                        if score_percentage >= self.assessment.passing_score:
+                            self.is_passed = True
+                            self.passed = True
+                            if not was_passed:
+                                updated_fields.extend(["is_passed", "passed"])
+                except (AttributeError, ZeroDivisionError) as e:
+                    logger.warning(
+                        f"Could not calculate passing status for attempt: {e}"
+                    )
 
-        super().save(*args, **kwargs)
+                # Call super().save() with update_fields if we're updating specific fields
+                if updated_fields and not self._state.adding:
+                    kwargs["update_fields"] = list(
+                        set(updated_fields + kwargs.get("update_fields", []))
+                    )
+
+                super().save(*args, **kwargs)
+
+        except (DatabaseError, OperationalError) as e:
+            logger.error(f"Database error in AssessmentAttempt.save(): {e}")
+            raise
+        except ValidationError:
+            raise
+        except Exception as e:
+            logger.error(f"Unexpected error in AssessmentAttempt.save(): {e}")
+            raise
 
     @property
     def score_percentage(self):
-        """Calculate score percentage - FIXED: Safe property access"""
+        """
+        Calculate score percentage with caching
+
+        Uses cached value if available to avoid repeated calculations
+        and DB queries. Includes fallbacks for error conditions.
+        """
+        # Return cached value if available
+        if hasattr(self, "_score_percentage_cache"):
+            return self._score_percentage_cache
+
         try:
             if self.max_score > 0:
-                return round((self.score / self.max_score) * 100, 1)
+                result = round((self.score / self.max_score) * 100, 1)
+                self._score_percentage_cache = result
+                return result
 
             # Fallback to assessment questions if max_score not set
-            if self.assessment and not hasattr(self, '_max_score'):
-                self._max_score = self.assessment.questions.aggregate(
-                    total_points=models.Sum('points')
-                )['total_points'] or 0
-                return round((self.score / self._max_score) * 100, 1) if self._max_score > 0 else 0
+            if self.assessment and not hasattr(self, "_max_score"):
+                self._max_score = (
+                    self.assessment.questions.aggregate(
+                        total_points=models.Sum("points")
+                    )["total_points"]
+                    or 0
+                )
 
+                if self._max_score > 0:
+                    result = round((self.score / self._max_score) * 100, 1)
+                    self._score_percentage_cache = result
+                    return result
+
+                self._score_percentage_cache = 0
+                return 0
+
+            self._score_percentage_cache = 0
             return 0
-        except (DatabaseError, OperationalError, AttributeError, ZeroDivisionError) as e:
-            logger.error(f"Error calculating score percentage for attempt {self.id}: {e}")
+        except (
+            DatabaseError,
+            OperationalError,
+            AttributeError,
+            ZeroDivisionError,
+        ) as e:
+            logger.error(
+                f"Error calculating score percentage for attempt {self.id}: {e}"
+            )
+            self._score_percentage_cache = 0
             return 0
 
     @property
@@ -490,101 +667,145 @@ class AssessmentAttempt(TimeStampedMixin):
         return f"{self.user.username}'s attempt #{self.attempt_number} for {self.assessment.title}"
 
     class Meta:
-        app_label = 'courses'
+        app_label = "courses"
         verbose_name = "Assessment Attempt"
         verbose_name_plural = "Assessment Attempts"
         ordering = ["-created_date"]
         indexes = [
+            # Use composite indexes that include filtering columns
             models.Index(fields=["user", "assessment"]),
             models.Index(fields=["assessment", "-created_date"]),
-            models.Index(fields=["is_passed"]),
-            models.Index(fields=["is_completed"]),
-            models.Index(fields=["attempt_number"]),
+            # Add index for is_completed status
+            models.Index(fields=["is_completed", "is_passed"]),
         ]
 
 
 class AttemptAnswer(TimeStampedMixin):
     """Enhanced attempt answer model with comprehensive validation"""
 
-    attempt = create_foreign_key(
-        AssessmentAttempt,
-        "answers",
-        help_text="Associated assessment attempt"
+    attempt = models.ForeignKey(
+        "AssessmentAttempt",
+        on_delete=models.CASCADE,
+        related_name="answers_attempt",  # FIXED: Renamed to avoid collision
+        db_index=True,
+        help_text="Associated assessment attempt",
     )
-    question = create_foreign_key(
-        Question,
-        'user_answers',
-        help_text="Question being answered"
+    question = models.ForeignKey(
+        "Question",
+        on_delete=models.CASCADE,
+        related_name="user_answers",
+        db_index=True,
+        help_text="Question being answered",
     )
-    # Maintain both field names for compatibility
+    # FIXED: Maintain only one DB field and expose the other as a property
     selected_answer = models.ForeignKey(
-        Answer,
+        "Answer",
         on_delete=models.CASCADE,
-        related_name='user_selections_legacy',
+        related_name="user_selections",
         blank=True,
         null=True,
-        help_text="Selected answer for multiple choice questions"
+        help_text="Selected answer for multiple choice questions",
     )
-    answer = models.ForeignKey(
-        Answer,
-        on_delete=models.CASCADE,
-        related_name='user_selections',
-        blank=True,
-        null=True,
-        help_text="Alias for selected_answer for compatibility"
+
+    # FIXED: Property instead of duplicate field
+    @property
+    def answer(self):
+        return self.selected_answer
+
+    @answer.setter
+    def answer(self, value):
+        self.selected_answer = value
+
+    text_answer = models.TextField(
+        blank=True, default="", help_text="Text answer for open-ended questions"
     )
-    text_answer = models.TextField(blank=True, null=True, help_text="Text answer for open-ended questions")
-    text_response = create_text_field(blank=True, help_text="Alias for text_answer for compatibility")
-    is_correct = models.BooleanField(default=False, help_text="Whether the answer is correct")
-    points_earned = models.PositiveIntegerField(default=0, help_text="Points earned for this answer")
-    feedback = models.TextField(blank=True, null=True, help_text="Instructor feedback for this answer")
-    answered_at = models.DateTimeField(auto_now_add=True, help_text="When answer was submitted")
+
+    # FIXED: Property instead of duplicate field
+    @property
+    def text_response(self):
+        return self.text_answer
+
+    @text_response.setter
+    def text_response(self, value):
+        self.text_answer = value
+
+    is_correct = models.BooleanField(
+        default=False, help_text="Whether the answer is correct"
+    )
+    points_earned = models.PositiveIntegerField(
+        default=0, help_text="Points earned for this answer"
+    )
+    feedback = models.TextField(
+        blank=True, default="", help_text="Instructor feedback for this answer"
+    )
+    answered_at = models.DateTimeField(
+        auto_now_add=True, help_text="When answer was submitted"
+    )
 
     def save(self, *args, **kwargs):
-        """Enhanced save with field synchronization and automatic correctness checking"""
-        # Synchronize selected_answer and answer fields for backward compatibility
-        if self.selected_answer and not self.answer:
-            self.answer = self.selected_answer
-        elif self.answer and not self.selected_answer:
-            self.selected_answer = self.answer
+        """
+        Enhanced save with automatic correctness checking
 
-        # Synchronize text_answer and text_response fields for backward compatibility
-        if self.text_answer and not self.text_response:
-            self.text_response = self.text_answer
-        elif self.text_response and not self.text_answer:
-            self.text_answer = self.text_response
+        Uses transaction to ensure atomicity and select_related to prevent
+        N+1 queries when checking question types and correctness.
+        """
+        try:
+            with transaction.atomic():
+                # Fetch question with select_related if needed
+                if self.selected_answer:
+                    # Check if question is already loaded
+                    if not hasattr(self, "question") or not hasattr(
+                        self.question, "question_type"
+                    ):
+                        # Fetch question with select_related to prevent N+1 query
+                        question = Question.objects.select_related().get(
+                            id=self.question_id
+                        )
+                    else:
+                        question = self.question
 
-        # Automatic correctness checking for multiple choice questions
-        if self.answer and self.question.question_type in ["multiple_choice", "true_false"]:
-            self.is_correct = self.answer.is_correct
-            self.points_earned = self.question.points if self.is_correct else 0
+                    # Automatic correctness checking for multiple choice questions
+                    if question.question_type in ["multiple_choice", "true_false"]:
+                        self.is_correct = self.selected_answer.is_correct
+                        self.points_earned = question.points if self.is_correct else 0
 
-        super().save(*args, **kwargs)
+                super().save(*args, **kwargs)
+        except (DatabaseError, OperationalError) as e:
+            logger.error(f"Database error in AttemptAnswer.save(): {e}")
+            raise
+        except Exception as e:
+            logger.error(f"Error in AttemptAnswer.save(): {e}")
+            raise
 
     def clean(self):
         """Enhanced validation for attempt answer"""
         super().clean()
         if self.question.question_type in ["multiple_choice", "true_false"]:
-            if not self.answer:
-                raise ValidationError("Selected answer is required for this question type")
+            if not self.selected_answer:
+                raise ValidationError(
+                    "Selected answer is required for this question type"
+                )
         elif self.question.question_type in ["short_answer", "essay"]:
-            if not self.text_response:
+            if not self.text_answer:
                 raise ValidationError("Text answer is required for this question type")
 
     def __str__(self):
         return f"Answer to {self.question} in {self.attempt}"
 
     class Meta:
-        app_label = 'courses'
+        app_label = "courses"
         verbose_name = "Attempt Answer"
         verbose_name_plural = "Attempt Answers"
         ordering = ["attempt", "question"]
         indexes = [
+            # Use composite index for common query patterns
             models.Index(fields=["attempt", "question"]),
             models.Index(fields=["is_correct"]),
         ]
         constraints = [
-            models.UniqueConstraint(fields=['attempt', 'question'], name='unique_attempt_answer'),
+            models.UniqueConstraint(
+                fields=["attempt", "question"], name="unique_attempt_answer"
+            ),
         ]
 
 
@@ -592,39 +813,81 @@ class AttemptAnswer(TimeStampedMixin):
 # REVIEW MODEL
 # =====================================
 
+
 class Review(TimeStampedMixin):
     """Enhanced review model with comprehensive validation and moderation"""
 
-    user = create_foreign_key(
+    user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        "course_reviews",
-        help_text="User who wrote the review"
+        on_delete=models.CASCADE,
+        related_name="course_reviews",
+        db_index=True,
+        help_text="User who wrote the review",
     )
-    course = create_foreign_key(
-        'Course',
-        "reviews",
-        help_text="Course being reviewed"
+    course = models.ForeignKey(
+        "Course",
+        on_delete=models.CASCADE,
+        related_name="reviews",
+        db_index=True,
+        help_text="Course being reviewed",
     )
     rating = models.PositiveSmallIntegerField(
         validators=[MinValueValidator(1), MaxValueValidator(5)],
-        help_text="Rating from 1 to 5 stars"
+        help_text="Rating from 1 to 5 stars",
     )
-    title = models.CharField(max_length=255, blank=True, null=True, help_text="Review title")
-    content = create_text_field(min_len=10, help_text="Review content (minimum 10 characters)")
-    helpful_count = models.PositiveIntegerField(default=0, help_text="Number of users who found this review helpful")
+    # FIXED: Use default='' instead of null=True for character fields
+    title = models.CharField(
+        max_length=255, blank=True, default="", help_text="Review title"
+    )
+    content = models.TextField(
+        validators=[
+            MinLengthValidator(10)
+        ],  # FIXED: Changed from MinValueValidator to MinLengthValidator
+        help_text="Review content (minimum 10 characters)",
+    )
+    helpful_count = models.PositiveIntegerField(
+        default=0, help_text="Number of users who found this review helpful"
+    )
 
     # Moderation fields
-    is_verified_purchase = models.BooleanField(default=False, help_text="Whether reviewer is enrolled in the course")
-    is_approved = models.BooleanField(default=True, help_text="Whether review is approved for display")
-    is_featured = models.BooleanField(default=False, help_text="Whether review is featured")
-    moderation_notes = models.TextField(blank=True, null=True, help_text="Internal moderation notes")
+    is_verified_purchase = models.BooleanField(
+        default=False, help_text="Whether reviewer is enrolled in the course"
+    )
+    is_approved = models.BooleanField(
+        default=True, help_text="Whether review is approved for display"
+    )
+    is_featured = models.BooleanField(
+        default=False, help_text="Whether review is featured"
+    )
+    moderation_notes = models.TextField(
+        blank=True, default="", help_text="Internal moderation notes"
+    )
 
     def save(self, *args, **kwargs):
-        """Enhanced save with verification check and analytics update"""
-        if not self.pk:
+        """
+        Enhanced save with verification check and analytics update
+
+        Only triggers analytics updates when the review is new or rating has changed.
+        """
+        is_new = not self.pk
+        update_analytics = is_new
+        old_rating = None
+
+        if not is_new:
+            # Check if rating changed on existing review
+            try:
+                old_review = Review.objects.get(pk=self.pk)
+                if old_review.rating != self.rating:
+                    update_analytics = True
+                    old_rating = old_review.rating
+            except (Review.DoesNotExist, DatabaseError, OperationalError) as e:
+                logger.warning(f"Could not check for rating change: {e}")
+                update_analytics = True
+
+        if is_new:
             # Import using apps.get_model to avoid circular imports
             try:
-                Enrollment = apps.get_model('courses', 'Enrollment')
+                Enrollment = apps.get_model("courses", "Enrollment")
                 self.is_verified_purchase = Enrollment.objects.filter(
                     user=self.user, course=self.course
                 ).exists()
@@ -632,31 +895,50 @@ class Review(TimeStampedMixin):
                 logger.error(f"Database error checking enrollment for review: {e}")
                 self.is_verified_purchase = False
 
-        super().save(*args, **kwargs)
-
         try:
-            self.course.update_analytics()
-        except (AttributeError, DatabaseError, OperationalError) as e:
-            logger.error(f"Error updating course analytics from review {self.id}: {e}")
+            with transaction.atomic():
+                super().save(*args, **kwargs)
+        except Exception as e:
+            logger.error(f"Error saving review: {e}")
+            raise
 
-        logger.info(f"Review created: {self.user.username} rated {self.course.title} {self.rating}/5")
+        # Only update analytics when needed
+        if update_analytics:
+            try:
+                self.course.update_analytics()
+                if is_new:
+                    logger.info(
+                        f"Review created: {self.user.username} rated {self.course.title} {self.rating}/5"
+                    )
+                elif old_rating:
+                    logger.info(
+                        f"Review updated: {self.user.username} changed rating from {old_rating} to {self.rating}/5"
+                    )
+            except (AttributeError, DatabaseError, OperationalError) as e:
+                logger.error(
+                    f"Error updating course analytics from review {self.id}: {e}"
+                )
 
     def __str__(self):
         return f"{self.user.username}'s review for {self.course.title}"
 
     class Meta:
-        app_label = 'courses'
+        app_label = "courses"
         verbose_name = "Review"
         verbose_name_plural = "Reviews"
         ordering = ["-created_date"]
         indexes = [
+            # Use composite indexes for common query patterns
             models.Index(fields=["course", "-created_date"]),
             models.Index(fields=["user", "-created_date"]),
-            models.Index(fields=["rating"]),
             models.Index(fields=["is_approved", "is_featured"]),
+            # Keep rating for potential sorting
+            models.Index(fields=["rating"]),
         ]
         constraints = [
-            models.UniqueConstraint(fields=['user', 'course'], name='unique_user_course_review'),
+            models.UniqueConstraint(
+                fields=["user", "course"], name="unique_user_course_review"
+            ),
         ]
 
 
@@ -664,40 +946,65 @@ class Review(TimeStampedMixin):
 # NOTE MODEL
 # =====================================
 
+
 class Note(TimeStampedMixin):
     """Enhanced note model with comprehensive organization and validation"""
 
-    user = create_foreign_key(
+    user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        "notes",
-        help_text="User who created the note"
+        on_delete=models.CASCADE,
+        related_name="user_notes",  # FIXED: Renamed to avoid collision
+        db_index=True,
+        help_text="User who created the note",
     )
-    lesson = create_foreign_key(
-        'Lesson',
-        "notes",
-        help_text="Lesson the note is associated with"
+    lesson = models.ForeignKey(
+        "Lesson",
+        on_delete=models.CASCADE,
+        related_name="lesson_notes",  # FIXED: Renamed to avoid collision
+        db_index=True,
+        help_text="Lesson the note is associated with",
     )
-    content = create_text_field(min_len=1, help_text="Note content")
+    content = models.TextField(
+        validators=[
+            MinLengthValidator(1)
+        ],  # FIXED: Changed from MinValueValidator to MinLengthValidator
+        help_text="Note content",
+    )
     timestamp_seconds = models.PositiveIntegerField(
-        default=0,
-        help_text="Timestamp in seconds for video notes"
+        default=0, help_text="Timestamp in seconds for video notes"
     )
-    is_private = models.BooleanField(default=True, help_text="Whether this note is private to the user")
-    tags = create_json_field(max_items=10, min_str_len=2, help_text="Tags for organizing notes")
+    is_private = models.BooleanField(
+        default=True, help_text="Whether this note is private to the user"
+    )
+    tags = create_json_field(
+        max_items=10, min_str_len=2, help_text="Tags for organizing notes"
+    )
+
+    def save(self, *args, **kwargs):
+        """Enhanced save with transaction for atomicity"""
+        try:
+            with transaction.atomic():
+                super().save(*args, **kwargs)
+        except Exception as e:
+            logger.error(f"Error in Note.save(): {e}")
+            raise
 
     def __str__(self):
-        content_preview = self.content[:50] + "..." if len(self.content) > 50 else self.content
+        content_preview = (
+            self.content[:50] + "..." if len(self.content) > 50 else self.content
+        )
         return f"{self.user.username}'s note on {self.lesson.title}: {content_preview}"
 
     class Meta:
-        app_label = 'courses'
+        app_label = "courses"
         verbose_name = "Note"
         verbose_name_plural = "Notes"
         ordering = ["-created_date"]
         indexes = [
+            # Use composite indexes for common query patterns
             models.Index(fields=["user", "lesson"]),
             models.Index(fields=["lesson", "is_private"]),
-            models.Index(fields=["is_private"]),
+            # Remove redundant single-column indexes already covered by composite ones
         ]
 
 
@@ -705,38 +1012,78 @@ class Note(TimeStampedMixin):
 # ANALYTICS AND TRACKING MODELS
 # =====================================
 
+
 class UserActivity(TimeStampedMixin):
     """Track user activities in courses"""
 
-    user = create_foreign_key(
+    user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        'course_activities'
+        on_delete=models.CASCADE,
+        related_name="course_activities",
+        db_index=True,
     )
-    activity_type = create_char_field(
+    activity_type = models.CharField(
+        max_length=255,
         choices=[
-            ('view_course', _('View Course')),
-            ('start_lesson', _('Start Lesson')),
-            ('complete_lesson', _('Complete Lesson')),
-            ('download_resource', _('Download Resource')),
-            ('take_quiz', _('Take Quiz')),
-            ('post_comment', _('Post Comment')),
-            ('give_review', _('Give Review')),
-        ]
+            ("view_course", _("View Course")),
+            ("start_lesson", _("Start Lesson")),
+            ("complete_lesson", _("Complete Lesson")),
+            ("download_resource", _("Download Resource")),
+            ("take_quiz", _("Take Quiz")),
+            ("post_comment", _("Post Comment")),
+            ("give_review", _("Give Review")),
+        ],
     )
-    course = models.ForeignKey('Course', on_delete=models.CASCADE, related_name='activities', null=True, blank=True)
-    lesson = models.ForeignKey('Lesson', on_delete=models.CASCADE, related_name='activities', null=True, blank=True)
-    resource = models.ForeignKey('Resource', on_delete=models.CASCADE, related_name='activities', null=True, blank=True)
-    assessment = models.ForeignKey('Assessment', on_delete=models.CASCADE, related_name='activities', null=True, blank=True)
+    # FIXED: Renamed related_name to avoid collisions
+    course = models.ForeignKey(
+        "Course",
+        on_delete=models.CASCADE,
+        related_name="course_activities",
+        null=True,
+        blank=True,
+    )
+    lesson = models.ForeignKey(
+        "Lesson",
+        on_delete=models.CASCADE,
+        related_name="lesson_activities",
+        null=True,
+        blank=True,
+    )
+    resource = models.ForeignKey(
+        "Resource",
+        on_delete=models.CASCADE,
+        related_name="resource_activities",
+        null=True,
+        blank=True,
+    )
+    assessment = models.ForeignKey(
+        "Assessment",
+        on_delete=models.CASCADE,
+        related_name="assessment_activities",
+        null=True,
+        blank=True,
+    )
     data = create_json_field(default=dict)
 
+    def save(self, *args, **kwargs):
+        """Enhanced save with transaction for atomicity"""
+        try:
+            with transaction.atomic():
+                super().save(*args, **kwargs)
+        except Exception as e:
+            logger.error(f"Error in UserActivity.save(): {e}")
+            raise
+
     class Meta:
-        app_label = 'courses'
-        ordering = ['-created_date']
-        verbose_name_plural = 'User activities'
+        app_label = "courses"
+        ordering = ["-created_date"]
+        verbose_name_plural = "User activities"
         indexes = [
-            models.Index(fields=['user', '-created_date']),
-            models.Index(fields=['activity_type']),
-            models.Index(fields=['course', '-created_date']),
+            # Use composite indexes for common query patterns
+            models.Index(fields=["user", "-created_date"]),
+            models.Index(fields=["course", "-created_date"]),
+            # Keep activity_type for potential filtering
+            models.Index(fields=["activity_type"]),
         ]
 
     def __str__(self):
@@ -746,7 +1093,9 @@ class UserActivity(TimeStampedMixin):
 class CourseStats(TimeStampedMixin):
     """Aggregate statistics for courses"""
 
-    course = models.OneToOneField('Course', on_delete=models.CASCADE, related_name='stats')
+    course = models.OneToOneField(
+        "Course", on_delete=models.CASCADE, related_name="stats"
+    )
     total_students = models.PositiveIntegerField(default=0)
     active_students = models.PositiveIntegerField(default=0)
     completion_count = models.PositiveIntegerField(default=0)
@@ -755,9 +1104,22 @@ class CourseStats(TimeStampedMixin):
     assessment_stats = create_json_field(default=dict)
     revenue_data = create_json_field(default=dict)
 
+    def save(self, *args, **kwargs):
+        """Enhanced save with transaction for atomicity"""
+        try:
+            with transaction.atomic():
+                super().save(*args, **kwargs)
+        except Exception as e:
+            logger.error(f"Error in CourseStats.save(): {e}")
+            raise
+
     class Meta:
-        app_label = 'courses'
-        verbose_name_plural = 'Course stats'
+        app_label = "courses"
+        verbose_name_plural = "Course stats"
+        indexes = [
+            # Add index for course lookup
+            models.Index(fields=["course"]),
+        ]
 
     def __str__(self):
         return f"Stats for {self.course.title}"
@@ -766,18 +1128,37 @@ class CourseStats(TimeStampedMixin):
 class UserStats(TimeStampedMixin):
     """Aggregate statistics for users"""
 
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='course_stats')
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="course_stats"
+    )
     courses_enrolled = models.PositiveIntegerField(default=0)
     courses_completed = models.PositiveIntegerField(default=0)
     total_time_spent_seconds = models.PositiveBigIntegerField(default=0)
-    assessment_avg_score = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    assessment_avg_score = models.DecimalField(
+        max_digits=5, decimal_places=2, default=0
+    )
     last_activity = models.DateTimeField(null=True, blank=True)
     activity_streak = models.PositiveIntegerField(default=0)
     learning_habits = create_json_field(default=dict)
 
+    def save(self, *args, **kwargs):
+        """Enhanced save with transaction for atomicity"""
+        try:
+            with transaction.atomic():
+                super().save(*args, **kwargs)
+        except Exception as e:
+            logger.error(f"Error in UserStats.save(): {e}")
+            raise
+
     class Meta:
-        app_label = 'courses'
-        verbose_name_plural = 'User stats'
+        app_label = "courses"
+        verbose_name_plural = "User stats"
+        indexes = [
+            # Add index for user lookup
+            models.Index(fields=["user"]),
+            # Add index for activity streak/date querying
+            models.Index(fields=["activity_streak", "last_activity"]),
+        ]
 
     def __str__(self):
         return f"Stats for {self.user.username}"
@@ -786,32 +1167,55 @@ class UserStats(TimeStampedMixin):
 class Notification(TimeStampedMixin):
     """Course-related notifications for users"""
 
-    user = create_foreign_key(settings.AUTH_USER_MODEL, 'course_notifications')
-    title = create_char_field()
-    message = create_text_field()
-    notification_type = create_char_field(
-        choices=[
-            ('course_update', _('Course Update')),
-            ('reminder', _('Reminder')),
-            ('achievement', _('Achievement')),
-            ('announcement', _('Announcement')),
-            ('feedback', _('Feedback Request')),
-            ('custom', _('Custom'))
-        ],
-        default='announcement'
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="course_notifications",
+        db_index=True,
     )
-    course = models.ForeignKey('Course', on_delete=models.CASCADE, related_name='notifications', null=True, blank=True)
+    title = models.CharField(max_length=255)
+    message = models.TextField()
+    notification_type = models.CharField(
+        max_length=255,
+        choices=[
+            ("course_update", _("Course Update")),
+            ("reminder", _("Reminder")),
+            ("achievement", _("Achievement")),
+            ("announcement", _("Announcement")),
+            ("feedback", _("Feedback Request")),
+            ("custom", _("Custom")),
+        ],
+        default="announcement",
+    )
+    course = models.ForeignKey(
+        "Course",
+        on_delete=models.CASCADE,
+        related_name="course_notifications",
+        null=True,
+        blank=True,
+    )
     is_read = models.BooleanField(default=False)
     read_date = models.DateTimeField(null=True, blank=True)
     action_url = models.URLField(blank=True)
 
+    def save(self, *args, **kwargs):
+        """Enhanced save with transaction for atomicity"""
+        try:
+            with transaction.atomic():
+                super().save(*args, **kwargs)
+        except Exception as e:
+            logger.error(f"Error in Notification.save(): {e}")
+            raise
+
     class Meta:
-        app_label = 'courses'
-        ordering = ['-created_date']
+        app_label = "courses"
+        ordering = ["-created_date"]
         indexes = [
-            models.Index(fields=['user', '-created_date']),
-            models.Index(fields=['is_read']),
-            models.Index(fields=['notification_type']),
+            # Use composite indexes for common query patterns
+            models.Index(fields=["user", "-created_date"]),
+            # Keep single-column indexes for commonly filtered fields
+            models.Index(fields=["is_read"]),
+            models.Index(fields=["notification_type"]),
         ]
 
     def __str__(self):
